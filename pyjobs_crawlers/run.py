@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from multiprocessing import Pool
 import optparse
+import fasteners
 from scrapy.cmdline import _get_commands_dict, _run_command
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from os.path import dirname, isfile
+from os.path import dirname, isfile, basename
 import glob
+from slugify import slugify
 
 
 def get_spiders_files(spiders_directory=None):
@@ -29,32 +31,58 @@ def crawl(site_file_name):
     :param site_file_name: python file considered as JobSpider
     :return:
     """
-    cmdname = 'runspider'
-    settings = get_project_settings()
-    cmds = _get_commands_dict(settings=settings, inproject=True)
 
-    parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(),
-                                   conflict_handler='resolve')
-    cmd = cmds[cmdname]
-    parser.usage = "scrapy %s %s" % (cmdname, cmd.syntax())
-    parser.description = cmd.long_desc()
-    settings.setdict(cmd.default_settings, priority='command')
-    cmd.settings = settings
-    cmd.add_options(parser)
-    opts, args = parser.parse_args(args=[site_file_name])
+    # Lock to prevent simultaneous crawnling process
+    lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
+    lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
+    lock_gotten = lock.acquire(blocking=False)
 
-    cmd.process_options(args, opts)
-    cmd.crawler_process = CrawlerProcess(settings)
+    try:
+        if not lock_gotten:
+            print("Crawl of %s already running" % site_file_name)
+            pass  # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
 
-    _run_command(cmd, args, opts)
+        cmdname = 'runspider'
+        settings = get_project_settings()
+        cmds = _get_commands_dict(settings=settings, inproject=True)
+
+        parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(),
+                                       conflict_handler='resolve')
+        cmd = cmds[cmdname]
+        parser.usage = "scrapy %s %s" % (cmdname, cmd.syntax())
+        parser.description = cmd.long_desc()
+        settings.setdict(cmd.default_settings, priority='command')
+        cmd.settings = settings
+        cmd.add_options(parser)
+        opts, args = parser.parse_args(args=[site_file_name])
+
+        cmd.process_options(args, opts)
+        cmd.crawler_process = CrawlerProcess(settings)
+
+        _run_command(cmd, args, opts)
+
+    finally:
+        if lock_gotten:
+            lock.release()
 
 
-def start_crawlers():
+def start_crawlers(processes=2):
+    """
+
+    Start spider processes
+
+    :return:
+    """
     # Creation of a process by site
-    # spiders_files = get_spiders_files()
-    spiders_files = [get_spiders_files()[0]]
-    p = Pool(len(spiders_files))
-    p.map(crawl, spiders_files)
+    spiders_files = get_spiders_files()
+
+    # split list in x list of processes count elements
+    spiders_files_chunks = [spiders_files[x:x+processes] for x in range(0, len(spiders_files), processes)]
+
+    # Start one cycle of processes by chunk
+    for spiders_files_chunk in spiders_files_chunks:
+        p = Pool(len(spiders_files_chunk))
+        p.map(crawl, spiders_files_chunk)
 
 
 if __name__ == '__main__':

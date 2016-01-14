@@ -11,7 +11,7 @@
 
 BOT_NAME = 'spiders'
 
-SPIDER_MODULES = ['pyjobs_crawlers.spiders']
+SPIDER_MODULES = ['crawling.spiders']
 NEWSPIDER_MODULE = 'spiders.spiders'
 
 
