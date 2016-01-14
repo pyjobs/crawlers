@@ -25,9 +25,10 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def crawl(site_file_name):
+def crawl(site_file_name, connector):
     """
     Launch crawl job for JobSpider file
+    :param connector: Connector with pyjobs_crawler caller
     :param site_file_name: python file considered as JobSpider
     :return:
     """
@@ -41,17 +42,22 @@ def crawl(site_file_name):
     parser.usage = "scrapy %s %s" % (cmdname, cmd.syntax())
     parser.description = cmd.long_desc()
     settings.setdict(cmd.default_settings, priority='command')
+
+    # Add our connector to config
+    settings.set('connector', connector)
+
     cmd.settings = settings
     cmd.add_options(parser)
     opts, args = parser.parse_args(args=[site_file_name])
-
     cmd.process_options(args, opts)
     cmd.crawler_process = CrawlerProcess(settings)
 
     _run_command(cmd, args, opts)
 
 
-def start_crawl_process(site_file_name):
+def start_crawl_process(process_params):
+    site_file_name, connector = process_params
+
     # Lock to prevent simultaneous crawnling process
     lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
     lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
@@ -59,7 +65,7 @@ def start_crawl_process(site_file_name):
 
     try:
         if lock_gotten:
-            crawl(site_file_name)
+            crawl(site_file_name, connector)
         else:
             print("Crawl of \"%s\" already running" % site_file_name)
             # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
@@ -68,7 +74,7 @@ def start_crawl_process(site_file_name):
             lock.release()
 
 
-def start_crawlers(processes=2):
+def start_crawlers(connector, processes=2, debug=False):
     """
 
     Start spider processes
@@ -78,14 +84,16 @@ def start_crawlers(processes=2):
     # Creation of a process by site
     spiders_files = get_spiders_files()
 
+    if debug:
+        crawl(spiders_files[0], connector)
+        print('debug finished')
+        exit()
+
     # split list in x list of processes count elements
-    spiders_files_chunks = [spiders_files[x:x+processes] for x in range(0, len(spiders_files), processes)]
+    spider_files_chunks = [spiders_files[x:x + processes] for x in range(0, len(spiders_files), processes)]
 
     # Start one cycle of processes by chunk
-    for spiders_files_chunk in spiders_files_chunks:
-        p = Pool(len(spiders_files_chunk))
-        p.map(start_crawl_process, spiders_files_chunk)
-
-
-if __name__ == '__main__':
-    start_crawlers()
+    for spider_files_chunk in spider_files_chunks:
+        process_params_chunk = [(spider_file, connector) for spider_file in spider_files_chunk]
+        p = Pool(len(process_params_chunk))
+        p.map(start_crawl_process, process_params_chunk)

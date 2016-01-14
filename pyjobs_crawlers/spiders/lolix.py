@@ -1,22 +1,8 @@
 # -*- coding: utf-8 -*-
-
-import time
-
 from datetime import datetime
-
 from scrapy import Request
-
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
-
-import sqlalchemy as sqla
-from pyjobsweb import model
-
-engine = sqla.engine.create_engine('postgres://pyjobs:pyjobs@localhost/pyjobs')
-engine.connect()
-model.init_model(engine)
-
-import os.path
 
 
 class LolixJobSpider(JobSpider):
@@ -35,12 +21,7 @@ class LolixJobSpider(JobSpider):
             url = u'{}{}'.format(LolixJobSpider.JOB_OFFER_BASE_URL,
                                  job_row.xpath('./td[3]/a/@href')[0].extract())
 
-            existing = model.DBSession \
-                .query(model.data.Job) \
-                .filter(model.data.Job.url==url) \
-                .count()
-
-            if existing:
+            if self.get_connector().job_exist(url):
                 return  # job already found; stop scrapying
 
             job = JobItem()

@@ -9,7 +9,6 @@
 class RecordJobPipeline(object):
 
     def process_item(self, item, spider):
-        #save_item_as_job(item)
-        # TODO
+        spider.get_connector().add_job(job_item=item)
         return item
 

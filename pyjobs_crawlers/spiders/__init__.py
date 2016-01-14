@@ -17,6 +17,10 @@ class Tag(object):
 
 class JobSpider(Spider):
 
+    def __init__(self, *args, **kwargs):
+        super(JobSpider, self).__init__(*args, **kwargs)
+        self._connector = None
+
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
 
@@ -24,6 +28,16 @@ class JobSpider(Spider):
         u'cdi', u'cdd', u'télétravail', u'stage', u'freelance', u'mysql'
         u'postgresql', u'django'
     ]
+
+    def _set_crawler(self, crawler):
+        super(JobSpider, self)._set_crawler(crawler)
+        self._connector = self.settings.get('connector')
+
+    def get_connector(self):
+        if not self._connector:
+            raise Exception("_connector attribute is not set")
+        return self._connector
+
     def _build_url(self, response, path):
         base_url = get_base_url(response)
         return urlparse.urljoin(base_url, path)

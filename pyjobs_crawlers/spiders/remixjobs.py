@@ -1,22 +1,9 @@
 # -*- coding: utf-8 -*-
-
-import time
-
 from datetime import datetime
-
 from pyjobs_crawlers.spiders import JobSpider
-
 from pyjobs_crawlers.items import JobItem
-from pyjobsweb.lib import save_item_as_job
-
 from scrapy import Request
 
-import sqlalchemy
-from pyjobsweb import model
-
-engine = sqlalchemy.engine.create_engine('postgres://pyjobs:pyjobs@localhost/pyjobs')
-engine.connect()
-model.init_model(engine)
 
 class RemixJobsSpider(JobSpider):
 
@@ -33,10 +20,8 @@ class RemixJobsSpider(JobSpider):
             url = self._build_url(response, relative_url)
 
             print 'URL IS...', url
-            existing = model.DBSession.query(model.data.Job).filter(model.data.Job.url==url).count()
-            if existing:
+            if self.get_connector().job_exist(url):
                 print '-> ALREADY FOUND :-('
-                print existing
                 return
 
             yield Request(url, self.parse_job_page)

@@ -1,22 +1,8 @@
 # -*- coding: utf-8 -*-
-
-import time
-
 from datetime import datetime
-
 from scrapy import Request
-
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
-
-import sqlalchemy
-from pyjobsweb import model
-
-engine = sqlalchemy.engine.create_engine('postgres://pyjobs:pyjobs@localhost/pyjobs')
-engine.connect()
-model.init_model(engine)
-
-import os.path
 
 
 class AfpyJobSpider(JobSpider):
@@ -31,8 +17,7 @@ class AfpyJobSpider(JobSpider):
             url_xpath = './a/@href'
             url = job.xpath(url_xpath)[0].extract()
 
-            existing = model.DBSession.query(model.data.Job).filter(model.data.Job.url==url).count()
-            if existing:
+            if self.get_connector().job_exist(url):
                 return
 
             yield Request(url, self.parse_job_page)

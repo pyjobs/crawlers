@@ -16,3 +16,14 @@ def get_spiders_files(spiders_directory=None):
     return [file for file in glob.glob(spiders_directory + "/*.py")
             if isfile(file)
             and not file.endswith('__init__.py')]
+
+
+class Connector(object):
+    """
+
+    """
+    def job_exist(self, job_public_id):
+        raise NotImplementedError()
+
+    def add_job(self, job_item):
+        raise NotImplementedError()
