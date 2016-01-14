@@ -4,9 +4,9 @@ import time
 
 from datetime import datetime
 
-from crawling.spiders import JobSpider
+from pyjobs_crawlers.spiders import JobSpider
 
-from crawling.items import JobItem
+from pyjobs_crawlers.items import JobItem
 from pyjobsweb.lib import save_item_as_job
 
 from scrapy import Request

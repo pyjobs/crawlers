@@ -7,8 +7,8 @@ from datetime import datetime
 
 from scrapy import Request
 
-from crawling.spiders import JobSpider
-from crawling.items import JobItem
+from pyjobs_crawlers.spiders import JobSpider
+from pyjobs_crawlers.items import JobItem
 
 import sqlalchemy as sqla
 from pyjobsweb import model
