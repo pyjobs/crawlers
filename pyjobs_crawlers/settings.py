@@ -11,7 +11,7 @@
 
 BOT_NAME = 'spiders'
 
-SPIDER_MODULES = ['crawling.spiders']
+SPIDER_MODULES = ['pyjobs_crawlers.spiders']
 NEWSPIDER_MODULE = 'spiders.spiders'
 
 
@@ -62,7 +62,7 @@ NEWSPIDER_MODULE = 'spiders.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'crawling.pipelines.RecordJobPipeline': 1,
+   'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
 }
 
 
