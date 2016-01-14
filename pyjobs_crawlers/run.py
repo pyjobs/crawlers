@@ -44,7 +44,7 @@ def crawl(site_file_name, connector):
     settings.setdict(cmd.default_settings, priority='command')
 
     # Add our connector to config
-    settings.set('connector', connector)
+    settings.set('connector', connector())
 
     cmd.settings = settings
     cmd.add_options(parser)
