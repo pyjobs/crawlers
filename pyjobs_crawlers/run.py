@@ -51,6 +51,23 @@ def crawl(site_file_name):
     _run_command(cmd, args, opts)
 
 
+def start_crawl_process(site_file_name):
+    # Lock to prevent simultaneous crawnling process
+    lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
+    lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
+    lock_gotten = lock.acquire(blocking=False)
+
+    try:
+        if lock_gotten:
+            crawl(site_file_name)
+        else:
+            print("Crawl of \"%s\" already running" % site_file_name)
+            # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
+    finally:
+        if lock_gotten:
+            lock.release()
+
+
 def start_crawlers(processes=2):
     """
 
@@ -63,22 +80,6 @@ def start_crawlers(processes=2):
 
     # split list in x list of processes count elements
     spiders_files_chunks = [spiders_files[x:x+processes] for x in range(0, len(spiders_files), processes)]
-
-    def start_crawl_process(site_file_name):
-        # Lock to prevent simultaneous crawnling process
-        lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
-        lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
-        lock_gotten = lock.acquire(blocking=False)
-
-        try:
-            if lock_gotten:
-                crawl(site_file_name)
-            else:
-                print("Crawl of %s already running" % site_file_name)
-                # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
-        finally:
-            if lock_gotten:
-                lock.release()
 
     # Start one cycle of processes by chunk
     for spiders_files_chunk in spiders_files_chunks:
