@@ -3,11 +3,11 @@ from multiprocessing import Pool
 import optparse
 import fasteners
 from scrapy.cmdline import _get_commands_dict, _run_command
-from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from os.path import dirname, isfile, basename
 import glob
 from slugify import slugify
+from pyjobs_crawlers import CrawlerProcess
 
 
 def get_spiders_files(spiders_directory=None):

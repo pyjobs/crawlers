@@ -35,6 +35,8 @@ class LolixJobSpider(JobSpider):
         return out
 
     def parse_job_list_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+
         i = 0
         for group in response.css('div.list-group'):
             goto_next_group = False
@@ -48,6 +50,7 @@ class LolixJobSpider(JobSpider):
                     url = job_row.xpath('./@href')[0].extract()
 
                     if self.get_connector().job_exist(url):
+                        self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
                         return  # job already found; stop scrapying
 
                     job = JobItem()
@@ -83,6 +86,8 @@ class LolixJobSpider(JobSpider):
         # yield Request(url=next_page_url)
 
     def parse_job_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
+
         job = response.meta['item']  # prefilled item
 
         job_header = response.css('div.row')[0].css('div.col-md-9')

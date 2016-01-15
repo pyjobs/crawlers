@@ -11,6 +11,8 @@ class RemixJobsSpider(JobSpider):
     start_urls = ['https://remixjobs.com/Emploi-python']
 
     def parse_job_list_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+
         print 'crawling ...'
         # print response.body
         for job in response.css('li.job-item'):
@@ -21,6 +23,7 @@ class RemixJobsSpider(JobSpider):
 
             print 'URL IS...', url
             if self.get_connector().job_exist(url):
+                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
                 print '-> ALREADY FOUND :-('
                 return
 
@@ -33,6 +36,8 @@ class RemixJobsSpider(JobSpider):
         yield Request(url=next_url)
 
     def parse_job_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
+
         job_node = response.css('div.job-title')
 
         url = response.url

@@ -11,6 +11,8 @@ class AfpyJobSpider(JobSpider):
     start_urls = ['http://www.afpy.org/jobs']
 
     def parse_job_list_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+
         for job in response.xpath('//div[@class="jobitem"]'):
             # first we check url. If the job exists, then skip crawling
             # (it means that the page has already been crawled
@@ -18,6 +20,7 @@ class AfpyJobSpider(JobSpider):
             url = job.xpath(url_xpath)[0].extract()
 
             if self.get_connector().job_exist(url):
+                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
                 return
 
             yield Request(url, self.parse_job_page)
@@ -27,6 +30,8 @@ class AfpyJobSpider(JobSpider):
         yield Request(url=next_page_url)
 
     def parse_job_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
+
         job_node = response.xpath('//div[@id="content"]')[0]
 
         url = response.url

@@ -17,6 +17,24 @@ class Tag(object):
 
 class JobSpider(Spider):
 
+    """Beginning of work"""
+    ACTION_START = 'START'
+
+    """End of work"""
+    ACTION_FINISHED = 'FINISHED'
+
+    """Spider close for other reason of finished"""
+    ACTION_UNEXPECTED_END = 'UNEXPECTED_END'
+
+    """Crawling job list page"""
+    ACTION_CRAWL_LIST = 'CRAWL_LIST'
+
+    """Crawling job page"""
+    ACTION_CRAWL_JOB = 'CRAWL_JOB_PAGE'
+
+    """Marker (last crawled point) found: stop crawling"""
+    ACTION_MARKER_FOUND = 'MARKER_FOUND'
+
     def __init__(self, *args, **kwargs):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
@@ -43,6 +61,7 @@ class JobSpider(Spider):
         return urlparse.urljoin(base_url, path)
 
     def parse(self, response):
+        self.get_connector().log(self.name, self.ACTION_START)
         print 'start crawling...'
         return self.parse_job_list_page(response)
 
@@ -68,3 +87,11 @@ class JobSpider(Spider):
 
         for tag in self.extract_specific_tags(html_content):
             yield tag
+
+    @staticmethod
+    def close(spider, reason):
+        if reason == 'finished':
+            spider.get_connector().log(spider.name, spider.ACTION_FINISHED)
+        else:
+            spider.get_connector().log(spider.name, spider.ACTION_UNEXPECTED_END, reason)
+        return Spider.close(spider, reason)

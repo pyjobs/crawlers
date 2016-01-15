@@ -13,6 +13,8 @@ class LolixJobSpider(JobSpider):
     start_urls = ['http://fr.lolix.org/search/offre/search.php?page=0&mode=find&posteid=0&regionid=0&contratid=0']
 
     def parse_job_list_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+
         for job_row in response.xpath('//td[@class="Contenu"]/table[2]/tr[position()>1]'):
             # first we check url. If the job exists, then skip crawling
             # (it means that the page has already been crawled
@@ -22,6 +24,7 @@ class LolixJobSpider(JobSpider):
                                  job_row.xpath('./td[3]/a/@href')[0].extract())
 
             if self.get_connector().job_exist(url):
+                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
                 return  # job already found; stop scrapying
 
             job = JobItem()
@@ -60,6 +63,8 @@ class LolixJobSpider(JobSpider):
         yield Request(url=next_page_url)
 
     def parse_job_page(self, response):
+        self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
+
         job_node = response.css('td.Contenu')[0]
 
         job = response.meta['item']  # prefilled item
