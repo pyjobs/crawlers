@@ -25,13 +25,14 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def crawl(site_file_name, connector):
+def crawl(site_file_name, connector_class):
     """
     Launch crawl job for JobSpider file
     :param connector: Connector with pyjobs_crawler caller
     :param site_file_name: python file considered as JobSpider
     :return:
     """
+    connector = connector_class()
     cmdname = 'runspider'
     settings = get_project_settings()
     cmds = _get_commands_dict(settings=settings, inproject=True)
@@ -44,7 +45,7 @@ def crawl(site_file_name, connector):
     settings.setdict(cmd.default_settings, priority='command')
 
     # Add our connector to config
-    settings.set('connector', connector())
+    settings.set('connector', connector)
 
     cmd.settings = settings
     cmd.add_options(parser)
@@ -56,7 +57,7 @@ def crawl(site_file_name, connector):
 
 
 def start_crawl_process(process_params):
-    site_file_name, connector = process_params
+    site_file_name, connector_class = process_params
 
     # Lock to prevent simultaneous crawnling process
     lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
@@ -65,7 +66,7 @@ def start_crawl_process(process_params):
 
     try:
         if lock_gotten:
-            crawl(site_file_name, connector)
+            crawl(site_file_name, connector_class)
         else:
             print("Crawl of \"%s\" already running" % site_file_name)
             # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
@@ -74,7 +75,7 @@ def start_crawl_process(process_params):
             lock.release()
 
 
-def start_crawlers(connector, processes=2, debug=False):
+def start_crawlers(connector_class, processes=2, debug=False):
     """
 
     Start spider processes
@@ -85,7 +86,7 @@ def start_crawlers(connector, processes=2, debug=False):
     spiders_files = get_spiders_files()
 
     if debug:
-        crawl(spiders_files[0], connector)
+        crawl(spiders_files[0], connector_class)
         print('debug finished')
         exit()
 
@@ -94,6 +95,6 @@ def start_crawlers(connector, processes=2, debug=False):
 
     # Start one cycle of processes by chunk
     for spider_files_chunk in spider_files_chunks:
-        process_params_chunk = [(spider_file, connector) for spider_file in spider_files_chunk]
+        process_params_chunk = [(spider_file, connector_class) for spider_file in spider_files_chunk]
         p = Pool(len(process_params_chunk))
         p.map(start_crawl_process, process_params_chunk)

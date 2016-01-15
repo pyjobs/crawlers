@@ -21,7 +21,7 @@ from mon_projet import MonConnecteur
 
 if __name__ == '__main__':
     os.environ['SCRAPY_SETTINGS_MODULE'] = 'pyjobs_crawlers.settings'
-    start_crawlers(connector=MonConnecteur)
+    start_crawlers(connector_class=MonConnecteur)
 ```
 
 Où ``MonConnecteur`` est une classe implémentant ``pyjobs_crawlers.Connector``.
