@@ -26,13 +26,13 @@ class JobSpider(Spider):
     """
 
     """Beginning of work"""
-    ACTION_START = 'START'
+    ACTION_START = 'CRAWL_LIST_START'
 
     """End of work"""
-    ACTION_FINISHED = 'FINISHED'
+    ACTION_FINISHED = 'CRAWL_LIST_FINISHED'
 
     """Spider close for other reason of finished"""
-    ACTION_UNEXPECTED_END = 'UNEXPECTED_END'
+    ACTION_UNEXPECTED_END = 'ERROR_UNEXPECTED_END'
 
     """Crawling job list page"""
     ACTION_CRAWL_LIST = 'CRAWL_LIST'
@@ -41,7 +41,10 @@ class JobSpider(Spider):
     ACTION_CRAWL_JOB = 'CRAWL_JOB_PAGE'
 
     """Marker (last crawled point) found: stop crawling"""
-    ACTION_MARKER_FOUND = 'MARKER_FOUND'
+    ACTION_MARKER_FOUND = 'CRAWL_LIST_MARKER_FOUND'
+
+    """Something went wrong when crawl"""
+    ACTION_CRAWL_ERROR = 'ERROR_CRAWNLING'
 
     COMMON_TAGS = [
         u'cdi', u'cdd', u'télétravail', u'stage', u'freelance', u'mysql'
