@@ -27,6 +27,9 @@ class Connector(object):
     def job_exist(self, job_public_id):
         raise NotImplementedError()
 
+    def get_most_recent_job_date(self, source):
+        raise NotImplementedError()
+
     def add_job(self, job_item):
         raise NotImplementedError()
 
