@@ -10,7 +10,7 @@ class AfpyJobSpider(JobSpider):
     name = 'afpy'
     start_urls = ['http://www.afpy.org/jobs']
 
-    crawl_parameters = {
+    _crawl_parameters = {
         'job_list_xpath': '//div[@class="jobitem"]',
         'job_list_element_url_xpath': './a/@href',
         'job_list_next_page_xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',

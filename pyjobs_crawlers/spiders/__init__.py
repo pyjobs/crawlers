@@ -51,7 +51,7 @@ class JobSpider(Spider):
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
 
-    crawl_parameters = {
+    _crawl_parameters = {
         'job_list_xpath': None,
         'job_list_element_url_xpath': None,
         'job_list_next_page_xpath': None,
@@ -70,9 +70,9 @@ class JobSpider(Spider):
         self._connector = None
 
     def _get_parameter(self, parameter_name):
-        if not self.crawl_parameters[parameter_name]:
+        if not self._crawl_parameters[parameter_name]:
             raise Exception("Crawl Parameter \"%s\" is not set")
-        return self.crawl_parameters[parameter_name]
+        return self._crawl_parameters[parameter_name]
 
     def _set_crawler(self, crawler):
         super(JobSpider, self)._set_crawler(crawler)
