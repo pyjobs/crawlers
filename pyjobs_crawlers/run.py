@@ -27,7 +27,11 @@ def get_spiders_files(spiders_directory=None):
 
 def crawl(site_file_name, connector_class):
     """
+
     Launch crawl job for JobSpider file
+    TODO - B.S. - 20160115: Exploiter la doc (http://doc.scrapy.org/en/1.0/topics/practices.html#run-from-script)
+                            pour réecrire cette fonction.
+
     :param connector: Connector with pyjobs_crawler caller
     :param site_file_name: python file considered as JobSpider
     :return:
