@@ -65,6 +65,8 @@ class JobSpider(Spider):
         'job_tags_xpath': None,
     }
 
+    _requireds = ('title', 'publication_datetime', 'description')
+
     def __init__(self, *args, **kwargs):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
@@ -127,7 +129,10 @@ class JobSpider(Spider):
         job_tags_xpath = self._get_parameter('job_tags_xpath')
         item['tags'] = self.extract_tags(self._extract(job_container, job_tags_xpath))
 
-        item['status'] = JobItem.CrawlStatus.COMPLETED
+        if self._item_satisfying(item):
+            item['status'] = JobItem.CrawlStatus.COMPLETED
+        else:
+            item['status'] = JobItem.CrawlStatus.INVALID
 
         yield item
 
@@ -169,6 +174,12 @@ class JobSpider(Spider):
     def _get_job_description(self, job_container):
         job_description_xpath = self._get_parameter('job_description_xpath')
         return self._extract(job_container, job_description_xpath)
+
+    def _item_satisfying(self, item):
+        for required_field in self._requireds:
+            if not item[required_field]:
+                return False
+        return True
 
     def _extract(self, container, selector):
         """
