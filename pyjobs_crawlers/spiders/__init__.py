@@ -18,13 +18,6 @@ class Tag(object):
         self.weight = iteration_nb
 
 class JobSpider(Spider):
-    """
-    TODO - B.S. - 20160115: Dans _get_jobs_container (et autres) on récupère le [0].
-                            Tester si il y est et lever erreur (log + ?) si il n'y est pas.
-                            De manière générale, tester et alerter partout où on va utiliser
-                            les crawl parameters
-    """
-
     """Beginning of work"""
     ACTION_START = 'CRAWL_LIST_START'
 
@@ -74,9 +67,11 @@ class JobSpider(Spider):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
 
-    def _get_parameter(self, parameter_name):
-        if not self._crawl_parameters[parameter_name]:
-            raise Exception("Crawl Parameter \"%s\" is not set")
+    def _get_parameter(self, parameter_name, required=False):
+        if parameter_name not in self._crawl_parameters or not self._crawl_parameters[parameter_name]:
+            if required:
+                raise Exception("Crawl Parameter \"%s\" is not set")
+            return None
         return self._crawl_parameters[parameter_name]
 
     def _set_crawler(self, crawler):
@@ -191,6 +186,9 @@ class JobSpider(Spider):
         :param selector: xpath or tuple
         :return: Extracted text value OR None
         """
+        if selector is None:
+            return
+
         if isinstance(selector, (list, tuple)):
             for selector_option in selector:
                 extracted_value = self._extract(container, selector_option)
