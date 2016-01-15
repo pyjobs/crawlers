@@ -3,41 +3,53 @@ from datetime import datetime
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
 from scrapy import Request
+import feedparser
+from time import mktime
 
 
 class RemixJobsSpider(JobSpider):
 
     name = 'remixjobs'
-    start_urls = ['https://remixjobs.com/Emploi-python']
+    start_urls = ['https://remixjobs.com/rss/python']
+
+    def __init__(self, *args, **kwargs):
+        super(RemixJobsSpider, self).__init__(*args, **kwargs)
+        self._last_job_date = datetime(1970, 1, 1, 0, 0, 0)
+
+    def _set_crawler(self, crawler):
+        super(RemixJobsSpider, self)._set_crawler(crawler)
+        self._last_job_date = self.get_connector().get_most_recent_job_date(self.name)
 
     def parse_job_list_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
 
-        print 'crawling ...'
-        # print response.body
-        for job in response.css('li.job-item'):
-            # first we check url. If the job exists, then skip crawling
-            # (it means that the page has already been crawled
-            relative_url = job.css('h3.job-title > a').xpath('@href').extract_first()
-            url = self._build_url(response, relative_url)
+        feed_parser = feedparser.parse(response.body)
+        for job_entry in feed_parser.entries:
+            job_url = feed_parser.entries[0].link
+            job_publication_date = datetime.fromtimestamp(mktime(feed_parser.entries[0].published_parsed))
 
-            print 'URL IS...', url
-            if self.get_connector().job_exist(url):
-                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
-                print '-> ALREADY FOUND :-('
+            job_publication_time = mktime(job_publication_date.timetuple())
+            last_job_publication_time = mktime(self._last_job_date.timetuple())
+            if job_publication_time <= last_job_publication_time:
+                self.get_connector().log(self.name,
+                                         self.ACTION_MARKER_FOUND,
+                                         "%s <= %s" % (job_publication_time, last_job_publication_time))
                 return
 
-            yield Request(url, self.parse_job_page)
+            prepared_job = JobItem()
+            request = Request(job_url, self.parse_job_page)
+            request.meta['item'] = prepared_job
 
-        # TODO - Activate other pages
-        next_page_url_xpath = '//div[@class="pagination"]/a[@class="next-link"]/@href'
-        next_page_url = response.xpath(next_page_url_xpath)[0].extract()
-        next_url = self._build_url(response, next_page_url)
-        yield Request(url=next_url)
+            prepared_job['title'] = feed_parser.entries[0].title
+            prepared_job['description'] = feed_parser.entries[0].description
+            prepared_job['publication_datetime'] = job_publication_date
+
+            yield request
 
     def parse_job_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
+        item = response.meta['item']  # prefilled item
         job_node = response.css('div.job-title')
 
         url = response.url
@@ -53,7 +65,6 @@ class RemixJobsSpider(JobSpider):
         address = job_infos.xpath('./li[4]/text()').extract_first().strip().rstrip(',')
         description = job_node.css('div.job-description').extract()
 
-        # the_date = TODO
         # 19 mars 2015,
         #
         # thedate_xpath = './div[@id="content-core"]/div[@id="content-core"]/div[@class="discreet"]/text()'
@@ -64,16 +75,12 @@ class RemixJobsSpider(JobSpider):
         # publication_datetime = thedatetime
 
 
-        item = JobItem()
-        item['title'] = title
         item['address'] = address
         item['url'] = url  # used as uid
-        item['publication_datetime'] = datetime.now()  # TODO
         item['source'] = self.name
         item['company'] = company_name
         item['company_url'] = company_url
         item['initial_crawl_datetime'] = datetime.now()
-        item['description'] = description
         item['status'] = JobItem.CrawlStatus.COMPLETED
 
         yield item
