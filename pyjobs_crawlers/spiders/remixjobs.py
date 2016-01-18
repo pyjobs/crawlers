@@ -56,9 +56,9 @@ class RemixJobsSpider(JobSpider):
         title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
 
         job_infos = job_node.css('ul.job-infos')[0]
-        company_name = job_infos.xpath('./li[1]/a/text()').extract_first().strip().rstrip(',')
-        if not company_name:
-            company_name = job_infos.xpath('./li[1]/text()').extract_first().strip().rstrip(',')
+        company = job_infos.xpath('./li[1]/a/text()').extract_first().strip().rstrip(',')
+        if not company:
+            company = job_infos.xpath('./li[1]/text()').extract_first().strip().rstrip(',')
 
         company_url = job_infos.xpath('./li[1]/a/@href').extract_first().strip()
 
@@ -78,7 +78,7 @@ class RemixJobsSpider(JobSpider):
         item['address'] = address
         item['url'] = url  # used as uid
         item['source'] = self.name
-        item['company'] = company_name
+        item['company'] = company
         item['company_url'] = company_url
         item['initial_crawl_datetime'] = datetime.now()
         item['status'] = JobItem.CrawlStatus.COMPLETED

@@ -12,84 +12,60 @@ class LolixJobSpider(JobSpider):
     name = 'lolix'
     start_urls = ['http://fr.lolix.org/search/offre/search.php?page=0&mode=find&posteid=0&regionid=0&contratid=0']
 
-    def parse_job_list_page(self, response):
-        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+    _crawl_parameters = {
+        'jobs_xpath': '//body',
+        'jobs_job_xpath': '//td[@class="Contenu"]/table[2]/tr[position()>1]',
+        'jobs_job_element_url_xpath': './td[3]/a/@href',
+        'jobs_next_page_xpath': '//a[@class="T3" and text()="Page suivante ->"]/@href',
 
-        for job_row in response.xpath('//td[@class="Contenu"]/table[2]/tr[position()>1]'):
-            # first we check url. If the job exists, then skip crawling
-            # (it means that the page has already been crawled
-            # url_xpath = './a/@href'
-            # url_path = job_row.xpath('./td[3]/a/@href')[0].extract()
-            url = u'{}{}'.format(LolixJobSpider.JOB_OFFER_BASE_URL,
-                                 job_row.xpath('./td[3]/a/@href')[0].extract())
+        'job_node_title_xpath': './td[3]/a/text()',
+        'job_node_company_xpath': './td[2]/a/text()',
+        'job_node_publication_datetime_xpath': './td[1]/text()',
 
-            if self.get_connector().job_exist(url):
-                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
-                return  # job already found; stop scrapying
+        'job_page_container_css': 'body',
+        'job_page_description_css': 'td.Contenu',
+        'job_page_company_url': '(//table)[last()]/tr[last()]/td[1]/a/@href'
+    }
 
-            job = JobItem()
-            job['url'] = url
-            job['source'] = self.name
-            job['address'] = ''
-            job['status'] = JobItem.CrawlStatus.PREFILLED
+    def _get_job_node_url(self, job_node):
+        url = super(LolixJobSpider, self)._get_job_node_url(job_node)
+        return "%s%s" % (self.JOB_OFFER_BASE_URL, url)
 
-            try:
-                job['title'] = job_row.xpath('./td[3]/a/text()')[0].extract()
-            except:
-                job['title'] = u'No title'
-            job['company'] = job_row.xpath('./td[2]/a/text()')[0].extract()
-            job['company_url'] = ''
+    def _get_jobs_node_url(self, job_container):
+        JOB_OFFER_BASE_URL = super(LolixJobSpider, self)._get_jobs_node_url(job_container)
+        return u'{}{}'.format(self.JOB_OFFER_BASE_URL, JOB_OFFER_BASE_URL)
 
-            publication_datetime_str = job_row.xpath('./td[1]/text()')[0].extract()
-            publication_datetime = datetime.strptime(publication_datetime_str, '%d %B %Y')
-            job['publication_datetime'] = publication_datetime
+    def _get_job_node_publication_datetime(self, job_node):
+        date_text = self._extract_first(job_node, 'job_node_publication_datetime')
+        if date_text:
+            return datetime.strptime(date_text, '%d %B %Y')
+        return super(LolixJobSpider, self)._get_job_node_publication_datetime(job_node)
 
-            job['initial_crawl_datetime'] = datetime.now()
-            job['description'] = ''
+    def _get_next_page_url(self, response):
+        relative_url = self._extract_first(response, 'jobs_next_page', required=False)
+        if relative_url:
+            return self._build_url(response=response, path=relative_url)
+        return None
 
-            job_detail_request = Request(job['url'],
-                                         callback=self.parse_job_page)
-            job_detail_request.meta['item'] = job
-            yield job_detail_request
-
-        # TODO - Activate other pages
-        # next_page_url_xpath = '//div[@class="listingBar"]/span[@class="next"]/a/@href'
-        next_page_url_xpath = '//a[@class="T3" and text()="Page suivante ->"]/@href'
-        next_page_url = self._build_url(
-            response=response,
-            path=response.xpath(next_page_url_xpath)[0].extract()
-        )
-
-        yield Request(url=next_page_url)
-
-    def parse_job_page(self, response):
-        self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
-
-        job_node = response.css('td.Contenu')[0]
-
-        job = response.meta['item']  # prefilled item
-        job['status'] = JobItem.CrawlStatus.COMPLETED
-
-        job['description'] = job_node.extract()
-
-        job['address'] = u''
-        address_lines = job_node.xpath('(//table)[last()]/tr[1]'
+    def _get_job_page_address(self, job_container):
+        address = u''
+        address_lines = job_container.xpath('(//table)[last()]/tr[1]'
                                        '/td[1]/text()').extract()
         for line in address_lines:
             content = line.strip()
             if content \
                     and not self.match_str(content,
                                            self.address_forbidden_content()):
-                job['address'] += content + ', '
+                address += content + ', '
 
-        job['company_url'] = job_node.xpath('(//table)[last()]/tr[last()]'
-                                            '/td[1]/a/@href')[0].extract()
+        return address
 
-        # FIXME - Make a better filtering on python jobs
-        if job['title'].lower().find('python') <= 0:
-            job['status'] = JobItem.CrawlStatus.INVALID
-        else:
-            yield job
+    def _item_satisfying(self, item):
+        satisfying = super(LolixJobSpider, self)._item_satisfying(item)
+        if satisfying:
+            if item['title'].lower().find('python') <= 0:
+                return False
+        return satisfying
 
     def address_forbidden_content(self):
         return [
