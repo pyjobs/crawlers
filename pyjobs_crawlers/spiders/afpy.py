@@ -24,19 +24,20 @@ class AfpyJobSpider(JobSpider):
         'jobs_job_xpath': '//div[@class="jobitem"]',
         'jobs_job_element_url_xpath': './a/@href',
         'job_list_next_page_xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',
-        'job_node_xpath': '//div[@id="content"]',
-        'job_title_xpath': './h1[@id="parent-fieldname-title"]/text()',
-        'job_publication_date_xpath': './div[@id="content-core"]/div[@id="content-core"]/div[@class="discreet"]/text()',
-        'job_company_name_xpath': ('.//h4/a/text()', './/h4/text()'),
-        'job_company_url_xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
-        'job_address_xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
-        'job_description_css': '#content-core',
-        'job_tags_xpath': './div[@id="content-core"]/div[@id="content-core"]'
+
+        'job_page_container_xpath': '//div[@id="content"]',
+        'job_page_title_xpath': './h1[@id="parent-fieldname-title"]/text()',
+        'job_page_publication_datetime_xpath': './div[@id="content-core"]/div[@id="content-core"]/div[@class="discreet"]/text()',
+        'job_page_company_xpath': ('.//h4/a/text()', './/h4/text()'),
+        'job_page_company_url_xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
+        'job_page_address_xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
+        'job_page_description_css': '#content-core',
+        'job_page_tags_xpath': './div[@id="content-core"]/div[@id="content-core"]'
     }
 
     def _get_job_page_publication_datetime(self, job_container):
         try:
-            publication_date_text = self._extract_first(job_container, 'job_publication_date')
+            publication_date_text = self._extract_first(job_container, 'job_page_publication_datetime')
             if publication_date_text:
                 publication_date_text_clean = publication_date_text.replace(u'Créé le ', '')
                 return datetime.strptime(publication_date_text_clean, '%d/%m/%Y %H:%M')

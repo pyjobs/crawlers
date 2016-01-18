@@ -90,7 +90,7 @@ class JobSpider(Spider):
         'jobs_next_page_xpath': None,
 
         'job_node_title_xpath': './h1/text()',
-        'job_node_publication_date_xpath': None,
+        'job_node_publication_datetime_xpath': None,
         'job_node_company_xpath': None,
         'job_node_company_url_xpath': None,
         'job_node_address_xpath': None,
@@ -99,7 +99,7 @@ class JobSpider(Spider):
 
         'job_page_container_xpath': '//body',
         'job_page_title_xpath': './h1/text()',
-        'job_page_publication_date_xpath': None,
+        'job_page_publication_datetime_xpath': None,
         'job_page_company_xpath': None,
         'job_page_company_url_xpath': None,
         'job_page_address_xpath': None,
@@ -114,7 +114,7 @@ class JobSpider(Spider):
 
         'job_node_container_css': 'body',
         'job_node_title_css': 'h1',
-        'job_node_publication_date_css': None,
+        'job_node_publication_datetime_css': None,
         'job_node_company_css': None,
         'job_node_company_url_css': None,
         'job_node_address_css': None,
@@ -123,7 +123,7 @@ class JobSpider(Spider):
 
         'job_page_container_css': 'body',
         'job_page_title_css': 'h1',
-        'job_page_publication_date_css': None,
+        'job_page_publication_datetime_css': None,
         'job_page_company_css': None,
         'job_page_company_url_css': None,
         'job_page_address_css': None,

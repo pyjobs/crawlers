@@ -65,7 +65,7 @@ class LolixJobSpider(JobSpider):
 
 
     def _get_job_page_publication_datetime(self, job_container):
-        publication_datetime_str = self._extract_first(job_container, 'job_publication_date')
+        publication_datetime_str = self._extract_first(job_container, 'job_publication_datetime')
         publication_datetime_str = publication_datetime_str.replace(u'Ajout\xe9e le', '')
         publication_datetime_str_english = self._month_french_to_english(publication_datetime_str)
         return datetime.strptime(publication_datetime_str_english, '%d %B %Y')
