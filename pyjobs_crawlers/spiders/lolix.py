@@ -3,6 +3,15 @@ from datetime import datetime
 from scrapy import Request
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
+from pyjobs_crawlers import JobSource
+
+
+source = JobSource(
+    'lolix',
+    'Lolix',
+    'http://fr.lolix.org/',
+    'http://fr.lolix.org/img/lolix/offer.png'
+)
 
 
 class LolixJobSpider(JobSpider):

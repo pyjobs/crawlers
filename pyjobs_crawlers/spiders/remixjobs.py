@@ -2,9 +2,19 @@
 from datetime import datetime
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
+from pyjobs_crawlers import JobSource
 from scrapy import Request
 import feedparser
 from time import mktime
+
+
+source = JobSource(
+    'remixjobs',
+    'RemixJobs',
+    'https://remixjobs.com/',
+    'https://remixjobs.com/images/press/logos/logo2-450-140.png'
+)
+
 
 
 class RemixJobsSpider(JobSpider):

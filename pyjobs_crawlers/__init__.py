@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from os.path import dirname, isfile
+from os.path import dirname, isfile, basename
 import glob
 from scrapy.crawler import CrawlerProcess as BaseCrawlerProcess, Crawler
 from pyjobs_crawlers.spiders import JobSpider
+from importlib import import_module
 
 
 def get_spiders_files(spiders_directory=None):
@@ -18,6 +19,31 @@ def get_spiders_files(spiders_directory=None):
     return [file for file in glob.glob(spiders_directory + "/*.py")
             if isfile(file)
             and not file.endswith('__init__.py')]
+
+
+def get_spiders_modules_names(spiders_directory=None):
+    modules = []
+    for spider_file in get_spiders_files(spiders_directory):
+        module_name = "pyjobs_crawlers.spiders.%s" % basename(spider_file.replace('.py', ''))
+        modules.append(module_name)
+    return modules
+
+
+def get_sources(spiders_directory=None):
+    sources = {}
+    for spider_module_name in get_spiders_modules_names(spiders_directory):
+        spider_module = import_module(spider_module_name)
+        spider_source = getattr(spider_module, 'source')
+        sources[spider_source.id] = spider_source
+    return sources
+
+
+class JobSource(object):
+    def __init__(self, id, label, url, logo_url):
+        self.logo_url = logo_url
+        self.label = label
+        self.id = id
+        self.url = url
 
 
 class Connector(object):

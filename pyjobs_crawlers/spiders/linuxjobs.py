@@ -6,6 +6,15 @@ from scrapy import Request
 from pyjobs_crawlers.spiders import JobSpider
 from pyjobs_crawlers.items import JobItem
 from pyjobs_crawlers.spiders import NotCrawlable
+from pyjobs_crawlers import JobSource
+
+
+source = JobSource(
+    'linuxjobs',
+    'LinuxJobs',
+    'https://www.linuxjobs.fr/',
+    'https://pbs.twimg.com/profile_images/649599776573403140/vaMrmib1_400x400.png'
+)
 
 
 class LolixJobSpider(JobSpider):
