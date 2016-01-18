@@ -138,6 +138,12 @@ class JobSpider(Spider):
         self._connector = None
 
     def _get_parameter(self, parameter_name, required=False):
+        """
+
+        :param parameter_name: name of parameter
+        :param required: if parameter not found or null value will raise ParameterNotFound
+        :return: mixed
+        """
         if not parameter_name in self._crawl_parameters \
                 or not self._crawl_parameters[parameter_name]:
             if required:
@@ -153,7 +159,7 @@ class JobSpider(Spider):
     def get_connector(self):
         """
 
-        :return:
+        :return: Connector
         :rtype: pyjobs_crawlers.Connector
         """
         if not self._connector:
@@ -169,6 +175,9 @@ class JobSpider(Spider):
         return self.parse_job_list_page(response)
 
     def parse_job_list_page(self, response):
+        """
+        Pasring of job list
+        """
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
 
         try:
@@ -199,6 +208,11 @@ class JobSpider(Spider):
             pass
 
     def _get_prefilled_job_item(self, job_node):
+        """
+
+        :param job_node: html node containg the job
+        :return: JobItem filled with founded data
+        """
         job_item = JobItem()
 
         job_item['status'] = JobItem.CrawlStatus.PREFILLED
@@ -212,6 +226,9 @@ class JobSpider(Spider):
         return job_item
 
     def parse_job_page(self, response):
+        """
+        Parsing of job page
+        """
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
         job_item = response.meta['item']
@@ -320,12 +337,24 @@ class JobSpider(Spider):
     #
 
     def _item_satisfying(self, item):
+        """
+        Return True if required fields are filled, or false if not.
+        :param item: JobItem
+        :return: bool
+        """
         for required_field in self._requireds:
             if not item[required_field]:
                 return False
         return True
 
     def _extract_first(self, container, selector_name, required=True):
+        """
+
+        :param container: html node
+        :param selector_name: name of selector (without suffix '_xpath' or '_css')
+        :param required: if True: if nothing to extracr raise NotFound. Else, return None
+        :return: string
+        """
         try:
             return ' '.join(self._extract(container, selector_name, required=True).extract_first().split())
         except NotFound:
@@ -333,19 +362,20 @@ class JobSpider(Spider):
                 return None
             raise
 
-    def _extract(self, container, selector_name, resolve_selector_name=True, type=None, required=True):
+    def _extract(self, container, selector_name, resolve_selector_name=True, selector_type=None, required=True):
         """
 
-        :param container:
+        :param container: html node
         :param selector: xpath or tuple
         :return: Extracted node
+        :rtype: scrapy.selector.unified.SelectorList
         """
 
-        if not resolve_selector_name and not type:
-            raise Exception('You must set "type" parameter')
+        if not resolve_selector_name and not selector_type:
+            raise Exception('You must set "selector_type" parameter')
 
         if resolve_selector_name:
-            type, selector = self._get_resolved_selector(selector_name)
+            selector_type, selector = self._get_resolved_selector(selector_name)
         else:
             selector = selector_name
 
@@ -356,16 +386,16 @@ class JobSpider(Spider):
                             container,
                             selector_option,
                             resolve_selector_name=False,
-                            type=type,
+                            selector_type=selector_type,
                             required=required
                     )
                 except NotFound:
                     pass  # We raise after iterate selectors options
             raise NotFound("Can't found value for %s" % selector_name)
 
-        if type == 'css':
+        if selector_type == 'css':
             extract = container.css(selector)
-        elif type == 'xpath':
+        elif selector_type == 'xpath':
             extract = container.xpath(selector)
 
         if not extract:
