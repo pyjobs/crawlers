@@ -50,7 +50,7 @@ class RemixJobsSpider(JobSpider):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
         item = response.meta['item']  # prefilled item
-        job_node = response.css('div.job-title')
+        job_node = response.css('#content .layer')
 
         url = response.url
         title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
