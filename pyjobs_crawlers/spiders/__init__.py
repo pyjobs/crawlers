@@ -150,7 +150,7 @@ class JobSpider(Spider):
 
             tags_html = self._extract_first(job_container, 'job_tags', required=False)
             if tags_html:
-                item['tags'] = self.extract_tags()
+                item['tags'] = self.extract_tags(tags_html)
         except NotFound, exc:
             # If required extraction fail, we log it
             self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
