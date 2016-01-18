@@ -11,8 +11,9 @@ class AfpyJobSpider(JobSpider):
     start_urls = ['http://www.afpy.org/jobs']
 
     _crawl_parameters = {
-        'job_list_xpath': '//div[@class="jobitem"]',
-        'job_list_element_url_xpath': './a/@href',
+        'jobs_xpath': '//body',
+        'jobs_job_xpath': '//div[@class="jobitem"]',
+        'jobs_job_element_url_xpath': './a/@href',
         'job_list_next_page_xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',
         'job_node_xpath': '//div[@id="content"]',
         'job_title_xpath': './h1[@id="parent-fieldname-title"]/text()',
@@ -25,10 +26,16 @@ class AfpyJobSpider(JobSpider):
     }
 
     def _get_job_publication_date(self, job_container):
-        job_publication_date_xpath = self._get_parameter('job_publication_date')
         try:
-            date_text = job_container.xpath(job_publication_date_xpath)[0].extract()\
-                .strip().splitlines()[0].strip().replace(u'Créé le ', '')
-            return datetime.strptime(date_text, '%d/%m/%Y %H:%M')
-        except Exception:
+            publication_date_text = self._extract_first(job_container, 'job_publication_date')
+            if publication_date_text:
+                publication_date_text_clean = publication_date_text.replace(u'Créé le ', '')
+                return datetime.strptime(publication_date_text_clean, '%d/%m/%Y %H:%M')
+            return super(AfpyJobSpider, self)._get_job_publication_date(job_container)
+        except Exception, exc:
+            self.get_connector().log(
+                    self.name,
+                    self.ACTION_CRAWL_ERROR,
+                    "Error during publication date extraction: %s" % str(exc)
+            )
             return super(AfpyJobSpider, self)._get_job_publication_date(job_container)

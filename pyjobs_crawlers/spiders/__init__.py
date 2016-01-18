@@ -12,11 +12,15 @@ import datetime
 from pyjobs_crawlers.items import JobItem
 
 
-class ParameterNotFound(Exception):
+class NotFound(Exception):
     pass
 
 
-class NotFound(Exception):
+class ParameterNotFound(NotFound):
+    pass
+
+
+class NotCrawlable(Exception):
     pass
 
 
@@ -49,17 +53,24 @@ class JobSpider(Spider):
     ACTION_CRAWL_ERROR = 'ERROR_CRAWNLING'
 
     COMMON_TAGS = [
-        u'cdi', u'cdd', u'télétravail', u'stage', u'freelance', u'mysql'
-        u'postgresql', u'django'
+        u'cdi',
+        u'cdd',
+        u'télétravail',
+        u'stage',
+        u'freelance',
+        u'mysql'
+        u'postgresql',
+        u'django'
     ]
 
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
 
     _crawl_parameters = {
-        'job_list_xpath': None,
-        'job_list_element_url_xpath': None,
-        'job_list_next_page_xpath': None,
+        'jobs_xpath': '//body',
+        'jobs_job_xpath': None,
+        'jobs_job_element_url_xpath': None,
+        'jobs_next_page_xpath': None,
         'job_node_xpath': '//body',
         'job_title_xpath': './h1/text()',
         'job_publication_date_xpath': None,
@@ -69,9 +80,10 @@ class JobSpider(Spider):
         'job_description_xpath': None,
         'job_tags_xpath': None,
         # Css version of parameters
-        'job_list_css': None,
-        'job_list_element_url_css': None,
-        'job_list_next_page_css': None,
+        'jobs_css': 'body',
+        'jobs_job_css': None,
+        'jobs_job_element_url_css': None,
+        'jobs_next_page_css': None,
         'job_node_css': 'body',
         'job_title_css': 'h1',
         'job_publication_date_css': None,
@@ -102,6 +114,11 @@ class JobSpider(Spider):
         self._connector = self.settings.get('connector')
 
     def get_connector(self):
+        """
+
+        :return:
+        :rtype: pyjobs_crawlers.Connector
+        """
         if not self._connector:
             raise Exception("_connector attribute is not set")
         return self._connector
@@ -117,19 +134,24 @@ class JobSpider(Spider):
     def parse_job_list_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
 
-        for job in self._get_jobs_nodes(response):
-            # first we check url. If the job exists, then skip crawling
-            # (it means that the page has already been crawled
-            url = self._get_jobs_node_url(job)
+        for jobs in self._get_jobs_lists(response):
+            for job in self._get_jobs_nodes(jobs):
+                # first we check url. If the job exists, then skip crawling
+                # (it means that the page has already been crawled
+                try:
+                    url = self._get_jobs_node_url(job)
+                except NotCrawlable:
+                    break
 
-            if self.get_connector().job_exist(url):
-                self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
-                return
+                if self.get_connector().job_exist(url):
+                    self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
+                    break
 
-            yield Request(url, self.parse_job_page)
+                yield Request(url, self.parse_job_page)
 
         next_page_url = self._get_next_page_url(response)
-        yield Request(url=next_page_url)
+        if next_page_url:
+            yield Request(url=next_page_url)
 
     def parse_job_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
@@ -163,15 +185,17 @@ class JobSpider(Spider):
 
         yield item
 
+    def _get_jobs_lists(self, response):
+        return self._extract(response, 'jobs', required=True)
+
     def _get_jobs_nodes(self, response):
-        return self._extract(response, 'job_list', required=True)
+        return self._extract(response, 'jobs_job', required=True)
 
     def _get_jobs_node_url(self, jobs_node):
-        return self._extract_first(jobs_node, 'job_list_element_url', required=True)
+        return self._extract_first(jobs_node, 'jobs_job_element_url', required=True)
 
     def _get_next_page_url(self, response):
-        # TODO - B.S. - 20160118: La next page devrait-elle être requise ?
-        return self._extract_first(response, 'job_list_next_page', required=False)
+        return self._extract_first(response, 'jobs_next_page', required=False)
 
     def _get_job_container(self, response):
         return self._extract(response, 'job_node', required=True)
@@ -269,7 +293,7 @@ class JobSpider(Spider):
                 pass
 
         raise ParameterNotFound(
-                "Crawl Parameter \"%s\" or (\"%s\") is not set",
+                "Crawl Parameter \"%s\" or (\"%s\") is not set" %
                 (css_parameter_name, xpath_parameter_name)
         )
 
