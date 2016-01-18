@@ -25,15 +25,15 @@ class LolixJobSpider(JobSpider):
         'jobs_css': '.list-group',
         'jobs_job_css': ' .list-group-item',
         'jobs_job_element_url_xpath': './@href',
-        'job_node_css': '.container',
-        'job_title_css': 'div.container div.row:nth-child(2) h2::text',
-        'job_publication_date_css': 'small.muted::text',
-        'job_company_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(3)::text',
-        'job_company_url_css': ('div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5) a::text',
+        'job_page_container_css': '.container',
+        'job_page_title_css': 'div.container div.row:nth-child(2) h2::text',
+        'job_page_publication_datetime_css': 'small.muted::text',
+        'job_page_company_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(3)::text',
+        'job_page_company_url_css': ('div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5) a::text',
                                 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5)::text'),
-        'job_address_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(4)::text',
-        'job_description_css': 'div.container div.row:nth-child(4) div.col-md-9',
-        'job_tags_css': 'div.container div.row:nth-child(4) div.col-md-9'
+        'job_page_address_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(4)::text',
+        'job_page_description_css': 'div.container div.row:nth-child(4) div.col-md-9',
+        'job_page_tags_css': 'div.container div.row:nth-child(4) div.col-md-9'
     }
 
     def _month_french_to_english(self, datetime_str):

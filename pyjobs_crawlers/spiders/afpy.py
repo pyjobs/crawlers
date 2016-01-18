@@ -27,7 +27,7 @@ class AfpyJobSpider(JobSpider):
         'job_node_xpath': '//div[@id="content"]',
         'job_title_xpath': './h1[@id="parent-fieldname-title"]/text()',
         'job_publication_date_xpath': './div[@id="content-core"]/div[@id="content-core"]/div[@class="discreet"]/text()',
-        'job_company_xpath': ('.//h4/a/text()', './/h4/text()'),
+        'job_company_name_xpath': ('.//h4/a/text()', './/h4/text()'),
         'job_company_url_xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
         'job_address_xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
         'job_description_css': '#content-core',
