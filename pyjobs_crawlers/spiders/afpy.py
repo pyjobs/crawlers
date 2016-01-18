@@ -20,21 +20,12 @@ class AfpyJobSpider(JobSpider):
         'job_company_name_xpath': ('.//h4/a/text()', './/h4/text()'),
         'job_company_url_xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
         'job_address_xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
-        'job_description_xpath': './div[@id="content-core"]/div[@id="content-core"]',
+        'job_description_css': '#content-core',
         'job_tags_xpath': './div[@id="content-core"]/div[@id="content-core"]'
     }
 
-    def _get_job_title(self, job_container):
-        job_title_xpath = self._get_parameter('job_title_xpath')
-        title_lines = job_container.xpath(job_title_xpath)[0].extract().strip().splitlines()
-        title = u''
-        for line in title_lines:
-            if line.strip() != u'':
-                title += line
-        return title
-
     def _get_job_publication_date(self, job_container):
-        job_publication_date_xpath = self._get_parameter('job_publication_date_xpath')
+        job_publication_date_xpath = self._get_parameter('job_publication_date')
         try:
             date_text = job_container.xpath(job_publication_date_xpath)[0].extract()\
                 .strip().splitlines()[0].strip().replace(u'Créé le ', '')

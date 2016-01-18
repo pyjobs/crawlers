@@ -12,10 +12,19 @@ import datetime
 from pyjobs_crawlers.items import JobItem
 
 
+class ParameterNotFound(Exception):
+    pass
+
+
+class NotFound(Exception):
+    pass
+
+
 class Tag(object):
     def __init__(self, tag, iteration_nb=1):
         self.tag = tag
         self.weight = iteration_nb
+
 
 class JobSpider(Spider):
     """Beginning of work"""
@@ -59,6 +68,18 @@ class JobSpider(Spider):
         'job_address_xpath': None,
         'job_description_xpath': None,
         'job_tags_xpath': None,
+        # Css version of parameters
+        'job_list_css': None,
+        'job_list_element_url_css': None,
+        'job_list_next_page_css': None,
+        'job_node_css': 'body',
+        'job_title_css': 'h1',
+        'job_publication_date_css': None,
+        'job_company_name_css': None,
+        'job_company_url_css': None,
+        'job_address_css': None,
+        'job_description_css': None,
+        'job_tags_css': None,
     }
 
     _requireds = ('title', 'publication_datetime', 'description')
@@ -68,10 +89,12 @@ class JobSpider(Spider):
         self._connector = None
 
     def _get_parameter(self, parameter_name, required=False):
-        if parameter_name not in self._crawl_parameters or not self._crawl_parameters[parameter_name]:
+        if not parameter_name in self._crawl_parameters \
+                or not self._crawl_parameters[parameter_name]:
             if required:
-                raise Exception("Crawl Parameter \"%s\" is not set")
+                raise ParameterNotFound("Crawl Parameter \"%s\" is not set")
             return None
+
         return self._crawl_parameters[parameter_name]
 
     def _set_crawler(self, crawler):
@@ -113,20 +136,26 @@ class JobSpider(Spider):
 
         item = JobItem()
 
-        job_container = self._get_job_container(response)
-        item['source'] = self.name
-        item['initial_crawl_datetime'] = datetime.datetime.now()
-        item['url'] = response.url
-        item['title'] = self._get_job_title(job_container)
-        item['publication_datetime'] = self._get_job_publication_date(job_container)
-        item['company'] = self._get_job_company_name(job_container)
-        item['company_url'] = self._get_job_company_url(job_container)
-        item['address'] = self._get_job_address(job_container)
-        item['description'] = self._get_job_description(job_container)
+        try:
+            job_container = self._get_job_container(response)
+            item['source'] = self.name
+            item['initial_crawl_datetime'] = datetime.datetime.now()
+            item['url'] = response.url
+            item['title'] = self._get_job_title(job_container)
+            item['publication_datetime'] = self._get_job_publication_date(job_container)
+            item['company'] = self._get_job_company_name(job_container)
+            item['company_url'] = self._get_job_company_url(job_container)
+            item['address'] = self._get_job_address(job_container)
+            item['description'] = self._get_job_description(job_container)
 
-        job_tags_xpath = self._get_parameter('job_tags_xpath')
-        item['tags'] = self.extract_tags(self._extract(job_container, job_tags_xpath))
+            tags_html = self._extract_first(job_container, 'job_tags', required=False)
+            if tags_html:
+                item['tags'] = self.extract_tags()
+        except NotFound, exc:
+            # If required extraction fail, we log it
+            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
 
+        # If some of required job properties are missing, job is INVALID
         if self._item_satisfying(item):
             item['status'] = JobItem.CrawlStatus.COMPLETED
         else:
@@ -135,43 +164,35 @@ class JobSpider(Spider):
         yield item
 
     def _get_jobs_nodes(self, response):
-        job_list_xpath = self._get_parameter('job_list_xpath')
-        return response.xpath(job_list_xpath)
+        return self._extract(response, 'job_list', required=True)
 
     def _get_jobs_node_url(self, jobs_node):
-        job_list_element_url_xpath = self._get_parameter('job_list_element_url_xpath')
-        return self._extract(jobs_node, job_list_element_url_xpath)
+        return self._extract_first(jobs_node, 'job_list_element_url', required=True)
 
     def _get_next_page_url(self, response):
-        job_list_next_page_xpath = self._get_parameter('job_list_next_page_xpath')
-        return self._extract(response, job_list_next_page_xpath)
+        # TODO - B.S. - 20160118: La next page devrait-elle être requise ?
+        return self._extract_first(response, 'job_list_next_page', required=False)
 
     def _get_job_container(self, response):
-        job_node_xpath = self._get_parameter('job_node_xpath')
-        return response.xpath('//div[@id="content"]')[0]
+        return self._extract(response, 'job_node', required=True)
 
     def _get_job_title(self, job_container):
-        job_title_xpath = self._get_parameter('job_title_xpath')
-        return self._extract(job_container, job_title_xpath)
+        return self._extract_first(job_container, 'job_title', required=True)
 
     def _get_job_publication_date(self, job_container):
         return datetime.datetime.now()
 
     def _get_job_company_name(self, job_container):
-        job_company_name_xpath = self._get_parameter('job_company_name_xpath')
-        return self._extract(job_container, job_company_name_xpath)
+        return self._extract_first(job_container, 'job_company_name', required=False)
 
     def _get_job_company_url(self, job_container):
-        job_company_url_xpath = self._get_parameter('job_company_url_xpath')
-        return self._extract(job_container, job_company_url_xpath)
+        return self._extract_first(job_container, 'job_company_url', required=False)
 
     def _get_job_address(self, job_container):
-        job_address_xpath = self._get_parameter('job_address_xpath')
-        return self._extract(job_container, job_address_xpath)
+        return self._extract_first(job_container, 'job_address', required=False)
 
     def _get_job_description(self, job_container):
-        job_description_xpath = self._get_parameter('job_description_xpath')
-        return self._extract(job_container, job_description_xpath)
+        return self._extract_first(job_container, 'job_description', required=True)
 
     def _item_satisfying(self, item):
         for required_field in self._requireds:
@@ -179,29 +200,78 @@ class JobSpider(Spider):
                 return False
         return True
 
-    def _extract(self, container, selector):
+    def _extract_first(self, container, selector_name, required=True):
+        try:
+            return ' '.join(self._extract(container, selector_name, required=True).extract_first().split())
+        except NotFound:
+            if not required:
+                return None
+            raise
+
+    def _extract(self, container, selector_name, resolve_selector_name=True, type=None, required=True):
         """
 
         :param container:
         :param selector: xpath or tuple
-        :return: Extracted text value OR None
+        :return: Extracted node
         """
-        if selector is None:
-            return
+
+        if not resolve_selector_name and not type:
+            raise Exception('You must set "type" parameter')
+
+        if resolve_selector_name:
+            type, selector = self._get_resolved_selector(selector_name)
+        else:
+            selector = selector_name
 
         if isinstance(selector, (list, tuple)):
             for selector_option in selector:
-                extracted_value = self._extract(container, selector_option)
-                if extracted_value:
-                    return extracted_value
+                try:
+                    return self._extract(
+                            container,
+                            selector_option,
+                            resolve_selector_name=False,
+                            type=type,
+                            required=required
+                    )
+                except NotFound:
+                    pass  # We raise after iterate selectors options
+            raise NotFound("Can't found value for %s" % selector_name)
 
-        extract = container.xpath(selector).extract_first()
+        if type == 'css':
+            extract = container.css(selector)
+        elif type == 'xpath':
+            extract = container.xpath(selector)
 
         if not extract:
-            return None
+            if required:
+                raise NotFound("Can't found value for %s" % selector_name)
+            else:
+                return None
 
         # The join of splited text remove \n \t etc ...
-        return ' '.join(extract.split())
+        return extract
+
+    def _get_resolved_selector(self, selector_name):
+        """
+
+        :param selector_name: The name of selector (withour suffix _xpath/_css)
+        :return: a tuple containing ('type_of_selector', 'selector_value')
+        """
+        css_parameter_name = "%s_css" % selector_name
+        try:
+            return 'css', self._get_parameter(css_parameter_name, required=True)
+        except ParameterNotFound:
+            try:
+                xpath_parameter_name = "%s_xpath" % selector_name
+                return 'xpath', self._get_parameter(xpath_parameter_name, required=True)
+            except ParameterNotFound:
+                pass
+
+        raise ParameterNotFound(
+                "Crawl Parameter \"%s\" or (\"%s\") is not set",
+                (css_parameter_name, xpath_parameter_name)
+        )
 
     def _extract_common_tags(self, html_content):
         for tag in self.COMMON_TAGS:
