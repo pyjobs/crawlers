@@ -24,6 +24,10 @@ class NotCrawlable(Exception):
     pass
 
 
+class StopCrawlJobList(StopIteration):
+    pass
+
+
 class Tag(object):
     def __init__(self, tag, iteration_nb=1):
         self.tag = tag
@@ -66,32 +70,65 @@ class JobSpider(Spider):
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
 
+    """Job item fields will be filled by overrideable methods"""
+    _job_item_fields = [
+        'title',
+        'publication_datetime',
+        'company',
+        'company_url',
+        'address',
+        'description',
+        'tags'
+    ]
+
+    """Explicit list of available parameters"""
     _crawl_parameters = {
+        # Xpath version of parameters
         'jobs_xpath': '//body',
         'jobs_job_xpath': None,
         'jobs_job_element_url_xpath': None,
         'jobs_next_page_xpath': None,
-        'job_node_xpath': '//body',
-        'job_title_xpath': './h1/text()',
-        'job_publication_date_xpath': None,
-        'job_company_name_xpath': None,
-        'job_company_url_xpath': None,
-        'job_address_xpath': None,
-        'job_description_xpath': None,
-        'job_tags_xpath': None,
+
+        'job_node_title_xpath': './h1/text()',
+        'job_node_publication_date_xpath': None,
+        'job_node_company_xpath': None,
+        'job_node_company_url_xpath': None,
+        'job_node_address_xpath': None,
+        'job_node_description_xpath': None,
+        'job_node_tags_xpath': None,
+
+        'job_page_container_xpath': '//body',
+        'job_page_title_xpath': './h1/text()',
+        'job_page_publication_date_xpath': None,
+        'job_page_company_xpath': None,
+        'job_page_company_url_xpath': None,
+        'job_page_address_xpath': None,
+        'job_page_description_xpath': None,
+        'job_page_tags_xpath': None,
+
         # Css version of parameters
         'jobs_css': 'body',
         'jobs_job_css': None,
         'jobs_job_element_url_css': None,
         'jobs_next_page_css': None,
-        'job_node_css': 'body',
-        'job_title_css': 'h1',
-        'job_publication_date_css': None,
-        'job_company_name_css': None,
-        'job_company_url_css': None,
-        'job_address_css': None,
-        'job_description_css': None,
-        'job_tags_css': None,
+
+        'job_node_container_css': 'body',
+        'job_node_title_css': 'h1',
+        'job_node_publication_date_css': None,
+        'job_node_company_css': None,
+        'job_node_company_url_css': None,
+        'job_node_address_css': None,
+        'job_node_description_css': None,
+        'job_node_tags_css': None,
+
+        'job_page_container_css': 'body',
+        'job_page_title_css': 'h1',
+        'job_page_publication_date_css': None,
+        'job_page_company_css': None,
+        'job_page_company_url_css': None,
+        'job_page_address_css': None,
+        'job_page_description_css': None,
+        'job_page_tags_css': None,
     }
 
     _requireds = ('title', 'publication_datetime', 'description')
@@ -134,56 +171,78 @@ class JobSpider(Spider):
     def parse_job_list_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
 
-        for jobs in self._get_jobs_lists(response):
-            for job in self._get_jobs_nodes(jobs):
-                # first we check url. If the job exists, then skip crawling
-                # (it means that the page has already been crawled
-                try:
-                    url = self._get_jobs_node_url(job)
-                except NotCrawlable:
-                    break
+        try:
+            for jobs in self._get_jobs_lists(response):
+                for job in self._get_jobs_nodes(jobs):
+                    # first we check url. If the job exists, then skip crawling
+                    # (it means that the page has already been crawled
+                    try:
+                        url = self._get_job_node_url(job)
+                    except NotCrawlable:
+                        break
 
-                if self.get_connector().job_exist(url):
-                    self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
-                    break
+                    if self.get_connector().job_exist(url):
+                        self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
+                        raise StopCrawlJobList()
 
-                yield Request(url, self.parse_job_page)
+                    request = Request(url, self.parse_job_page)
+                    prefilled_job_item = self._get_prefilled_job_item(job)
+                    request.meta['item'] = prefilled_job_item
 
-        next_page_url = self._get_next_page_url(response)
-        if next_page_url:
-            yield Request(url=next_page_url)
+                    yield request
+
+            next_page_url = self._get_next_page_url(response)
+            if next_page_url:
+                yield Request(url=next_page_url)
+
+        except StopCrawlJobList:
+            pass
+
+    def _get_prefilled_job_item(self, job_node):
+        job_item = JobItem()
+
+        job_item['status'] = JobItem.CrawlStatus.PREFILLED
+        job_item['source'] = self.name
+        job_item['initial_crawl_datetime'] = datetime.datetime.now()
+
+        for job_item_field in self._job_item_fields:
+            job_item_method_name = "_get_job_node_%s" % job_item_field
+            job_item[job_item_field] = getattr(self, job_item_method_name)(job_node)
+
+        return job_item
 
     def parse_job_page(self, response):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
-        item = JobItem()
+        job_item = response.meta['item']
 
         try:
-            job_container = self._get_job_container(response)
-            item['source'] = self.name
-            item['initial_crawl_datetime'] = datetime.datetime.now()
-            item['url'] = response.url
-            item['title'] = self._get_job_title(job_container)
-            item['publication_datetime'] = self._get_job_publication_date(job_container)
-            item['company'] = self._get_job_company_name(job_container)
-            item['company_url'] = self._get_job_company_url(job_container)
-            item['address'] = self._get_job_address(job_container)
-            item['description'] = self._get_job_description(job_container)
+            job_container = self._get_job_page_container(response)
+            job_item['url'] = response.url
 
-            tags_html = self._extract_first(job_container, 'job_tags', required=False)
-            if tags_html:
-                item['tags'] = self.extract_tags(tags_html)
+            for job_item_field in self._job_item_fields:
+                if not job_item[job_item_field]: # Fill field only if not prefilled value
+                    job_item_method_name = "_get_job_page_%s" % job_item_field
+                    job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
+
         except NotFound, exc:
             # If required extraction fail, we log it
             self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
 
         # If some of required job properties are missing, job is INVALID
-        if self._item_satisfying(item):
-            item['status'] = JobItem.CrawlStatus.COMPLETED
+        if self._item_satisfying(job_item):
+            job_item['status'] = JobItem.CrawlStatus.COMPLETED
+            # TODO - B.S. - 20160118: Est-ce que l'on yield les INVALID ? Si non ils
+            # disparaissent, si oui on les as en bdd mais est-ce pertinent ?
+            # Ex. avec lolix ou si on les yield ils polluent la base
+            yield job_item
         else:
-            item['status'] = JobItem.CrawlStatus.INVALID
+            job_item['status'] = JobItem.CrawlStatus.INVALID
 
-        yield item
+
+    #
+    # START - Job list page methods
+    #
 
     def _get_jobs_lists(self, response):
         return self._extract(response, 'jobs', required=True)
@@ -191,32 +250,74 @@ class JobSpider(Spider):
     def _get_jobs_nodes(self, response):
         return self._extract(response, 'jobs_job', required=True)
 
-    def _get_jobs_node_url(self, jobs_node):
-        return self._extract_first(jobs_node, 'jobs_job_element_url', required=True)
+    def _get_job_node_url(self, job_node):
+        return self._extract_first(job_node, 'jobs_job_element_url', required=True)
 
     def _get_next_page_url(self, response):
         return self._extract_first(response, 'jobs_next_page', required=False)
 
-    def _get_job_container(self, response):
-        return self._extract(response, 'job_node', required=True)
+    def _get_job_node_title(self, job_node):
+        return self._extract_first(job_node, 'job_node_title', required=True)
 
-    def _get_job_title(self, job_container):
-        return self._extract_first(job_container, 'job_title', required=True)
-
-    def _get_job_publication_date(self, job_container):
+    def _get_job_node_publication_datetime(self, job_node):
         return datetime.datetime.now()
 
-    def _get_job_company_name(self, job_container):
-        return self._extract_first(job_container, 'job_company_name', required=False)
+    def _get_job_node_company(self, job_node):
+        return self._extract_first(job_node, 'job_node_company', required=False)
 
-    def _get_job_company_url(self, job_container):
-        return self._extract_first(job_container, 'job_company_url', required=False)
+    def _get_job_node_company_url(self, job_node):
+        return self._extract_first(job_node, 'job_node_company_url', required=False)
 
-    def _get_job_address(self, job_container):
-        return self._extract_first(job_container, 'job_address', required=False)
+    def _get_job_node_address(self, job_node):
+        return self._extract_first(job_node, 'job_node_address', required=False)
 
-    def _get_job_description(self, job_container):
-        return self._extract_first(job_container, 'job_description', required=True)
+    def _get_job_node_description(self, job_node):
+        return self._extract_first(job_node, 'job_node_description', required=False)
+
+    def _get_job_node_tags(self, job_node):
+        tags_html = self._extract_first(job_node, 'job_node_tags', required=False)
+        if tags_html:
+            return self.extract_tags(tags_html)
+        return []
+
+    #
+    # END - Job list page methods
+    #
+
+    #
+    # START - Job page methods
+    #
+
+    def _get_job_page_container(self, response):
+        return self._extract(response, 'job_page_container', required=True)
+
+    def _get_job_page_title(self, job_container):
+        return self._extract_first(job_container, 'job_page_title', required=True)
+
+    def _get_job_page_publication_datetime(self, job_container):
+        return datetime.datetime.now()
+
+    def _get_job_page_company(self, job_container):
+        return self._extract_first(job_container, 'job_page_company', required=False)
+
+    def _get_job_page_company_url(self, job_container):
+        return self._extract_first(job_container, 'job_page_company_url', required=False)
+
+    def _get_job_page_address(self, job_container):
+        return self._extract_first(job_container, 'job_page_address', required=False)
+
+    def _get_job_page_description(self, job_container):
+        return self._extract_first(job_container, 'job_page_description', required=True)
+
+    def _get_job_page_tags(self, job_container):
+        tags_html = self._extract_first(job_container, 'job_page_tags', required=False)
+        if tags_html:
+            return self.extract_tags(tags_html)
+        return []
+
+    #
+    # END - Job page methods
+    #
 
     def _item_satisfying(self, item):
         for required_field in self._requireds:
