@@ -41,11 +41,11 @@ class AfpyJobSpider(JobSpider):
             if publication_date_text:
                 publication_date_text_clean = publication_date_text.replace(u'Créé le ', '')
                 return datetime.strptime(publication_date_text_clean, '%d/%m/%Y %H:%M')
-            return super(AfpyJobSpider, self)._get_job_publication_date(job_container)
+            return super(AfpyJobSpider, self)._get_from_page__publication_datetime(job_container)
         except Exception, exc:
             self.get_connector().log(
                     self.name,
                     self.ACTION_CRAWL_ERROR,
                     "Error during publication date extraction: %s" % str(exc)
             )
-            return super(AfpyJobSpider, self)._get_job_publication_date(job_container)
+            return super(AfpyJobSpider, self)._get_from_page__publication_datetime(job_container)
