@@ -6,20 +6,15 @@ from pyjobs_crawlers.items import JobItem
 from pyjobs_crawlers import JobSource
 
 
-source = JobSource(
-    'lolix',
-    'Lolix',
-    'http://fr.lolix.org/',
-    'http://fr.lolix.org/img/lolix/offer.png'
-)
-
-
 class LolixJobSpider(JobSpider):
 
     JOB_OFFER_BASE_URL = 'http://fr.lolix.org/search/offre/'
 
     name = 'lolix'
     start_urls = ['http://fr.lolix.org/search/offre/search.php?page=0&mode=find&posteid=0&regionid=0&contratid=0']
+    label = 'Lolix'
+    url = 'http://fr.lolix.org/'
+    logo_url = 'http://fr.lolix.org/img/lolix/offer.png'
 
     _crawl_parameters = {
         'from_list__jobs_lists__xpath': '//body',
@@ -94,3 +89,5 @@ class LolixJobSpider(JobSpider):
                 return True
 
         return False
+
+source = JobSource.from_job_spider(LolixJobSpider)

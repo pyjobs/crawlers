@@ -33,6 +33,8 @@ def get_sources(spiders_directory=None):
     sources = {}
     for spider_module_name in get_spiders_modules_names(spiders_directory):
         spider_module = import_module(spider_module_name)
+        if not hasattr(spider_module, 'source'):
+            raise Exception("Can't find \"source\" property in %s" % spider_module_name)
         spider_source = getattr(spider_module, 'source')
         sources[spider_source.id] = spider_source
     return sources
@@ -44,6 +46,24 @@ class JobSource(object):
         self.label = label
         self.id = id
         self.url = url
+
+    @classmethod
+    def from_job_spider(cls, job_spider_class):
+        """
+
+        Return a JobSource instance from a pyjobs_crawlers.spiders.JobSpider class
+
+        :param job_spider_class: The JobCrawler class
+        :type job_spider_class: pyjobs_crawlers.spiders.JobSpider
+        :return: pyjobs_crawlers.JobSource instance
+        :rtype: pyjobs_crawlers.JobSource
+        """
+        return cls(
+            id=job_spider_class.name,
+            label=job_spider_class.label,
+            url=job_spider_class.url,
+            logo_url=job_spider_class.logo_url
+        )
 
 
 class Connector(object):

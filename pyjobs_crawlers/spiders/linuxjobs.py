@@ -9,18 +9,13 @@ from pyjobs_crawlers.spiders import NotCrawlable
 from pyjobs_crawlers import JobSource
 
 
-source = JobSource(
-    'linuxjobs',
-    'LinuxJobs',
-    'https://www.linuxjobs.fr/',
-    'https://pbs.twimg.com/profile_images/649599776573403140/vaMrmib1_400x400.png'
-)
-
-
 class LolixJobSpider(JobSpider):
 
     name = 'linuxjobs'
     start_urls = ['https://www.linuxjobs.fr/search/python']
+    label = 'LinuxJobs'
+    url = 'https://www.linuxjobs.fr/'
+    logo_url = 'https://pbs.twimg.com/profile_images/649599776573403140/vaMrmib1_400x400.png'
 
     _crawl_parameters = {
         'from_list__jobs_lists__css': '.list-group',
@@ -77,3 +72,5 @@ class LolixJobSpider(JobSpider):
         if address:
             return re.sub(r'\([^)]*\)', '', address).strip() #  address is like Paris (programmeurs)
         return None
+
+source = JobSource.from_job_spider(LolixJobSpider)

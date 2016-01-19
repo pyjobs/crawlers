@@ -8,19 +8,13 @@ import feedparser
 from time import mktime
 
 
-source = JobSource(
-    'remixjobs',
-    'RemixJobs',
-    'https://remixjobs.com/',
-    'https://remixjobs.com/images/press/logos/logo2-450-140.png'
-)
-
-
-
 class RemixJobsSpider(JobSpider):
 
     name = 'remixjobs'
     start_urls = ['https://remixjobs.com/rss/python']
+    label = 'RemixJobs'
+    url = 'https://remixjobs.com/'
+    logo_url = 'https://remixjobs.com/images/press/logos/logo2-450-140.png'
 
     def __init__(self, *args, **kwargs):
         super(RemixJobsSpider, self).__init__(*args, **kwargs)
@@ -94,3 +88,5 @@ class RemixJobsSpider(JobSpider):
         item['status'] = JobItem.CrawlStatus.COMPLETED
 
         yield item
+
+source = JobSource.from_job_spider(RemixJobsSpider)

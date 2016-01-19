@@ -69,6 +69,9 @@ class JobSpider(Spider):
 
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
+    label = None  # To be overwritten
+    url = None  # To be overwritten
+    logo_url = None  # To be overwritten
 
     """Job item fields will be filled by overrideable methods"""
     _job_item_fields = [

@@ -6,18 +6,13 @@ from pyjobs_crawlers.items import JobItem
 from pyjobs_crawlers import JobSource
 
 
-source = JobSource(
-    'afpy',
-    'AFPY',
-    'http://www.afpy.org',
-    'http://www.afpy.org/logo.png'
-)
-
-
 class AfpyJobSpider(JobSpider):
 
     name = 'afpy'
     start_urls = ['http://www.afpy.org/jobs']
+    label = 'AFPY'
+    url = 'http://www.afpy.org'
+    logo_url = 'http://www.afpy.org/logo.png'
 
     _crawl_parameters = {
         'from_list__jobs_lists__xpath': '//body',
@@ -49,3 +44,5 @@ class AfpyJobSpider(JobSpider):
                     "Error during publication date extraction: %s" % str(exc)
             )
             return super(AfpyJobSpider, self)._get_from_page__publication_datetime(job_container)
+
+source = JobSource.from_job_spider(AfpyJobSpider)
