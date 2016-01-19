@@ -18,22 +18,24 @@ source = JobSource(
 
 
 class LolixJobSpider(JobSpider):
+
     name = 'linuxjobs'
     start_urls = ['https://www.linuxjobs.fr/search/python']
 
     _crawl_parameters = {
-        'jobs_css': '.list-group',
-        'jobs_job_css': ' .list-group-item',
-        'jobs_job_element_url_xpath': './@href',
-        'job_page_container_css': '.container',
-        'job_page_title_css': 'div.container div.row:nth-child(2) h2::text',
-        'job_page_publication_datetime_css': 'small.muted::text',
-        'job_page_company_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(3)::text',
-        'job_page_company_url_css': ('div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5) a::text',
+        'from_list__jobs_lists__css': '.list-group',
+        'from_list__jobs__css': ' .list-group-item',
+        'from_list__url__xpath': './@href',
+
+        'from_page__container__css': '.container',
+        'from_page__title__css': 'div.container div.row:nth-child(2) h2::text',
+        'from_page__publication_datetime__css': 'small.muted::text',
+        'from_page__company__css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(3)::text',
+        'from_page__company_url__css': ('div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5) a::text',
                                 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(5)::text'),
-        'job_page_address_css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(4)::text',
-        'job_page_description_css': 'div.container div.row:nth-child(4) div.col-md-9',
-        'job_page_tags_css': 'div.container div.row:nth-child(4) div.col-md-9'
+        'from_page__address__css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(4)::text',
+        'from_page__description__css': 'div.container div.row:nth-child(4) div.col-md-9',
+        'from_page__tags__css': 'div.container div.row:nth-child(4) div.col-md-9'
     }
 
     def _month_french_to_english(self, datetime_str):
@@ -64,13 +66,13 @@ class LolixJobSpider(JobSpider):
         return super(LolixJobSpider, self)._get_jobs_node_url(jobs_node)
 
 
-    def _get_job_page_publication_datetime(self, job_container):
+    def _get_from_page__publication_datetime(self, job_container):
         publication_datetime_str = self._extract_first(job_container, 'job_publication_datetime')
         publication_datetime_str = publication_datetime_str.replace(u'Ajout\xe9e le', '')
         publication_datetime_str_english = self._month_french_to_english(publication_datetime_str)
         return datetime.strptime(publication_datetime_str_english, '%d %B %Y')
 
-    def _get_job_page_address(self, job_container):
+    def _get_from_page__address(self, job_container):
         address = super(LolixJobSpider, self)._get_job_address(job_container)
         if address:
             return re.sub(r'\([^)]*\)', '', address).strip() #  address is like Paris (programmeurs)

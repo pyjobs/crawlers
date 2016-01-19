@@ -84,51 +84,51 @@ class JobSpider(Spider):
     """Explicit list of available parameters"""
     _crawl_parameters = {
         # Xpath version of parameters
-        'jobs_xpath': '//body',
-        'jobs_job_xpath': None,
-        'jobs_job_element_url_xpath': None,
-        'jobs_next_page_xpath': None,
+        'from_list__jobs_lists__xpath': '//body',
+        'from_list__jobs__xpath': None,
+        'from_list__url__xpath': None,
+        'from_list__next_page__xpath': None,
 
-        'job_node_title_xpath': './h1/text()',
-        'job_node_publication_datetime_xpath': None,
-        'job_node_company_xpath': None,
-        'job_node_company_url_xpath': None,
-        'job_node_address_xpath': None,
-        'job_node_description_xpath': None,
-        'job_node_tags_xpath': None,
+        'from_list__title__xpath': './h1/text()',
+        'from_list__publication_datetime__xpath': None,
+        'from_list__company__xpath': None,
+        'from_list__company_url__xpath': None,
+        'from_list__address__xpath': None,
+        'from_list__description__xpath': None,
+        'from_list__tags__xpath': None,
 
-        'job_page_container_xpath': '//body',
-        'job_page_title_xpath': './h1/text()',
-        'job_page_publication_datetime_xpath': None,
-        'job_page_company_xpath': None,
-        'job_page_company_url_xpath': None,
-        'job_page_address_xpath': None,
-        'job_page_description_xpath': None,
-        'job_page_tags_xpath': None,
+        'from_page__container__xpath': '//body',
+        'from_page__title__xpath': './h1/text()',
+        'from_page__publication_datetime__xpath': None,
+        'from_page__company__xpath': None,
+        'from_page__company_url__xpath': None,
+        'from_page__address__xpath': None,
+        'from_page__description__xpath': None,
+        'from_page__tags__xpath': None,
 
         # Css version of parameters
-        'jobs_css': 'body',
-        'jobs_job_css': None,
-        'jobs_job_element_url_css': None,
-        'jobs_next_page_css': None,
+        'from_list__jobs_lists__css': 'body',
+        'from_list__jobs__css': None,
+        'from_list__url__css': None,
+        'from_list__next_page__css': None,
 
-        'job_node_container_css': 'body',
-        'job_node_title_css': 'h1',
-        'job_node_publication_datetime_css': None,
-        'job_node_company_css': None,
-        'job_node_company_url_css': None,
-        'job_node_address_css': None,
-        'job_node_description_css': None,
-        'job_node_tags_css': None,
+        'from_list__container__css': 'body',
+        'from_list__title__css': 'h1',
+        'from_list__publication_datetime__css': None,
+        'from_list__company__css': None,
+        'from_list__company_url__css': None,
+        'from_list__address__css': None,
+        'from_list__description__css': None,
+        'from_list__tags__css': None,
 
-        'job_page_container_css': 'body',
-        'job_page_title_css': 'h1',
-        'job_page_publication_datetime_css': None,
-        'job_page_company_css': None,
-        'job_page_company_url_css': None,
-        'job_page_address_css': None,
-        'job_page_description_css': None,
-        'job_page_tags_css': None,
+        'from_page__container__css': 'body',
+        'from_page__title__css': 'h1',
+        'from_page__publication_datetime__css': None,
+        'from_page__company__css': None,
+        'from_page__company_url__css': None,
+        'from_page__address__css': None,
+        'from_page__description__css': None,
+        'from_page__tags__css': None,
     }
 
     _requireds = ('title', 'publication_datetime', 'description')
@@ -181,12 +181,12 @@ class JobSpider(Spider):
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
 
         try:
-            for jobs in self._get_jobs_lists(response):
-                for job in self._get_jobs_nodes(jobs):
+            for jobs in self._get_from_list__jobs_lists(response):
+                for job in self._get_from_list__jobs(jobs):
                     # first we check url. If the job exists, then skip crawling
                     # (it means that the page has already been crawled
                     try:
-                        url = self._get_job_node_url(job)
+                        url = self._get_from_list__url(job)
                     except NotCrawlable:
                         break
 
@@ -200,7 +200,7 @@ class JobSpider(Spider):
 
                     yield request
 
-            next_page_url = self._get_next_page_url(response)
+            next_page_url = self._get_from_list__next_page(response)
             if next_page_url:
                 yield Request(url=next_page_url)
 
@@ -220,7 +220,7 @@ class JobSpider(Spider):
         job_item['initial_crawl_datetime'] = datetime.datetime.now()
 
         for job_item_field in self._job_item_fields:
-            job_item_method_name = "_get_job_node_%s" % job_item_field
+            job_item_method_name = "_get_from_list__%s" % job_item_field
             job_item[job_item_field] = getattr(self, job_item_method_name)(job_node)
 
         return job_item
@@ -234,12 +234,12 @@ class JobSpider(Spider):
         job_item = response.meta['item']
 
         try:
-            job_container = self._get_job_page_container(response)
+            job_container = self._get_from_page__container(response)
             job_item['url'] = response.url
 
             for job_item_field in self._job_item_fields:
                 if not job_item[job_item_field]: # Fill field only if not prefilled value
-                    job_item_method_name = "_get_job_page_%s" % job_item_field
+                    job_item_method_name = "_get_from_page__%s" % job_item_field
                     job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
 
         except NotFound, exc:
@@ -261,38 +261,38 @@ class JobSpider(Spider):
     # START - Job list page methods
     #
 
-    def _get_jobs_lists(self, response):
-        return self._extract(response, 'jobs', required=True)
+    def _get_from_list__jobs_lists(self, response):
+        return self._extract(response, 'from_list__jobs_lists', required=True)
 
-    def _get_jobs_nodes(self, response):
-        return self._extract(response, 'jobs_job', required=True)
+    def _get_from_list__jobs(self, response):
+        return self._extract(response, 'from_list__jobs', required=True)
 
-    def _get_job_node_url(self, job_node):
-        return self._extract_first(job_node, 'jobs_job_element_url', required=True)
+    def _get_from_list__url(self, job_node):
+        return self._extract_first(job_node, 'from_list__url', required=True)
 
-    def _get_next_page_url(self, response):
-        return self._extract_first(response, 'jobs_next_page', required=False)
+    def _get_from_list__next_page(self, response):
+        return self._extract_first(response, 'from_list__next_page', required=False)
 
-    def _get_job_node_title(self, job_node):
-        return self._extract_first(job_node, 'job_node_title', required=True)
+    def _get_from_list__title(self, job_node):
+        return self._extract_first(job_node, 'from_list__title', required=False)
 
-    def _get_job_node_publication_datetime(self, job_node):
+    def _get_from_list__publication_datetime(self, job_node):
         return datetime.datetime.now()
 
-    def _get_job_node_company(self, job_node):
-        return self._extract_first(job_node, 'job_node_company', required=False)
+    def _get_from_list__company(self, job_node):
+        return self._extract_first(job_node, 'from_list__company', required=False)
 
-    def _get_job_node_company_url(self, job_node):
-        return self._extract_first(job_node, 'job_node_company_url', required=False)
+    def _get_from_list__company_url(self, job_node):
+        return self._extract_first(job_node, 'from_list__company_url', required=False)
 
-    def _get_job_node_address(self, job_node):
-        return self._extract_first(job_node, 'job_node_address', required=False)
+    def _get_from_list__address(self, job_node):
+        return self._extract_first(job_node, 'from_list__address', required=False)
 
-    def _get_job_node_description(self, job_node):
-        return self._extract_first(job_node, 'job_node_description', required=False)
+    def _get_from_list__description(self, job_node):
+        return self._extract_first(job_node, 'from_list__description', required=False)
 
-    def _get_job_node_tags(self, job_node):
-        tags_html = self._extract_first(job_node, 'job_node_tags', required=False)
+    def _get_from_list__tags(self, job_node):
+        tags_html = self._extract_first(job_node, 'from_list__tags', required=False)
         if tags_html:
             return self.extract_tags(tags_html)
         return []
@@ -305,29 +305,29 @@ class JobSpider(Spider):
     # START - Job page methods
     #
 
-    def _get_job_page_container(self, response):
-        return self._extract(response, 'job_page_container', required=True)
+    def _get_from_page__container(self, response):
+        return self._extract(response, 'from_page__container', required=True)
 
-    def _get_job_page_title(self, job_container):
-        return self._extract_first(job_container, 'job_page_title', required=True)
+    def _get_from_page__title(self, job_container):
+        return self._extract_first(job_container, 'from_page__title', required=True)
 
-    def _get_job_page_publication_datetime(self, job_container):
+    def _get_from_page__publication_datetime(self, job_container):
         return datetime.datetime.now()
 
-    def _get_job_page_company(self, job_container):
-        return self._extract_first(job_container, 'job_page_company', required=False)
+    def _get_from_page__company(self, job_container):
+        return self._extract_first(job_container, 'from_page__company', required=False)
 
-    def _get_job_page_company_url(self, job_container):
-        return self._extract_first(job_container, 'job_page_company_url', required=False)
+    def _get_from_page__company_url(self, job_container):
+        return self._extract_first(job_container, 'from_page__company_url', required=False)
 
-    def _get_job_page_address(self, job_container):
-        return self._extract_first(job_container, 'job_page_address', required=False)
+    def _get_from_page__address(self, job_container):
+        return self._extract_first(job_container, 'from_page__address', required=False)
 
-    def _get_job_page_description(self, job_container):
-        return self._extract_first(job_container, 'job_page_description', required=True)
+    def _get_from_page__description(self, job_container):
+        return self._extract_first(job_container, 'from_page__description', required=True)
 
-    def _get_job_page_tags(self, job_container):
-        tags_html = self._extract_first(job_container, 'job_page_tags', required=False)
+    def _get_from_page__tags(self, job_container):
+        tags_html = self._extract_first(job_container, 'from_page__tags', required=False)
         if tags_html:
             return self.extract_tags(tags_html)
         return []
@@ -351,7 +351,7 @@ class JobSpider(Spider):
         """
 
         :param container: html node
-        :param selector_name: name of selector (without suffix '_xpath' or '_css')
+        :param selector_name: name of selector (without suffix '__xpath' or '__css')
         :param required: if True: if nothing to extracr raise NotFound. Else, return None
         :return: string
         """
@@ -410,15 +410,15 @@ class JobSpider(Spider):
     def _get_resolved_selector(self, selector_name):
         """
 
-        :param selector_name: The name of selector (withour suffix _xpath/_css)
+        :param selector_name: The name of selector (withour suffix __xpath/__css)
         :return: a tuple containing ('type_of_selector', 'selector_value')
         """
-        css_parameter_name = "%s_css" % selector_name
+        css_parameter_name = "%s__css" % selector_name
         try:
             return 'css', self._get_parameter(css_parameter_name, required=True)
         except ParameterNotFound:
             try:
-                xpath_parameter_name = "%s_xpath" % selector_name
+                xpath_parameter_name = "%s__xpath" % selector_name
                 return 'xpath', self._get_parameter(xpath_parameter_name, required=True)
             except ParameterNotFound:
                 pass
