@@ -272,38 +272,38 @@ class JobSpider(Spider):
     # START - Job list page methods
     #
 
-    def _get_from_list__jobs_lists(self, response):
-        return self._extract(response, 'from_list__jobs_lists', required=True)
+    def _get_from_list__jobs_lists(self, node):
+        return self._extract(node, 'from_list__jobs_lists', required=True)
 
-    def _get_from_list__jobs(self, response):
-        return self._extract(response, 'from_list__jobs', required=True)
+    def _get_from_list__jobs(self, node):
+        return self._extract(node, 'from_list__jobs', required=True)
 
-    def _get_from_list__url(self, job_node):
-        return self._extract_first(job_node, 'from_list__url', required=True)
+    def _get_from_list__url(self, node):
+        return self._extract_first(node, 'from_list__url', required=True)
 
-    def _get_from_list__next_page(self, response):
-        return self._extract_first(response, 'from_list__next_page', required=False)
+    def _get_from_list__next_page(self, node):
+        return self._extract_first(node, 'from_list__next_page', required=False)
 
-    def _get_from_list__title(self, job_node):
-        return self._extract_first(job_node, 'from_list__title', required=False)
+    def _get_from_list__title(self, node):
+        return self._extract_first(node, 'from_list__title', required=False)
 
-    def _get_from_list__publication_datetime(self, job_node):
+    def _get_from_list__publication_datetime(self, node):
         return None
 
-    def _get_from_list__company(self, job_node):
-        return self._extract_first(job_node, 'from_list__company', required=False)
+    def _get_from_list__company(self, node):
+        return self._extract_first(node, 'from_list__company', required=False)
 
-    def _get_from_list__company_url(self, job_node):
-        return self._extract_first(job_node, 'from_list__company_url', required=False)
+    def _get_from_list__company_url(self, node):
+        return self._extract_first(node, 'from_list__company_url', required=False)
 
-    def _get_from_list__address(self, job_node):
-        return self._extract_first(job_node, 'from_list__address', required=False)
+    def _get_from_list__address(self, node):
+        return self._extract_first(node, 'from_list__address', required=False)
 
-    def _get_from_list__description(self, job_node):
-        return self._extract_first(job_node, 'from_list__description', required=False)
+    def _get_from_list__description(self, node):
+        return self._extract_first(node, 'from_list__description', required=False)
 
-    def _get_from_list__tags(self, job_node):
-        tags_html = self._extract_first(job_node, 'from_list__tags', required=False)
+    def _get_from_list__tags(self, node):
+        tags_html = self._extract_first(node, 'from_list__tags', required=False)
         if tags_html:
             return self.extract_tags(tags_html)
         return []
@@ -316,29 +316,29 @@ class JobSpider(Spider):
     # START - Job page methods
     #
 
-    def _get_from_page__container(self, response):
-        return self._extract(response, 'from_page__container', required=True)
+    def _get_from_page__container(self, node):
+        return self._extract(node, 'from_page__container', required=True)
 
-    def _get_from_page__title(self, job_container):
-        return self._extract_first(job_container, 'from_page__title', required=True)
+    def _get_from_page__title(self, node):
+        return self._extract_first(node, 'from_page__title', required=True)
 
-    def _get_from_page__publication_datetime(self, job_container):
+    def _get_from_page__publication_datetime(self, node):
         return datetime.datetime.now()
 
-    def _get_from_page__company(self, job_container):
-        return self._extract_first(job_container, 'from_page__company', required=False)
+    def _get_from_page__company(self, node):
+        return self._extract_first(node, 'from_page__company', required=False)
 
-    def _get_from_page__company_url(self, job_container):
-        return self._extract_first(job_container, 'from_page__company_url', required=False)
+    def _get_from_page__company_url(self, node):
+        return self._extract_first(node, 'from_page__company_url', required=False)
 
-    def _get_from_page__address(self, job_container):
-        return self._extract_first(job_container, 'from_page__address', required=False)
+    def _get_from_page__address(self, node):
+        return self._extract_first(node, 'from_page__address', required=False)
 
-    def _get_from_page__description(self, job_container):
-        return self._extract_first(job_container, 'from_page__description', required=True)
+    def _get_from_page__description(self, node):
+        return self._extract_first(node, 'from_page__description', required=True)
 
-    def _get_from_page__tags(self, job_container):
-        tags_html = self._extract_first(job_container, 'from_page__tags', required=False)
+    def _get_from_page__tags(self, node):
+        tags_html = self._extract_first(node, 'from_page__tags', required=False)
         if tags_html:
             return self.extract_tags(tags_html)
         return []
