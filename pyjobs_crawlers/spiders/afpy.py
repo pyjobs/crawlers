@@ -18,7 +18,7 @@ class AfpyJobSpider(JobSpider):
         'from_list__jobs_lists__xpath': '//body',
         'from_list__jobs__xpath': '//div[@class="jobitem"]',
         'from_list__url__xpath': './a/@href',
-        'job_list_next_page__xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',
+        'from_list__next_page__xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',
 
         'from_page__container__xpath': '//div[@id="content"]',
         'from_page__title__xpath': './h1[@id="parent-fieldname-title"]/text()',

@@ -20,7 +20,7 @@ class TestAfpySpider(SpiderTest):
     def test_initial_crawl(self):
         results = self._get_result_html_file(html_file='jobs.html')
 
-        self.assertEqual(len(results), 7, "7 jobs must be found in jobs.html, %d found" % len(results))
+        self.assertEqual(len(results), 17, "17 jobs must be found in jobs.html, %d found" % len(results))
         self._result_contains_jobs(results, expected_jobs_titles=[
             u"Développeur Python full stack",
             u"Développeur Python orienté FullStack",
@@ -34,7 +34,7 @@ class TestAfpySpider(SpiderTest):
     def test_two_passage_with_one_more_job(self):
         items = self._get_result_html_file(html_file='jobs.html')
 
-        self.assertEqual(len(items), 7, "7 jobs must be found in jobs.html, %d found" % len(items))
+        self.assertEqual(len(items), 17, "17 jobs must be found in jobs.html, %d found" % len(items))
         self._result_contains_jobs(items, expected_jobs_titles=[
             u"Développeur Python full stack",
             u"Développeur Python orienté FullStack",

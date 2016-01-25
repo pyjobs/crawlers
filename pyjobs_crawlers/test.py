@@ -18,6 +18,7 @@ class SpiderTest(FunctionalTest):
 
     # These class attributes must be implemented. TODO - B.S. 20160125: Encapsutalte them ?
     _spider_class = None
+    _spider = None
     _expected_jobs = None
     _test_dir = ''
     _dump_dir = ''
@@ -40,10 +41,10 @@ class SpiderTest(FunctionalTest):
                 request=request,
                 response_class=HtmlResponse
         )
-        spider = self._get_prepared_spider()()
-        spider.set_connector(connector)
+        self._spider = self._get_prepared_spider()()
+        self._spider.set_connector(connector)
 
-        return list(self._parse_spider_requests(spider.parse(start_response)))
+        return list(self._parse_spider_response(self._spider.parse(start_response)))
 
     def _get_prepared_spider(self):
         """
@@ -63,24 +64,34 @@ class SpiderTest(FunctionalTest):
 
         return OverridedSpider
 
-    def _parse_spider_requests(self, spider_response):
+    def _parse_spider_response(self, spider_response):
         """
         :param spider_response: return of parse spider method
         :return: job item generator
         """
+
+
+
         for response_item in spider_response:
             if isinstance(response_item, Request):
                 request = response_item
                 file_path = self._dump_format % request.url.replace(self._replace, self._dump_dir)
                 if file_path.find('file://') != -1:
                     file_path = file_path.replace('file://', '')
-                request_response = request.callback(fake_response_from_file(
+                response = fake_response_from_file(
                         file_path=file_path,
                         request=request,
                         response_class=HtmlResponse
-                ))
-                for item in request_response:
-                    yield item
+                )
+                # If a callback it's a job page request
+                if request.callback:
+                    for item in request.callback(response):
+                        yield item
+                # Else it's a next page
+                else:
+                    for job_item in self._parse_spider_response(self._spider.parse(response)):
+                        yield job_item
+
             elif isinstance(response_item, Item):
                 yield response_item
 
