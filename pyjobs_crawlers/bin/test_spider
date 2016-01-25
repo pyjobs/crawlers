@@ -29,5 +29,5 @@ if __name__ == '__main__':
     print('TERMINATED: %d job(s) found' % len(jobs))
 
     if len(jobs):
-        print('Job details:')
+        print('DETAILS:')
         print(jobs)
