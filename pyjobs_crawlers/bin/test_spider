@@ -3,12 +3,31 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
 
 from pyjobs_crawlers import StdOutputConnector
 from pyjobs_crawlers.run import run_crawl
 
+errors_count = 0
+
+
+def error_callback(failure, response, spider):
+    print("ERROR: (%s) %s" % (response.url, str(failure.value)))
+
 
 if __name__ == '__main__':
-    run_crawl(spider_module_name=sys.argv[1], connector_class=StdOutputConnector)
+    connector = StdOutputConnector()
+    run_crawl(
+            spider_module_name=sys.argv[1],
+            connector=connector,
+            spider_error_callback=error_callback
+    )
+
+    jobs = connector.get_jobs()
+    print('TERMINATED: %d job(s) found' % len(jobs))
+
+    if len(jobs):
+        print('Job details:')
+        print(jobs)

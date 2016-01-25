@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-from multiprocessing import Pool
+import glob
 import optparse
+from importlib import import_module
+from multiprocessing import Pool
+from os.path import dirname, isfile, basename
+
 import fasteners
+from scrapy import signals
 from scrapy.cmdline import _get_commands_dict, _run_command
 from scrapy.utils.project import get_project_settings
-from os.path import dirname, isfile, basename
-import glob
+from scrapy.xlib.pydispatch import dispatcher
 from slugify import slugify
+
 from pyjobs_crawlers import CrawlerProcess
-from importlib import import_module
 
 
 def get_spiders_files(spiders_directory=None):
@@ -26,11 +30,14 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def run_crawl(spider_module_name, connector_class):
+def run_crawl(spider_module_name, connector, spider_error_callback=None):
     process = CrawlerProcess({
-        'connector': connector_class(),
+        'connector': connector,
         'LOG_ENABLED': False
     })
+
+    if spider_error_callback:
+        dispatcher.connect(spider_error_callback, signals.spider_error)
 
     module_name = '.'.join(spider_module_name.split('.')[:-1])
     class_name = spider_module_name.split('.')[-1]
