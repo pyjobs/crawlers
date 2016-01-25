@@ -1,0 +1,155 @@
+# -*- coding: utf-8 -*-
+import os
+import unittest
+
+import datetime
+
+from scrapy.item import Item
+from scrapy.settings import Settings
+from scrapy.crawler import CrawlerRunner
+from scrapy.http import Response, Request, HtmlResponse
+from twisted.internet import reactor
+from pyjobs_crawlers import CrawlerProcess, Connector
+from tests import NotFound
+
+
+class FunctionalTest(unittest.TestCase):
+    pass
+
+
+class SpiderTest(FunctionalTest):
+    _spider_class = None
+    _expected_jobs = None
+    _test_dir = ''
+    _dump_dir = ''
+    _dump_format = '%s'
+    _replace = ''
+
+    def _crawl(self, url_replace, start_file_path, fake_url, items=[]):
+        connector = SpiderTestConnector(items)
+
+        request = Request(url=fake_url)
+        start_response = fake_response_from_file(
+                start_file_path,
+                request=request,
+                response_class=HtmlResponse
+        )
+        spider = self._get_prepared_spider(url_replace)()
+        spider.set_connector(connector)
+
+        return list(self._parse_spider_requests(spider.parse(start_response)))
+
+    def _get_prepared_spider(self, url_replace):
+
+        class OverridedSpider(self._spider_class):
+            def _get_from_list__url(self, job_node):
+                url = super(OverridedSpider, self)._get_from_list__url(job_node)
+                if url:
+                    url = url.replace(url_replace[0], url_replace[1])
+                return url
+
+        OverridedSpider.__name__ = "Overrided%s" % self._spider_class.__name__
+
+        return OverridedSpider
+
+    def _parse_spider_requests(self, spider_response):
+        for response_item in spider_response:
+            if isinstance(response_item, Request):
+                request = response_item
+                file_path = self._dump_format % request.url.replace(self._replace, self._dump_dir)
+                if file_path.find('file://') != -1:
+                    file_path = file_path.replace('file://', '')
+                request_response = request.callback(fake_response_from_file(
+                    file_path=file_path,
+                    request=request,
+                    response_class=HtmlResponse
+                ))
+                for item in request_response:
+                    yield item
+            elif isinstance(response_item, Item):
+                yield response_item
+
+    def _get_job_from_expected(self, job_title):
+        for job in self._expected_jobs:
+            if job['title'] == job_title:
+                return job
+        raise Exception("Job \"%s\" not found" % job_title)
+
+    @staticmethod
+    def _get_job_from_result_with_title(result, job_title):
+        for job in result:
+            if job['title'] == job_title:
+                return job
+        raise NotFound("Job \"%s\" not found in results")
+
+    def _result_contains_jobs(self, result, expected_jobs_titles):
+        for expected_job_title in expected_jobs_titles:
+            expected_job = self._get_job_from_expected(expected_job_title)
+            try:
+                result_job = self._get_job_from_result_with_title(result, expected_job_title)
+            except NotFound:
+                self.fail("Job \"%s\" not found in results" % expected_job_title)
+            self._compare_jobs(expected_job, result_job)
+
+    def _compare_jobs(self, expected_job, result_job):
+        result_job_as_dict = result_job.to_dict()
+        for field_name in expected_job:
+            if field_name not in result_job_as_dict:
+                self.fail("Job \"%s\" has not \"%s\" field" % (str(result_job_as_dict), field_name))
+
+            # Exception for url field (file path is not the same depending of executing machine
+            if field_name == 'url':
+                expected_job[field_name] = expected_job[field_name].replace(
+                        '__tests_dir__',
+                        'file://' + self._test_dir
+                )
+
+            self.assertEqual(
+                    expected_job[field_name],
+                    result_job_as_dict[field_name],
+                    msg="Field \"%s\" of job \"%s\" field must be %s, actual is %s" % (
+                        field_name,
+                        result_job_as_dict['title'],
+                        expected_job[field_name],
+                        result_job_as_dict[field_name]
+                    )
+            )
+
+
+class SpiderTestConnector(Connector):
+    def __init__(self, saved_jobs=[]):
+        self.saved_jobs = saved_jobs
+
+    def get_most_recent_job_date(self, source):
+        last_date = datetime.datetime(1970, 1, 1, 0, 0, 0)
+        for job in self.saved_jobs:
+            if job.publication_date > last_date:
+                last_date = job.publication_date
+        return last_date
+
+    def add_job(self, job_item):
+        self.saved_jobs.append(job_item)
+
+    def job_exist(self, job_public_id):
+        for job in self.saved_jobs:
+            if job['url'] == job_public_id:
+                return True
+        return False
+
+
+def fake_response_from_file(file_path, request, response_class=Response):
+    """
+    Create a Scrapy fake HTTP response from a HTML file
+    :param request:
+    :param file_path: Absolute path of source file.
+    :param response_class:
+    returns: A scrapy HTTP response which can be used for unittesting.
+    """
+    file_content = open(file_path, 'r').read()
+
+    response = response_class(
+            url=request.url,
+            request=request,
+            body=file_content
+    )
+    return response

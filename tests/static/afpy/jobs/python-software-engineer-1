@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+
+    
+    
+    
+    
+    
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    
+        <base href="http://www.afpy.org/jobs/python-software-engineer-1" /><!--[if lt IE 7]></base><![endif]-->
+    
+
+    
+        <meta content="Sqreen is hiring Python software engineers to build game changing protection technologies." name="description" />
+
+  
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.afpy.org/portal_css/AFPY%20skin/reset-cachekey-6d73cdefb5c9ed2ed40788cc40058c22.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.afpy.org/portal_css/AFPY%20skin/base-cachekey-afc980840bb81dcef69499836cc6ef8f.css" />
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/resourceplone.app.jquerytools.dateinput-cachekey-aead8ff63229c044e349c93676287274.css);</style>
+        <!--[if lt IE 8]>    
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.afpy.org/portal_css/AFPY%20skin/IEFixes-cachekey-7b60e615885ff53fedd9932c6165c700.css" />
+        <![endif]-->
+    
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/afpy-cachekey-56d4e12d32cf0e01d0f7d81fef2af1df.css);</style>
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/++resource++afpy.theme.stylesheets/fonts.css);</style>
+    <style type="text/css">@import url(http://www.afpy.org/portal_css/AFPY%20skin/resourceafpy.theme.stylesheetsmain-cachekey-f27095de05fb52aa8e6c1ce830e56dcb.css);</style>
+    <link rel="stylesheet" type="text/css" media="all" href="http://www.afpy.org/portal_css/AFPY%20skin/ploneCustom-cachekey-ae5b8867b466476ab83d65b3008318ee.css" />
+
+  
+  
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourceplone.app.jquery-cachekey-5d365c6eaf42943a45423b83c121916d.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.galleriffic-cachekey-956e8e4a06e277b2aa494b37a33710e4.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.opacityrollover-cachekey-cf5bea8e721a7b329f34dc8957077cfa.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.history-cachekey-5ef5e5609233a6b06601f408cd833c3c.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/gallery-cachekey-1397dade567633a4c977ba63426630d3.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/gallery-portlet-cachekey-c23608bd5d898663558e2ff7f0c6f403.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcecollective.galleria-cachekey-03b80611b2bdc6461ec4546fca776363.js"></script>
+
+
+<title>Python software engineer &mdash; AFPY</title>
+        
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.afpy.org/favicon.ico" />
+    <link rel="apple-touch-icon" href="http://www.afpy.org/touch_icon.png" />
+
+
+<script type="text/javascript">
+        jQuery(function($){
+            $.datepicker.setDefaults(
+                jQuery.extend($.datepicker.regional['fr'],
+                {dateFormat: 'dd/mm/yy'}));
+        });
+        </script>
+
+
+
+
+    <link rel="search" href="http://www.afpy.org/@@search" title="Recherche dans ce site" />
+
+
+
+        
+        
+        
+        
+        
+
+        <meta name="viewport" content="width=device-width, initial-scale=0.6666, maximum-scale=1.0, minimum-scale=0.6666" />
+        <meta name="generator" content="Plone - http://plone.org" />
+    
+</head>
+
+<body class="template-job_view portaltype-afpy-job site-afpy.org section-jobs subsection-python-software-engineer-1 userrole-anonymous" dir="ltr">
+
+<div id="visual-portal-wrapper">
+
+        <div id="portal-top" class="row">
+<div class="cell width-full position-0">
+            <div id="portal-header">
+    <p class="hiddenStructure">
+  <a accesskey="2" href="http://www.afpy.org/jobs/python-software-engineer-1#content">Aller au contenu.</a> |
+
+  <a accesskey="6" href="http://www.afpy.org/jobs/python-software-engineer-1#portal-globalnav">Aller à la navigation</a>
+</p>
+
+<div id="portal-personaltools-wrapper">
+
+<p class="hiddenStructure">Outils personnels</p>
+
+
+
+<ul class="actionMenu deactivated" id="portal-personaltools">
+  <li id="anon-personalbar">
+    
+        <a href="http://www.afpy.org/login_form" id="personaltools-login">Se connecter</a>
+    
+    
+        <a href="http://www.afpy.org/membres/register" id="personaltools-join">S'inscrire</a>
+    
+  </li>
+</ul>
+
+</div>
+
+
+
+<div id="portal-searchbox">
+
+    <form id="searchGadget_form" action="http://www.afpy.org/@@search">
+
+        <div class="LSBox">
+        <label class="hiddenStructure" for="searchGadget">Chercher par</label>
+
+        <input name="SearchableText" type="text" size="18" title="Recherche" placeholder="Recherche" accesskey="4" class="searchField" id="searchGadget" />
+
+        <input class="searchButton" type="submit" value="Rechercher" />
+
+        <div class="searchSection">
+            <input id="searchbox_currentfolder_only" class="noborder" type="checkbox" name="path" value="/afpy.org/jobs" />
+            <label for="searchbox_currentfolder_only" style="cursor: pointer">Seulement dans le dossier courant</label>
+        </div>
+
+        <div class="LSResult" id="LSResult"><div class="LSShadow" id="LSShadow"></div></div>
+        </div>
+    </form>
+
+    <div id="portal-advanced-search" class="hiddenStructure">
+        <a href="http://www.afpy.org/@@search" accesskey="5">Recherche avancée…</a>
+    </div>
+
+</div>
+
+<a id="portal-logo" title="AFPY" accesskey="1" href="http://www.afpy.org">
+    <img src="http://www.afpy.org/logo.png" alt="AFPY" title="AFPY" height="85" width="200" /></a>
+
+
+    <p class="hiddenStructure">Navigation</p>
+
+    <ul id="portal-globalnav"><li id="portaltab-docs" class="plain"><a href="http://www.afpy.org/doc/afpy/" title="">Informations</a></li><li id="portaltab-faqs" class="plain"><a href="http://www.afpy.org/doc/afpy/faq.html" title="">FAQ</a></li><li id="portaltab-clavardage" class="plain"><a href="http://www.afpy.org/doc/afpy/clavardage.html" title="">T'chat</a></li><li id="portaltab-news" class="plain"><a href="http://www.afpy.org/news" title="Actualités du site">Actualités</a></li><li id="portaltab-forums" class="plain"><a href="http://www.afpy.org/forums" title="">Forums &amp; ML</a></li><li id="portaltab-jobs" class="selected"><a href="http://www.afpy.org/jobs" title=" Le job board de l'AFPY ">Jobs</a></li></ul>
+
+
+</div>
+
+</div>
+        </div>
+    <div id="portal-columns" class="row">
+
+        <div id="portal-column-content" class="cell width-3:4 position-1:4">
+
+            <div id="viewlet-above-content"><div id="portal-breadcrumbs">
+
+    <span id="breadcrumbs-you-are-here">Vous êtes ici :</span>
+    <span id="breadcrumbs-home">
+        <a href="http://www.afpy.org">Accueil</a>
+        <span class="breadcrumbSeparator">
+            /
+            
+        </span>
+    </span>
+    <span id="breadcrumbs-1" dir="ltr">
+        
+            <a href="http://www.afpy.org/jobs">Jobs</a>
+            <span class="breadcrumbSeparator">
+                /
+                
+            </span>
+            
+         
+    </span>
+    <span id="breadcrumbs-2" dir="ltr">
+        
+            
+            
+            <span id="breadcrumbs-current">Python software engineer</span>
+         
+    </span>
+
+</div>
+</div>
+
+            
+                <div class="">
+
+                    
+
+                    
+
+    <dl class="portalMessage info" id="kssPortalMessage" style="display:none">
+        <dt>Info</dt>
+        <dd></dd>
+    </dl>
+
+
+
+                    
+                        <div id="content">
+
+                            
+
+                            
+
+                             <div id="viewlet-above-content-title"></div>
+                             
+                                 
+                                 
+            
+                <h1 id="parent-fieldname-title" class="documentFirstHeading">
+                    Python software engineer
+                </h1>
+            
+            
+        
+                             
+                             <div id="viewlet-below-content-title">
+</div>
+
+                             
+                                 
+                                 
+            
+                <div id="parent-fieldname-description" class="documentDescription">
+                   Sqreen is hiring Python software engineers to build game changing protection technologies.
+                </div>
+            
+            
+        
+                             
+
+                             <div id="viewlet-above-content-body"></div>
+                             <div id="content-core">
+                                 
+<div id="content-core">
+  <div class="discreet">
+            Cr&eacute;&eacute; le 23/09/2015 13:11
+          </div>
+  <div style="float : right; padding : 0 10px 10px 0">
+    <a target="_blank" href="https://www.sqreen.io/"><img src="http://www.afpy.org/jobs/python-software-engineer-1/image_medium" alt="Python software engineer" title="Python software engineer" height="200" width="200" /></a>
+    
+  </div>
+
+<p style="text-align: justify; "><strong>Company Summary</strong><br /> Sqreen brings extraordinary self-healing technologies leveraging real-time adaptative capabilities. Sqreen defenses continuously adapt and improve from rules and attacks sourced from our community.<br /><br /> Our team is made up of passionate, smart and open-minded people dedicated to making the Internet a safer place. At Sqreen, we love code, we love security, and we work on revolutionizing the way applications are protected. You will join a highly technical and product-driven team and contribute to an extraordinary game changing technology.<br /><br /> Sqreen contributes to the Open Source community. Much of our work is shared in conferences, meetups and articles. Our work environment is modern, casual, and respectful. Our engineering team is based in Paris.</p>
+<section class="features" id="company">
+<div class="container">
+<div class="row hidden-xs">
+<div class="col-lg-12 text-center"></div>
+</div>
+</div>
+</section><section class="features" id="position">
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-lg-offset-2">
+<p style="text-align: justify; "><strong>Position Summary</strong><br /> Candidate will be responsible of designing and developing Sqreen key features of client security components, as well as backend infrastructure.<br /><br /> Code will reach production fast using modern development methods and tools. Sqreen platform brings cutting edge technologies to solve complex issues in the simplest form. Candidate will have a high consideration of reliability, low-latency, redundancy, and security. <br /><br /> Our engineers have deep impacts on our products and contribute in protecting millions of products. The candidate will be a key contributor of the engineering team at Sqreen, delivering the best solutions to protect applications.</p>
+<p style="text-align: justify; "> </p>
+<p style="text-align: justify; "> </p>
+<section class="features" id="qualifications">
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-lg-offset-2">
+<p style="text-align: justify; "><strong>Technical Qualifications</strong></p>
+<ul>
+<li>Strong experience with Python and/or Ruby programming</li>
+<li>Experience on various cloud services (e.g., AWS, Google cloud, etc.)</li>
+<li>Proficient with Linux on both bare-metal and virtualized environments</li>
+<li>Ability to design custom protocols, services and frameworks</li>
+<li>Bachelor’s or Master’s degree in computer science or computer engineering</li>
+</ul>
+</div>
+</div>
+<div class="row hidden-xs">
+<div class="col-lg-12 text-center"></div>
+</div>
+</div>
+</section><section class="features" id="responsabilities">
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-lg-offset-2">
+<p style="text-align: justify; "><strong>Responsibilities will include</strong></p>
+<ul>
+<li>Driving architectural design changes with the engineering team</li>
+<li>Implementing and unit testing software modules and/or features</li>
+<li>Producing technical documentation with shipped software components</li>
+<li>Translating technical requirements to engineering tasks</li>
+<li>Estimating efforts for engineering tasks</li>
+<li>Proactively keeping current with relevant technical trends, techniques, tools and systems</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<p> </p>
+<p style="text-align: justify; "> </p>
+</div>
+</div>
+</div>
+</section>
+<a target="_blank" href="https://www.sqreen.io/jobs/software-engineer-developer-ruby-python.html">Voir l'annonce originale
+</a>
+<hr />
+
+<h4>
+    <a target="_blank" href="https://www.sqreen.io/">Sqreen</a>
+</h4>
+
+<div class="row">Paris</div>
+ 
+ 
+<div>
+    <em>Contact:</em>
+    <a href="mailto:jb@sqreen.io">Jean-Baptiste Aviat</a>
+    <span></span>
+    </div> 
+</div>
+  
+                             </div>
+                             <div id="viewlet-below-content-body">
+
+
+
+    <div class="visualClear"><!-- --></div>
+
+    <div class="documentActions">
+        
+
+        
+
+    </div>
+
+</div>
+
+                            
+                        </div>
+                    
+
+                    
+                </div>
+            
+
+            <div id="viewlet-below-content">
+
+
+
+
+
+</div>
+        </div>
+
+        
+        <div id="portal-column-one" class="cell width-1:4 position-0">
+            
+                
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6c616670792d736f757469656e732d617072696c" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6c616670792d736f757469656e732d617072696c"><div class="portletStaticText portlet-static-lafpy-soutiens-april"><p><a href="http://april.org/campagne"> <img alt="Priorité au Logiciel Libre! Je soutiens l'April." height="200" src="http://april.org/campagne/images/priorite-logiciel-libre-je-soutiens-april_p.png" width="240" /> </a></p></div>
+
+</div>
+
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a7273732d706c616e65742d707974686f6e2d6672616e636f" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a7273732d706c616e65742d707974686f6e2d6672616e636f">
+<dl class="portlet portletRss">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="http://www.afpy.org/planet/" class="tile">Planet</a>
+        <span class="portletTopRight"></span>
+    </dt>
+    
+        <dd class="portletItem odd">
+
+            <a href="http://salt-fr.afpy.org/compte-rendu-sommaire-du-meetup-salt-paris-de-decembre-2015.html" class="tile">
+                [AFPy Salt-fr] Compte rendu (sommaire) du meetup Salt Paris de décembre 2015
+                <span class="portletItemDetails">
+                      20/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem even">
+
+            <a href="http://blog.sciunto.org//posts/profilage_rss2email_feedparser/" class="tile">
+                [sciunto] Profilage CPU de rss2email et feedparser (python)
+                <span class="portletItemDetails">
+                      17/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem odd">
+
+            <a href="http://carlchenet.com/2016/01/14/feed2tweet-0-2-pouvoir-de-la-ligne-de-commande/" class="tile">
+                [carlchenet] Feed2tweet 0.2 : pouvoir de la ligne de commande
+                <span class="portletItemDetails">
+                      14/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem even">
+
+            <a href="http://carlchenet.com/2016/01/13/etendre-votre-reseau-twitter-avec-retweet-0-8/" class="tile">
+                [carlchenet] Étendre votre réseau Twitter avec Retweet 0.8
+                <span class="portletItemDetails">
+                      13/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem odd">
+
+            <a href="http://carlchenet.com/2016/01/12/extend-your-twitter-network-with-retweet/" class="tile">
+                [carlchenet] Extend your Twitter network with Retweet
+                <span class="portletItemDetails">
+                      12/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    <dd class="portletFooter">
+        <a href="http://www.afpy.org/planet/">
+           <span class="hiddenStructure">Planet - </span>
+           <span>Plus…</span>
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+
+</div>
+
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6a6f6273" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6a6f6273"><dl class="portlet portletCollection portlet-collection-offres-demploi">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        
+            <span>Offres d'emploi</span>
+        
+        <span class="portletTopRight"></span>
+    </dt>
+
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/developpeur-python-c-confirme-h-f" class="tile contenttype-afpy-job" title="Afin de renforcer ses équipes de développement, NeoXam recherche un Développeur Python/C pour sa business unit back office. Au sein de l’équipe Développement Python, vous participerez au projet de refonte du compilateur d'un langage de programmation de quatrième génération et au développement de sa machine virtuelle associée.">
+            Développeur Python/C Confirmé (H/F)
+            <span class="portletItemDetails">18/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem even">
+        <a href="http://www.afpy.org/jobs/developpeur-django-h-f-2" class="tile contenttype-afpy-job"
+           title="Rattaché au service d'automatisation logicielle vous serez en charge de développer une plateforme de gestion d'exécution de test logiciel pour les drones. Cette plateforme doit permettre de configurer les tests à exécuter (test unitaire, d'intégration, fonctionnel), le binaire ainsi que la cible (HW embarqué, simulateur ...) La plateforme devra gérer le séquencement sur les exécuteurs et agréger les résultats. Le travail consiste en un développement web Django pour s'interfacer avec GIT, Jenkins, Celery, Elasticsearch ....   
+
+Missions:
+- Participation à la définition de l'architecture
+- Développement Frontend Django
+- Développement Backend Django
+- Travail avec le DevOp
+
+Objectifs:
+
+- Développement Django
+- Serveur/système générique
+- Robustesse du système
+- Retour des utilisateurs
+
+Profil:
+
+De formation : BAC+5 école d'ingénieur/M2 spécialisé en informatique ou niveau équivalent
+Vous avez une expérience de  3 à 5 ans dans le développement Web
+Compétences techniques 	 Indispensables : Web, Python, Django, Linux
+Souhaitées : GIT, Conception Object, BDD, intégration continue, script (Bash, Python)
+Autonome, esprit d'équipe
+bon niveau d'anglais
+
+Poste basé à Paris 10è .
+">
+            Développeur Django  (H/F)
+            <span class="portletItemDetails">13/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/devops-python-h-f" class="tile contenttype-afpy-job"
+           title="Rattaché au service d'automatisation logicielle vous serez en charge de travailler sur une plateforme de gestion d'exécution de test logiciel pour les drones. Cette plateforme doit permettre de configurer les tests à exécuter (test unitaire, d'intégration, fonctionnel), le binaire ainsi que la cible (HW embarqué, simulateur ...) La plateforme devra gérer le séquencement sur les exécuteurs et agréger les résultats. Le travail consiste à développer en Python et à mettre en opération un serveur web Django pour s'interfacer avec GIT, Jenkins, Celery, Elasticsearch ....   
+
+Missions:
+
+- Participation à la définition de l'architecture
+- Développement Backend Python
+- Communication/Interface avec les autres serveurs (GIT/Jenkins/...)
+- Gestion du serveur Celery
+- Gestion des hôtes d'exécution (physique, virtuel)
+- Mise en production
+- Maintenance
+
+Objectifs:
+
+- Mise en place progressive et itérative des fonctionnalités
+- Interface avec les autres serveurs 
+- Interface avec le service IT
+- Disponibilité du système 
+- Debug et maintenance
+
+
+
+
+Profil:
+
+De formation : BAC+5 école d'ingénieur/M2 spécialisé en informatique ou niveau équivalent
+Vous avez une expérience de  3 à 5 ans dans le développement Web
+Compétences techniques 	 Indispensables : Web, Python, Django, Linux
+Souhaitées : GIT, Conception Object, BDD, intégration continue, script (Bash, Python)
+Autonome, esprit d'équipe
+bon niveau d'anglais
+">
+            DevOps Python (H/F)
+            <span class="portletItemDetails">13/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem even">
+        <a href="http://www.afpy.org/jobs/developpeur-python-full-stack" class="tile contenttype-afpy-job" title="Coopengo est une start-up qui construit la nouvelle génération des solutions métier assurance. Elle a été fondée en 2012 par une jeune équipe avec un fort background technologie, delivery et métier Assurance.
+
+
+">
+            Développeur Python full stack
+            <span class="portletItemDetails">09/12/2015</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/developpeur-python-oriente-fullstack" class="tile contenttype-afpy-job" title=" Sewan est un opérateur nouvelle génération, 100% cloud, orienté sur l’expérience utilisateur. Nous sommes une société jeune, en forte croissance et innovante dont le métier est piloté par un système d’information développé in-house avec beaucoup de passion et d’enthousiasme. 
+
+ Notre philosophie : s’entourer de gens passionnés par ce qu’ils font et qui aiment travailler sur des projets qui sont utilisés au quotidien par des centaines de milliers d’utilisateurs. ">
+            Développeur Python orienté FullStack
+            <span class="portletItemDetails">09/12/2015</span>
+        </a>
+    </dd>
+    
+
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>
+</div>
+
+
+
+
+            
+        </div>
+
+        
+        
+    </div>
+
+
+    <div id="portal-footer-wrapper" class="row">
+        <div class="cell width-full position-0">
+            <div id="portal-footer">
+          <p>
+               Les droits d'auteurs <abbr title="Droits d'auteur">&copy;</abbr> 2000 - 2016 du <a href="http://plone.org">système de gestion de contenu libre Plone<sup>&reg;</sup></a> appartiennent à la <a href="http://plone.org/foundation">Fondation Plone</a>.
+
+               Distribué sous <a href="http://creativecommons.org/licenses/GPL/2.0/">Licence GNU GPL</a>.
+          </p>
+
+</div>
+
+<div id="portal-colophon">
+<div class="colophonWrapper">
+<ul>
+  <li>
+    <a href="http://plone.org" title="Ce site utilise le CMS Plone, un système de gestion de contenu libre.">Réalisé avec Plone & Python</a>
+  </li>
+</ul>
+</div>
+</div>
+
+<ul id="portal-siteactions">
+
+    <li id="siteaction-sitemap"><a href="http://www.afpy.org/sitemap" title="Plan du site" accesskey="3">Plan du site</a></li>
+    <li id="siteaction-accessibility"><a href="http://www.afpy.org/accessibility-info" title="Accessibilité" accesskey="0">Accessibilité</a></li>
+    <li id="siteaction-contact"><a href="http://www.afpy.org/contact-info" title="Contact" accesskey="9">Contact</a></li>
+    <li id="siteaction-archives"><a href="http://archive.afpy.org" title="Archives ancien site" accesskey="">Archives ancien site</a></li>
+</ul>
+
+
+        </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>
+
+
+

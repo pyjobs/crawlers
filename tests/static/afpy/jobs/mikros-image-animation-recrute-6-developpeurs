@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+
+    
+    
+    
+    
+    
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    
+        <base href="http://www.afpy.org/jobs/mikros-image-animation-recrute-6-developpeurs" /><!--[if lt IE 7]></base><![endif]-->
+    
+
+    
+        <meta content="Dans le cadre de ses projets de longs métrages, Mikros Image Animation est à la recherche de plusieurs profils.
+
+Mikros Image Animation is hiring 6 software engineers for both core teams and project positions.
+
+Contacts :
+
+jobs_animation@mikrosimage.eu + cach@mikrosimage.eu
+
+" name="description" />
+
+  
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.afpy.org/portal_css/AFPY%20skin/reset-cachekey-6d73cdefb5c9ed2ed40788cc40058c22.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.afpy.org/portal_css/AFPY%20skin/base-cachekey-afc980840bb81dcef69499836cc6ef8f.css" />
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/resourceplone.app.jquerytools.dateinput-cachekey-aead8ff63229c044e349c93676287274.css);</style>
+        <!--[if lt IE 8]>    
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.afpy.org/portal_css/AFPY%20skin/IEFixes-cachekey-7b60e615885ff53fedd9932c6165c700.css" />
+        <![endif]-->
+    
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/afpy-cachekey-56d4e12d32cf0e01d0f7d81fef2af1df.css);</style>
+    <style type="text/css" media="screen">@import url(http://www.afpy.org/portal_css/AFPY%20skin/++resource++afpy.theme.stylesheets/fonts.css);</style>
+    <style type="text/css">@import url(http://www.afpy.org/portal_css/AFPY%20skin/resourceafpy.theme.stylesheetsmain-cachekey-f27095de05fb52aa8e6c1ce830e56dcb.css);</style>
+    <link rel="stylesheet" type="text/css" media="all" href="http://www.afpy.org/portal_css/AFPY%20skin/ploneCustom-cachekey-ae5b8867b466476ab83d65b3008318ee.css" />
+
+  
+  
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourceplone.app.jquery-cachekey-5d365c6eaf42943a45423b83c121916d.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.galleriffic-cachekey-956e8e4a06e277b2aa494b37a33710e4.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.opacityrollover-cachekey-cf5bea8e721a7b329f34dc8957077cfa.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcejquery.history-cachekey-5ef5e5609233a6b06601f408cd833c3c.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/gallery-cachekey-1397dade567633a4c977ba63426630d3.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/gallery-portlet-cachekey-c23608bd5d898663558e2ff7f0c6f403.js"></script>
+    <script type="text/javascript" src="http://www.afpy.org/portal_javascripts/AFPY%20skin/resourcecollective.galleria-cachekey-03b80611b2bdc6461ec4546fca776363.js"></script>
+
+
+<title>Mikros Image Animation recrute 6 développeurs &mdash; AFPY</title>
+        
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.afpy.org/favicon.ico" />
+    <link rel="apple-touch-icon" href="http://www.afpy.org/touch_icon.png" />
+
+
+<script type="text/javascript">
+        jQuery(function($){
+            $.datepicker.setDefaults(
+                jQuery.extend($.datepicker.regional['fr'],
+                {dateFormat: 'dd/mm/yy'}));
+        });
+        </script>
+
+
+
+
+    <link rel="search" href="http://www.afpy.org/@@search" title="Recherche dans ce site" />
+
+
+
+        
+        
+        
+        
+        
+
+        <meta name="viewport" content="width=device-width, initial-scale=0.6666, maximum-scale=1.0, minimum-scale=0.6666" />
+        <meta name="generator" content="Plone - http://plone.org" />
+    
+</head>
+
+<body class="template-job_view portaltype-afpy-job site-afpy.org section-jobs subsection-mikros-image-animation-recrute-6-developpeurs userrole-anonymous" dir="ltr">
+
+<div id="visual-portal-wrapper">
+
+        <div id="portal-top" class="row">
+<div class="cell width-full position-0">
+            <div id="portal-header">
+    <p class="hiddenStructure">
+  <a accesskey="2" href="http://www.afpy.org/jobs/mikros-image-animation-recrute-6-developpeurs#content">Aller au contenu.</a> |
+
+  <a accesskey="6" href="http://www.afpy.org/jobs/mikros-image-animation-recrute-6-developpeurs#portal-globalnav">Aller à la navigation</a>
+</p>
+
+<div id="portal-personaltools-wrapper">
+
+<p class="hiddenStructure">Outils personnels</p>
+
+
+
+<ul class="actionMenu deactivated" id="portal-personaltools">
+  <li id="anon-personalbar">
+    
+        <a href="http://www.afpy.org/login_form" id="personaltools-login">Se connecter</a>
+    
+    
+        <a href="http://www.afpy.org/membres/register" id="personaltools-join">S'inscrire</a>
+    
+  </li>
+</ul>
+
+</div>
+
+
+
+<div id="portal-searchbox">
+
+    <form id="searchGadget_form" action="http://www.afpy.org/@@search">
+
+        <div class="LSBox">
+        <label class="hiddenStructure" for="searchGadget">Chercher par</label>
+
+        <input name="SearchableText" type="text" size="18" title="Recherche" placeholder="Recherche" accesskey="4" class="searchField" id="searchGadget" />
+
+        <input class="searchButton" type="submit" value="Rechercher" />
+
+        <div class="searchSection">
+            <input id="searchbox_currentfolder_only" class="noborder" type="checkbox" name="path" value="/afpy.org/jobs" />
+            <label for="searchbox_currentfolder_only" style="cursor: pointer">Seulement dans le dossier courant</label>
+        </div>
+
+        <div class="LSResult" id="LSResult"><div class="LSShadow" id="LSShadow"></div></div>
+        </div>
+    </form>
+
+    <div id="portal-advanced-search" class="hiddenStructure">
+        <a href="http://www.afpy.org/@@search" accesskey="5">Recherche avancée…</a>
+    </div>
+
+</div>
+
+<a id="portal-logo" title="AFPY" accesskey="1" href="http://www.afpy.org">
+    <img src="http://www.afpy.org/logo.png" alt="AFPY" title="AFPY" height="85" width="200" /></a>
+
+
+    <p class="hiddenStructure">Navigation</p>
+
+    <ul id="portal-globalnav"><li id="portaltab-docs" class="plain"><a href="http://www.afpy.org/doc/afpy/" title="">Informations</a></li><li id="portaltab-faqs" class="plain"><a href="http://www.afpy.org/doc/afpy/faq.html" title="">FAQ</a></li><li id="portaltab-clavardage" class="plain"><a href="http://www.afpy.org/doc/afpy/clavardage.html" title="">T'chat</a></li><li id="portaltab-news" class="plain"><a href="http://www.afpy.org/news" title="Actualités du site">Actualités</a></li><li id="portaltab-forums" class="plain"><a href="http://www.afpy.org/forums" title="">Forums &amp; ML</a></li><li id="portaltab-jobs" class="selected"><a href="http://www.afpy.org/jobs" title=" Le job board de l'AFPY ">Jobs</a></li></ul>
+
+
+</div>
+
+</div>
+        </div>
+    <div id="portal-columns" class="row">
+
+        <div id="portal-column-content" class="cell width-3:4 position-1:4">
+
+            <div id="viewlet-above-content"><div id="portal-breadcrumbs">
+
+    <span id="breadcrumbs-you-are-here">Vous êtes ici :</span>
+    <span id="breadcrumbs-home">
+        <a href="http://www.afpy.org">Accueil</a>
+        <span class="breadcrumbSeparator">
+            /
+            
+        </span>
+    </span>
+    <span id="breadcrumbs-1" dir="ltr">
+        
+            <a href="http://www.afpy.org/jobs">Jobs</a>
+            <span class="breadcrumbSeparator">
+                /
+                
+            </span>
+            
+         
+    </span>
+    <span id="breadcrumbs-2" dir="ltr">
+        
+            
+            
+            <span id="breadcrumbs-current">Mikros Image Animation recrute 6 développeurs</span>
+         
+    </span>
+
+</div>
+</div>
+
+            
+                <div class="">
+
+                    
+
+                    
+
+    <dl class="portalMessage info" id="kssPortalMessage" style="display:none">
+        <dt>Info</dt>
+        <dd></dd>
+    </dl>
+
+
+
+                    
+                        <div id="content">
+
+                            
+
+                            
+
+                             <div id="viewlet-above-content-title"></div>
+                             
+                                 
+                                 
+            
+                <h1 id="parent-fieldname-title" class="documentFirstHeading">
+                    Mikros Image Animation recrute 6 développeurs
+                </h1>
+            
+            
+        
+                             
+                             <div id="viewlet-below-content-title">
+</div>
+
+                             
+                                 
+                                 
+            
+                <div id="parent-fieldname-description" class="documentDescription">
+                   Dans le cadre de ses projets de longs métrages, Mikros Image Animation est à la recherche de plusieurs profils.
+
+Mikros Image Animation is hiring 6 software engineers for both core teams and project positions.
+
+Contacts :
+
+jobs_animation@mikrosimage.eu + cach@mikrosimage.eu
+
+
+                </div>
+            
+            
+        
+                             
+
+                             <div id="viewlet-above-content-body"></div>
+                             <div id="content-core">
+                                 
+<div id="content-core">
+  <div class="discreet">
+            Cr&eacute;&eacute; le 14/10/2015 13:17
+          </div>
+  <div style="float : right; padding : 0 10px 10px 0">
+    <a target="_blank" href="http://www.mikrosimage.eu/"><img src="http://www.afpy.org/jobs/mikros-image-animation-recrute-6-developpeurs/image_medium" alt="Mikros Image Animation recrute 6 développeurs" title="Mikros Image Animation recrute 6 développeurs" height="200" width="135" /></a>
+    
+  </div>
+
+<p>Postes à pourvoir :</p>
+<p> </p>
+<p><strong> · Développeur (H/F) pour le pipeline Layout</strong><br />Connaissance de Maya, PyQt et de Python nécessaires. Shotgun / Tank bienvenue. Prise en charge puis update du pipeline Layout en coordination avec les équipes de Montréal. Rigueur, autonomie, capacité à travailler en équipe.<br /><em>· Developer (M/W) Layout pipeline</em><br /><em>Maya, PyQt and Python skills needed. Shotgun / Tank is a plus. Take-over and then update of the Layout pipeline, in coordination with the teams in Montreal. Rigor, autonomy, teamwork skills.</em></p>
+<p><em></em><br /><strong>· Développeur (H/F) Tank/Shotgun/Python</strong><br />Connaissance de Shotgun / Tank et Python nécessaire. Intégration à l'équipe core pipe Mikros animation, multi projet Paris / Montréal. Maintenance et R&amp;D des fonctionnalités core pipe.<br /><em>· Developer (M/W) Tank / Shotgun / Python Shotgun / Tank and Python skills needed. Integration inside the Mikros Animation Core Pipe team, multiple projects Paris / Montreal. Maintenance and R&amp;D of the Core Pipe functionalities.</em></p>
+<p><em></em><br /><strong>· Développeur (H/F) Rendu C++</strong><br />Profil ingénieur, intégration dans l'équipe rendu Mikros animation (Katana, Arnold, Nuke). Système génératif de rendu (alembic, formats propriétaires).<br /><em>· Developer (M/W) C++ Rendering Software engineering profile, integration into the Mikros Animation rendering team (Katana, Arnold, Nuke). Generative Rendering system (Alembic, in-house formats).</em></p>
+<p><em></em><br /><strong>· Développeur (H/F) Maya / Python </strong><br />Connaissance de Maya et Python nécessaires. Intégration à l'équipe Maya pipe, connaissance de la chaîne de fabrication 3D appréciée.<br /><em>· Developer (M/W) Maya / Python</em><br /><em>Maya and Python skills needed. Integration into the Maya pipeline team, knowledge of the 3D production pipeline required.</em></p>
+<p><em></em><br /><strong>· Développeur (H/F) shading</strong><br />Expert Arnold. Développement des shaders Arnold, C++ et procéduraux Arnold.<br />· Developer (M/W) Shading<br /><em>C++ and Arnold expertise.</em><br /><em>Development of Arnold shaders and procedurals.</em></p>
+<p><em></em><br /><strong>· Développeur (H/F) FX</strong><br />Intégration à l'équipe FX Mikros animation. Travail sur la communication entre Houdini, Maya, Katana, Arnold.<br /><em>· Developer (M/W) FX Integration into the Mikros Animation FX team. Assignment on the links between Houdini, Maya, Katana and Arnold.</em></p>
+<a target="_blank" href="http://www.mikrosimage.eu/recrutement/recherche-profils-developpeurs/">Voir l'annonce originale
+</a>
+<hr />
+
+<h4>
+    <a target="_blank" href="http://www.mikrosimage.eu/">Mikros Image </a>
+</h4>
+
+<div class="row">120, rue Danton<br />92300 Levallois-Perret</div>
+ 
+ 
+<div>
+    <em>Contact:</em>
+    <a href="mailto:jobs_animation@mikrosimage.eu">Cécile Steinlein</a>
+    <span></span>
+    </div> 
+</div>
+  
+                             </div>
+                             <div id="viewlet-below-content-body">
+
+
+
+    <div class="visualClear"><!-- --></div>
+
+    <div class="documentActions">
+        
+
+        
+
+    </div>
+
+</div>
+
+                            
+                        </div>
+                    
+
+                    
+                </div>
+            
+
+            <div id="viewlet-below-content">
+
+
+
+
+
+</div>
+        </div>
+
+        
+        <div id="portal-column-one" class="cell width-1:4 position-0">
+            
+                
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6c616670792d736f757469656e732d617072696c" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6c616670792d736f757469656e732d617072696c"><div class="portletStaticText portlet-static-lafpy-soutiens-april"><p><a href="http://april.org/campagne"> <img alt="Priorité au Logiciel Libre! Je soutiens l'April." height="200" src="http://april.org/campagne/images/priorite-logiciel-libre-je-soutiens-april_p.png" width="240" /> </a></p></div>
+
+</div>
+
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a7273732d706c616e65742d707974686f6e2d6672616e636f" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a7273732d706c616e65742d707974686f6e2d6672616e636f">
+<dl class="portlet portletRss">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="http://www.afpy.org/planet/" class="tile">Planet</a>
+        <span class="portletTopRight"></span>
+    </dt>
+    
+        <dd class="portletItem odd">
+
+            <a href="http://salt-fr.afpy.org/compte-rendu-sommaire-du-meetup-salt-paris-de-decembre-2015.html" class="tile">
+                [AFPy Salt-fr] Compte rendu (sommaire) du meetup Salt Paris de décembre 2015
+                <span class="portletItemDetails">
+                      20/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem even">
+
+            <a href="http://blog.sciunto.org//posts/profilage_rss2email_feedparser/" class="tile">
+                [sciunto] Profilage CPU de rss2email et feedparser (python)
+                <span class="portletItemDetails">
+                      17/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem odd">
+
+            <a href="http://carlchenet.com/2016/01/14/feed2tweet-0-2-pouvoir-de-la-ligne-de-commande/" class="tile">
+                [carlchenet] Feed2tweet 0.2 : pouvoir de la ligne de commande
+                <span class="portletItemDetails">
+                      14/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem even">
+
+            <a href="http://carlchenet.com/2016/01/13/etendre-votre-reseau-twitter-avec-retweet-0-8/" class="tile">
+                [carlchenet] Étendre votre réseau Twitter avec Retweet 0.8
+                <span class="portletItemDetails">
+                      13/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    
+        <dd class="portletItem odd">
+
+            <a href="http://carlchenet.com/2016/01/12/extend-your-twitter-network-with-retweet/" class="tile">
+                [carlchenet] Extend your Twitter network with Retweet
+                <span class="portletItemDetails">
+                      12/01/2016
+                </span>
+            </a>
+        </dd>
+    
+    <dd class="portletFooter">
+        <a href="http://www.afpy.org/planet/">
+           <span class="hiddenStructure">Planet - </span>
+           <span>Plus…</span>
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+
+</div>
+
+<div class="portletWrapper" id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6a6f6273" data-portlethash="706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f616670792e6f72670a6a6f6273"><dl class="portlet portletCollection portlet-collection-offres-demploi">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        
+            <span>Offres d'emploi</span>
+        
+        <span class="portletTopRight"></span>
+    </dt>
+
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/developpeur-python-c-confirme-h-f" class="tile contenttype-afpy-job" title="Afin de renforcer ses équipes de développement, NeoXam recherche un Développeur Python/C pour sa business unit back office. Au sein de l’équipe Développement Python, vous participerez au projet de refonte du compilateur d'un langage de programmation de quatrième génération et au développement de sa machine virtuelle associée.">
+            Développeur Python/C Confirmé (H/F)
+            <span class="portletItemDetails">18/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem even">
+        <a href="http://www.afpy.org/jobs/developpeur-django-h-f-2" class="tile contenttype-afpy-job"
+           title="Rattaché au service d'automatisation logicielle vous serez en charge de développer une plateforme de gestion d'exécution de test logiciel pour les drones. Cette plateforme doit permettre de configurer les tests à exécuter (test unitaire, d'intégration, fonctionnel), le binaire ainsi que la cible (HW embarqué, simulateur ...) La plateforme devra gérer le séquencement sur les exécuteurs et agréger les résultats. Le travail consiste en un développement web Django pour s'interfacer avec GIT, Jenkins, Celery, Elasticsearch ....   
+
+Missions:
+- Participation à la définition de l'architecture
+- Développement Frontend Django
+- Développement Backend Django
+- Travail avec le DevOp
+
+Objectifs:
+
+- Développement Django
+- Serveur/système générique
+- Robustesse du système
+- Retour des utilisateurs
+
+Profil:
+
+De formation : BAC+5 école d'ingénieur/M2 spécialisé en informatique ou niveau équivalent
+Vous avez une expérience de  3 à 5 ans dans le développement Web
+Compétences techniques 	 Indispensables : Web, Python, Django, Linux
+Souhaitées : GIT, Conception Object, BDD, intégration continue, script (Bash, Python)
+Autonome, esprit d'équipe
+bon niveau d'anglais
+
+Poste basé à Paris 10è .
+">
+            Développeur Django  (H/F)
+            <span class="portletItemDetails">13/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/devops-python-h-f" class="tile contenttype-afpy-job"
+           title="Rattaché au service d'automatisation logicielle vous serez en charge de travailler sur une plateforme de gestion d'exécution de test logiciel pour les drones. Cette plateforme doit permettre de configurer les tests à exécuter (test unitaire, d'intégration, fonctionnel), le binaire ainsi que la cible (HW embarqué, simulateur ...) La plateforme devra gérer le séquencement sur les exécuteurs et agréger les résultats. Le travail consiste à développer en Python et à mettre en opération un serveur web Django pour s'interfacer avec GIT, Jenkins, Celery, Elasticsearch ....   
+
+Missions:
+
+- Participation à la définition de l'architecture
+- Développement Backend Python
+- Communication/Interface avec les autres serveurs (GIT/Jenkins/...)
+- Gestion du serveur Celery
+- Gestion des hôtes d'exécution (physique, virtuel)
+- Mise en production
+- Maintenance
+
+Objectifs:
+
+- Mise en place progressive et itérative des fonctionnalités
+- Interface avec les autres serveurs 
+- Interface avec le service IT
+- Disponibilité du système 
+- Debug et maintenance
+
+
+
+
+Profil:
+
+De formation : BAC+5 école d'ingénieur/M2 spécialisé en informatique ou niveau équivalent
+Vous avez une expérience de  3 à 5 ans dans le développement Web
+Compétences techniques 	 Indispensables : Web, Python, Django, Linux
+Souhaitées : GIT, Conception Object, BDD, intégration continue, script (Bash, Python)
+Autonome, esprit d'équipe
+bon niveau d'anglais
+">
+            DevOps Python (H/F)
+            <span class="portletItemDetails">13/01/2016</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem even">
+        <a href="http://www.afpy.org/jobs/developpeur-python-full-stack" class="tile contenttype-afpy-job" title="Coopengo est une start-up qui construit la nouvelle génération des solutions métier assurance. Elle a été fondée en 2012 par une jeune équipe avec un fort background technologie, delivery et métier Assurance.
+
+
+">
+            Développeur Python full stack
+            <span class="portletItemDetails">09/12/2015</span>
+        </a>
+    </dd>
+    
+    
+    <dd class="portletItem odd">
+        <a href="http://www.afpy.org/jobs/developpeur-python-oriente-fullstack" class="tile contenttype-afpy-job" title=" Sewan est un opérateur nouvelle génération, 100% cloud, orienté sur l’expérience utilisateur. Nous sommes une société jeune, en forte croissance et innovante dont le métier est piloté par un système d’information développé in-house avec beaucoup de passion et d’enthousiasme. 
+
+ Notre philosophie : s’entourer de gens passionnés par ce qu’ils font et qui aiment travailler sur des projets qui sont utilisés au quotidien par des centaines de milliers d’utilisateurs. ">
+            Développeur Python orienté FullStack
+            <span class="portletItemDetails">09/12/2015</span>
+        </a>
+    </dd>
+    
+
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>
+</div>
+
+
+
+
+            
+        </div>
+
+        
+        
+    </div>
+
+
+    <div id="portal-footer-wrapper" class="row">
+        <div class="cell width-full position-0">
+            <div id="portal-footer">
+          <p>
+               Les droits d'auteurs <abbr title="Droits d'auteur">&copy;</abbr> 2000 - 2016 du <a href="http://plone.org">système de gestion de contenu libre Plone<sup>&reg;</sup></a> appartiennent à la <a href="http://plone.org/foundation">Fondation Plone</a>.
+
+               Distribué sous <a href="http://creativecommons.org/licenses/GPL/2.0/">Licence GNU GPL</a>.
+          </p>
+
+</div>
+
+<div id="portal-colophon">
+<div class="colophonWrapper">
+<ul>
+  <li>
+    <a href="http://plone.org" title="Ce site utilise le CMS Plone, un système de gestion de contenu libre.">Réalisé avec Plone & Python</a>
+  </li>
+</ul>
+</div>
+</div>
+
+<ul id="portal-siteactions">
+
+    <li id="siteaction-sitemap"><a href="http://www.afpy.org/sitemap" title="Plan du site" accesskey="3">Plan du site</a></li>
+    <li id="siteaction-accessibility"><a href="http://www.afpy.org/accessibility-info" title="Accessibilité" accesskey="0">Accessibilité</a></li>
+    <li id="siteaction-contact"><a href="http://www.afpy.org/contact-info" title="Contact" accesskey="9">Contact</a></li>
+    <li id="siteaction-archives"><a href="http://archive.afpy.org" title="Archives ancien site" accesskey="">Archives ancien site</a></li>
+</ul>
+
+
+        </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>
+
+
+

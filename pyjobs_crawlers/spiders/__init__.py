@@ -159,6 +159,14 @@ class JobSpider(Spider):
         super(JobSpider, self)._set_crawler(crawler)
         self._connector = self.settings.get('connector')
 
+    def set_connector(self, connector):
+        """
+
+        :param connector: Connecteur
+        :return:
+        """
+        self._connector = connector
+
     def get_connector(self):
         """
 
