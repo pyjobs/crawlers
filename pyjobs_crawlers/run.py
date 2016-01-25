@@ -8,6 +8,7 @@ from os.path import dirname, isfile, basename
 import glob
 from slugify import slugify
 from pyjobs_crawlers import CrawlerProcess
+from importlib import import_module
 
 
 def get_spiders_files(spiders_directory=None):
@@ -23,6 +24,22 @@ def get_spiders_files(spiders_directory=None):
     return [file for file in glob.glob(spiders_directory + "/*.py")
             if isfile(file)
             and not file.endswith('__init__.py')]
+
+
+def run_crawl(spider_module_name, connector_class):
+    process = CrawlerProcess({
+        'connector': connector_class(),
+        'LOG_ENABLED': False
+    })
+
+    module_name = '.'.join(spider_module_name.split('.')[:-1])
+    class_name = spider_module_name.split('.')[-1]
+
+    spider_module = import_module(module_name)
+    spider_class = getattr(spider_module, class_name)
+
+    process.crawl(spider_class)
+    process.start()
 
 
 def crawl(site_file_name, connector_class):
@@ -79,7 +96,7 @@ def start_crawl_process(process_params):
             lock.release()
 
 
-def start_crawlers(connector_class, processes=2, debug=False):
+def start_crawlers(connector_class, processes=1, debug=False):
     """
 
     Start spider processes
