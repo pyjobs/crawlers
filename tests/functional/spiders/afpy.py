@@ -60,10 +60,6 @@ class TestAfpySpider(SpiderTest):
         """
         return self._crawl(
                 start_file_path=os.path.join(test_dir, 'static', html_file),
-                url_replace=(
-                    'http://www.afpy.org/jobs/',
-                    'file://' + os.path.join(test_dir, 'static/afpy/jobs/')
-                ),
                 items=items,
                 fake_url='http://www.afpy.org/jobs/'  # TODO: From spider class ?
         )

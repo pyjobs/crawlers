@@ -21,7 +21,7 @@ class SpiderTest(FunctionalTest):
     _dump_format = '%s'
     _replace = ''
 
-    def _crawl(self, url_replace, start_file_path, fake_url, items=[]):
+    def _crawl(self, start_file_path, fake_url, items=[]):
         connector = SpiderTestConnector(items)
 
         request = Request(url=fake_url)
@@ -30,18 +30,21 @@ class SpiderTest(FunctionalTest):
                 request=request,
                 response_class=HtmlResponse
         )
-        spider = self._get_prepared_spider(url_replace)()
+        spider = self._get_prepared_spider()()
         spider.set_connector(connector)
 
         return list(self._parse_spider_requests(spider.parse(start_response)))
 
-    def _get_prepared_spider(self, url_replace):
+    def _get_prepared_spider(self):
+
+        replace = self._replace
+        dump_dir = self._dump_dir
 
         class OverridedSpider(self._spider_class):
             def _get_from_list__url(self, job_node):
                 url = super(OverridedSpider, self)._get_from_list__url(job_node)
                 if url:
-                    url = url.replace(url_replace[0], url_replace[1])
+                    url = url.replace(replace, 'file://' + dump_dir)
                 return url
 
         OverridedSpider.__name__ = "Overrided%s" % self._spider_class.__name__
