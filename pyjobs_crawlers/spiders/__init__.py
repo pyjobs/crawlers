@@ -280,7 +280,7 @@ class JobSpider(Spider):
         return self._extract_first(job_node, 'from_list__title', required=False)
 
     def _get_from_list__publication_datetime(self, job_node):
-        return datetime.datetime.now()
+        return None
 
     def _get_from_list__company(self, job_node):
         return self._extract_first(job_node, 'from_list__company', required=False)
