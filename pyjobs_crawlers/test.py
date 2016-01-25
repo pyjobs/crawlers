@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-import os
+import datetime
 import unittest
 
-import datetime
-
-from scrapy.item import Item
-from scrapy.settings import Settings
-from scrapy.crawler import CrawlerRunner
 from scrapy.http import Response, Request, HtmlResponse
-from twisted.internet import reactor
-from pyjobs_crawlers import CrawlerProcess, Connector
+from scrapy.item import Item
+
+from pyjobs_crawlers import Connector
 from tests import NotFound
 
 
@@ -60,9 +56,9 @@ class SpiderTest(FunctionalTest):
                 if file_path.find('file://') != -1:
                     file_path = file_path.replace('file://', '')
                 request_response = request.callback(fake_response_from_file(
-                    file_path=file_path,
-                    request=request,
-                    response_class=HtmlResponse
+                        file_path=file_path,
+                        request=request,
+                        response_class=HtmlResponse
                 ))
                 for item in request_response:
                     yield item
