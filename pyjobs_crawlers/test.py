@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import os
 import unittest
 
 from scrapy.http import Response, Request, HtmlResponse
@@ -67,6 +68,18 @@ class SpiderTest(FunctionalTest):
                     yield item
             elif isinstance(response_item, Item):
                 yield response_item
+
+    def _get_result_html_file(self, html_file, items=[]):
+        """
+        :param html_file:
+        :param results:
+        :return:
+        """
+        return self._crawl(
+                start_file_path=os.path.join(self._dump_dir, html_file),
+                items=items,
+                fake_url=self._start_url
+        )
 
     def _get_job_from_expected(self, job_title):
         for job in self._expected_jobs:

@@ -15,9 +15,10 @@ class TestAfpySpider(SpiderTest):
     _test_dir = test_dir
     _dump_dir = test_dir + 'static/afpy/'
     _replace = 'http://www.afpy.org/'
+    _start_url = 'http://www.afpy.org/jobs/'
 
     def test_initial_crawl(self):
-        results = self._get_result_html_file(html_file='afpy/jobs.html')
+        results = self._get_result_html_file(html_file='jobs.html')
 
         self.assertEqual(len(results), 7, "7 jobs must be found in jobs.html, %d found" % len(results))
         self._result_contains_jobs(results, expected_jobs_titles=[
@@ -31,7 +32,7 @@ class TestAfpySpider(SpiderTest):
         ])
 
     def test_two_passage_with_one_more_job(self):
-        items = self._get_result_html_file(html_file='afpy/jobs.html')
+        items = self._get_result_html_file(html_file='jobs.html')
 
         self.assertEqual(len(items), 7, "7 jobs must be found in jobs.html, %d found" % len(items))
         self._result_contains_jobs(items, expected_jobs_titles=[
@@ -44,25 +45,12 @@ class TestAfpySpider(SpiderTest):
             u"DevOps Python/Go/Linux",
         ])
 
-        items = self._get_result_html_file(items=items, html_file='afpy/jobs_add_1.html')
+        items = self._get_result_html_file(items=items, html_file='jobs_add_1.html')
 
         self.assertEqual(len(items), 1, "1 jobs must be found in jobs.html, %d found" % len(items))
         self._result_contains_jobs(items, expected_jobs_titles=[
             u"Développeur Python/C Confirmé (H/F)",
         ])
-
-    def _get_result_html_file(self, html_file, items=[]):
-        """
-        TODO B.S.: refact it
-        :param html_file:
-        :param results:
-        :return:
-        """
-        return self._crawl(
-                start_file_path=os.path.join(test_dir, 'static', html_file),
-                items=items,
-                fake_url='http://www.afpy.org/jobs/'  # TODO: From spider class ?
-        )
 
 if __name__ == '__main__':
     unittest.main()
