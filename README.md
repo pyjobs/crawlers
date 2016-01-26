@@ -7,7 +7,7 @@ Crawlers pour le service d'agrégation d'offres d'emploi pyjobs.
 Pour utiliser ``pyjobs_crawler`` dans votre projet, installez-le comme dépendence:
 
 ```
-pip install git+https://github.com/algoo/crawlers.git@master
+pip install git+https://github.com/pyjobs/crawlers.git@master
 ```
 
 Pour crawler les annonces et les injecter dans votre système:
