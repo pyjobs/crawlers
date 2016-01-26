@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from os.path import dirname, isfile, basename
 import glob
+
+import datetime
 from scrapy.crawler import CrawlerProcess as BaseCrawlerProcess, Crawler
 from pyjobs_crawlers.spiders import JobSpider
 from importlib import import_module
@@ -81,6 +83,34 @@ class Connector(object):
 
     def log(self, source, action, more=None):
         pass
+
+
+class StoreConnector(Connector):
+    def __init__(self):
+        self._jobs = []
+
+    def job_exist(self, job_public_id):
+        return False
+
+    def get_most_recent_job_date(self, source):
+        return datetime.datetime(1970, 1, 1, 0, 0, 0)
+
+    def add_job(self, job_item):
+        self._jobs.append(job_item)
+
+    def log(self, source, action, more=None):
+        pass
+
+    def get_jobs(self):
+        return self._jobs
+
+
+class StdOutputConnector(StoreConnector):
+    def log(self, source, action, more=None):
+        if more:
+            print("LOG: (%s) %s: %s" % (source, action, more))
+        else:
+            print("LOG: (%s) %s" % (source, action))
 
 
 class CrawlerProcess(BaseCrawlerProcess):

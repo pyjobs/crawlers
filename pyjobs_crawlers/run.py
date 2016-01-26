@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
-from multiprocessing import Pool
+import glob
 import optparse
+from importlib import import_module
+from multiprocessing import Pool
+from os.path import dirname, isfile, basename
+
 import fasteners
+from scrapy import signals
 from scrapy.cmdline import _get_commands_dict, _run_command
 from scrapy.utils.project import get_project_settings
-from os.path import dirname, isfile, basename
-import glob
+from scrapy.xlib.pydispatch import dispatcher
 from slugify import slugify
+
 from pyjobs_crawlers import CrawlerProcess
 
 
@@ -23,6 +28,31 @@ def get_spiders_files(spiders_directory=None):
     return [file for file in glob.glob(spiders_directory + "/*.py")
             if isfile(file)
             and not file.endswith('__init__.py')]
+
+
+def run_crawl(spider_module_name, connector, spider_error_callback=None):
+    process = CrawlerProcess({
+        'ITEM_PIPELINES': {
+           'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
+        },
+        'connector': connector,
+        'LOG_ENABLED': False
+    })
+
+    if spider_error_callback:
+        dispatcher.connect(spider_error_callback, signals.spider_error)
+
+    module_name = '.'.join(spider_module_name.split('.')[:-1])
+    class_name = spider_module_name.split('.')[-1]
+
+    spider_module = import_module(module_name)
+    spider_class = getattr(spider_module, class_name)
+
+    process.crawl(spider_class)
+    spider = list(process.crawlers)[0].spider
+    process.start()
+
+    return spider
 
 
 def crawl(site_file_name, connector_class):
@@ -79,7 +109,7 @@ def start_crawl_process(process_params):
             lock.release()
 
 
-def start_crawlers(connector_class, processes=2, debug=False):
+def start_crawlers(connector_class, processes=1, debug=False):
     """
 
     Start spider processes

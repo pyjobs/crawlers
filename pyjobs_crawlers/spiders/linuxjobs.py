@@ -33,33 +33,10 @@ class LolixJobSpider(JobSpider):
         'from_page__tags__css': 'div.container div.row:nth-child(4) div.col-md-9'
     }
 
-    def _month_french_to_english(self, datetime_str):
-        months = {
-            u'janvier': u'january',
-            u'février': u'february',
-            u'mars': u'march',
-            u'avril': u'april',
-            u'mai': u'may',
-            u'juin': u'june',
-            u'juillet': u'july',
-            u'août': u'august',
-            u'septembre': u'september',
-            u'octobre': u'october',
-            u'novembre': u'november',
-            u'décembre': u'december',
-
-        }
-
-        out = datetime_str
-        for key, value in months.items():
-            out = out.replace(key, value)
-        return out
-
     def _get_jobs_node_url(self, jobs_node):
         if len(jobs_node.css('h4')) < 1: # If no h4, then, this is not a job
             raise NotCrawlable()
         return super(LolixJobSpider, self)._get_jobs_node_url(jobs_node)
-
 
     def _get_from_page__publication_datetime(self, job_container):
         publication_datetime_str = self._extract_first(job_container, 'job_publication_datetime')
