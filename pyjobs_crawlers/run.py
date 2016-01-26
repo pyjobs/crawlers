@@ -32,6 +32,9 @@ def get_spiders_files(spiders_directory=None):
 
 def run_crawl(spider_module_name, connector, spider_error_callback=None):
     process = CrawlerProcess({
+        'ITEM_PIPELINES': {
+           'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
+        },
         'connector': connector,
         'LOG_ENABLED': False
     })
@@ -46,7 +49,10 @@ def run_crawl(spider_module_name, connector, spider_error_callback=None):
     spider_class = getattr(spider_module, class_name)
 
     process.crawl(spider_class)
+    spider = list(process.crawlers)[0].spider
     process.start()
+
+    return spider
 
 
 def crawl(site_file_name, connector_class):

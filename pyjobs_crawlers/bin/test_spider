@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 # -*- coding: utf-8 -*-
+import json
 import os
 import sys
+from pprint import pprint
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
@@ -14,20 +16,22 @@ errors_count = 0
 
 
 def error_callback(failure, response, spider):
-    print("ERROR: (%s) %s" % (response.url, str(failure.value)))
+    print("ERROR: (%s) %s:" % (response.url, str(failure.value)))
+    print(str(failure))
 
 
 if __name__ == '__main__':
     connector = StdOutputConnector()
-    run_crawl(
+    spider = run_crawl(
             spider_module_name=sys.argv[1],
             connector=connector,
             spider_error_callback=error_callback
     )
 
-    jobs = connector.get_jobs()
+    jobs = spider.get_connector().get_jobs()
     print('TERMINATED: %d job(s) found' % len(jobs))
 
     if len(jobs):
-        print('DETAILS:')
-        print(jobs)
+        for job in jobs:
+            print('DETAILS FOR %s:' % job['url'])
+            print(json.dumps(job.to_dict(), sort_keys=True, indent=4))

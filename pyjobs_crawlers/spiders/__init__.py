@@ -86,6 +86,8 @@ class JobSpider(Spider):
 
     """Explicit list of available parameters"""
     _crawl_parameters = {
+        'from_page_enabled': True,
+
         # Xpath version of parameters
         'from_list__jobs_lists__xpath': '//body',
         'from_list__jobs__xpath': None,
@@ -147,8 +149,7 @@ class JobSpider(Spider):
         :param required: if parameter not found or null value will raise ParameterNotFound
         :return: mixed
         """
-        if not parameter_name in self._crawl_parameters \
-                or not self._crawl_parameters[parameter_name]:
+        if parameter_name not in self._crawl_parameters:
             if required:
                 raise ParameterNotFound("Crawl Parameter \"%s\" is not set")
             return None
@@ -206,10 +207,13 @@ class JobSpider(Spider):
                         raise StopCrawlJobList()
 
                     request = Request(url, self.parse_job_page)
-                    prefilled_job_item = self._get_prefilled_job_item(job)
+                    prefilled_job_item = self._get_prefilled_job_item(job, url)
                     request.meta['item'] = prefilled_job_item
 
-                    yield request
+                    if self.is_from_page_enabled():
+                        yield request
+                    else:
+                        yield prefilled_job_item
 
             next_page_url = self._get_from_list__next_page(response)
             if next_page_url:
@@ -218,7 +222,7 @@ class JobSpider(Spider):
         except StopCrawlJobList:
             pass
 
-    def _get_prefilled_job_item(self, job_node):
+    def _get_prefilled_job_item(self, job_node, url):
         """
 
         :param job_node: html node containg the job
@@ -229,6 +233,7 @@ class JobSpider(Spider):
         job_item['status'] = JobItem.CrawlStatus.PREFILLED
         job_item['source'] = self.name
         job_item['initial_crawl_datetime'] = datetime.datetime.now()
+        job_item['url'] = url
 
         for job_item_field in self._job_item_fields:
             job_item_method_name = "_get_from_list__%s" % job_item_field
@@ -249,7 +254,7 @@ class JobSpider(Spider):
             job_item['url'] = response.url
 
             for job_item_field in self._job_item_fields:
-                if not job_item[job_item_field]: # Fill field only if not prefilled value
+                if not job_item[job_item_field]:  # Fill field only if not prefilled value
                     job_item_method_name = "_get_from_page__%s" % job_item_field
                     job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
 
@@ -267,7 +272,6 @@ class JobSpider(Spider):
         else:
             job_item['status'] = JobItem.CrawlStatus.INVALID
 
-
     #
     # START - Job list page methods
     #
@@ -279,7 +283,8 @@ class JobSpider(Spider):
         return self._extract(node, 'from_list__jobs', required=True)
 
     def _get_from_list__url(self, node):
-        return self._extract_first(node, 'from_list__url', required=True)
+        extracted_url = self._extract_first(node, 'from_list__url', required=True)
+        return self._get_absolute_url(extracted_url)
 
     def _get_from_list__next_page(self, node):
         return self._extract_first(node, 'from_list__next_page', required=False)
@@ -288,7 +293,9 @@ class JobSpider(Spider):
         return self._extract_first(node, 'from_list__title', required=False)
 
     def _get_from_list__publication_datetime(self, node):
-        return None
+        if self.is_from_page_enabled():
+            return None
+        return datetime.datetime.now()
 
     def _get_from_list__company(self, node):
         return self._extract_first(node, 'from_list__company', required=False)
@@ -346,6 +353,17 @@ class JobSpider(Spider):
     #
     # END - Job page methods
     #
+
+    def _get_absolute_url(self, url):
+        if url.find('http') is 0:
+            return url
+        parsed_uri = urlparse.urlparse(self.url)
+        domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+        return urlparse.urljoin(domain, url)
+
+    def is_from_page_enabled(self):
+        from_page_enabled = self._get_parameter('from_page_enabled', required=False)
+        return from_page_enabled is None or from_page_enabled
 
     def _item_satisfying(self, item):
         """
@@ -455,6 +473,40 @@ class JobSpider(Spider):
 
         for tag in self.extract_specific_tags(html_content):
             yield tag
+
+    def _month_french_to_english(self, datetime_str):
+        months = {
+            u'janvier': u'january',
+            u'février': u'february',
+            u'mars': u'march',
+            u'avril': u'april',
+            u'mai': u'may',
+            u'juin': u'june',
+            u'juillet': u'july',
+            u'août': u'august',
+            u'septembre': u'september',
+            u'octobre': u'october',
+            u'novembre': u'november',
+            u'décembre': u'december',
+
+            u'janv': u'january',
+            u'févr': u'february',
+            u'mars': u'march',
+            u'avril': u'april',
+            u'mai': u'may',
+            u'juin': u'june',
+            u'juil': u'july',
+            u'août': u'august',
+            u'sept': u'september',
+            u'oct': u'october',
+            u'nov': u'november',
+            u'déc': u'december',
+        }
+
+        out = datetime_str
+        for key, value in months.items():
+            out = out.replace(key, value)
+        return out
 
     @staticmethod
     def close(spider, reason):
