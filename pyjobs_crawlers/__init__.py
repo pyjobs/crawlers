@@ -3,7 +3,6 @@ from os.path import dirname, isfile, basename
 import glob
 
 import datetime
-from scrapy.crawler import CrawlerProcess as BaseCrawlerProcess, Crawler
 from pyjobs_crawlers.spiders import JobSpider
 from importlib import import_module
 
@@ -111,7 +110,3 @@ class StdOutputConnector(StoreConnector):
             print("LOG: (%s) %s: %s" % (source, action, more))
         else:
             print("LOG: (%s) %s" % (source, action))
-
-
-class CrawlerProcess(BaseCrawlerProcess):
-    pass
