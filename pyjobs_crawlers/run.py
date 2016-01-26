@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import glob
 import optparse
 from importlib import import_module
@@ -131,3 +132,48 @@ def start_crawlers(connector_class, processes=1, debug=False):
         process_params_chunk = [(spider_file, connector_class) for spider_file in spider_files_chunk]
         p = Pool(len(process_params_chunk))
         p.map(start_crawl_process, process_params_chunk)
+
+
+class Connector(object):
+    """
+    Connector class have to be used to insert caller context in pyjobs_crawler context
+    """
+    def job_exist(self, job_public_id):
+        raise NotImplementedError()
+
+    def get_most_recent_job_date(self, source):
+        raise NotImplementedError()
+
+    def add_job(self, job_item):
+        raise NotImplementedError()
+
+    def log(self, source, action, more=None):
+        pass
+
+
+class StoreConnector(Connector):
+    def __init__(self):
+        self._jobs = []
+
+    def job_exist(self, job_public_id):
+        return False
+
+    def get_most_recent_job_date(self, source):
+        return datetime.datetime(1970, 1, 1, 0, 0, 0)
+
+    def add_job(self, job_item):
+        self._jobs.append(job_item)
+
+    def log(self, source, action, more=None):
+        pass
+
+    def get_jobs(self):
+        return self._jobs
+
+
+class StdOutputConnector(StoreConnector):
+    def log(self, source, action, more=None):
+        if more:
+            print("LOG: (%s) %s: %s" % (source, action, more))
+        else:
+            print("LOG: (%s) %s" % (source, action))

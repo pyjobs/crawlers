@@ -82,8 +82,7 @@ Créez un fichier [python](https://fr.wikipedia.org/wiki/Python_%28langage%29) d
 
 ```
 # -*- coding: utf-8 -*-
-from pyjobs_crawlers.spiders import JobSpider
-from pyjobs_crawlers import JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
 class MonSiteSpider(JobSpider):
@@ -178,8 +177,7 @@ Version minimaliste d'extraction d'annonce sur le site http://jobs.humancoders.c
 
 ```
 # -*- coding: utf-8 -*-
-from pyjobs_crawlers.spiders import JobSpider
-from pyjobs_crawlers import JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
 class HumanCodersSpider(JobSpider):
@@ -236,8 +234,7 @@ Version plus complète d'extraction d'annonce sur le site http://jobs.humancoder
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from pyjobs_crawlers.spiders import JobSpider
-from pyjobs_crawlers import JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
 class HumanCodersSpider(JobSpider):

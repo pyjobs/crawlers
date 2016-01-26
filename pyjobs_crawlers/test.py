@@ -6,7 +6,7 @@ import unittest
 from scrapy.http import Response, Request, HtmlResponse
 from scrapy.item import Item
 
-from pyjobs_crawlers import Connector
+from pyjobs_crawlers.run import Connector
 from tests import NotFound
 
 

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from scrapy import Request
-from pyjobs_crawlers.spiders import JobSpider
-from pyjobs_crawlers.items import JobItem
-from pyjobs_crawlers import JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
 class LolixJobSpider(JobSpider):

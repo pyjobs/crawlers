@@ -172,7 +172,7 @@ class JobSpider(Spider):
         """
 
         :return: Connector
-        :rtype: pyjobs_crawlers.Connector
+        :rtype: pyjobs_crawlers.run.Connector
         """
         if not self._connector:
             raise Exception("_connector attribute is not set")
@@ -516,3 +516,29 @@ class JobSpider(Spider):
         else:
             spider.get_connector().log(spider.name, spider.ACTION_UNEXPECTED_END, reason)
         return Spider.close(spider, reason)
+
+
+class JobSource(object):
+    def __init__(self, id, label, url, logo_url):
+        self.logo_url = logo_url
+        self.label = label
+        self.id = id
+        self.url = url
+
+    @classmethod
+    def from_job_spider(cls, job_spider_class):
+        """
+
+        Return a JobSource instance from a pyjobs_crawlers.spiders.JobSpider class
+
+        :param job_spider_class: The JobCrawler class
+        :type job_spider_class: pyjobs_crawlers.spiders.JobSpider
+        :return: pyjobs_crawlers.JobSource instance
+        :rtype: pyjobs_crawlers.spiders.JobSource
+        """
+        return cls(
+            id=job_spider_class.name,
+            label=job_spider_class.label,
+            url=job_spider_class.url,
+            logo_url=job_spider_class.logo_url
+        )

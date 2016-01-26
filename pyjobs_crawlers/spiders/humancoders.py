@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from pyjobs_crawlers.spiders import JobSpider
-from pyjobs_crawlers import JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
 class HumanCodersSpider(JobSpider):
