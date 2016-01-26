@@ -493,6 +493,7 @@ class JobSpider(Spider):
             u'févr': u'february',
             u'mars': u'march',
             u'avril': u'april',
+            u'avr': u'april',
             u'mai': u'may',
             u'juin': u'june',
             u'juil': u'july',

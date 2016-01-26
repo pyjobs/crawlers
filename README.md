@@ -258,7 +258,7 @@ class HumanCodersSpider(JobSpider):
         'from_list__company__css': 'div.company span.company_name::text',
 
         'from_page__container__css': 'body',
-        'from_page__company_url': 'div.company_url a::attr(href)',
+        'from_page__company_url__css': 'div.company_url a::attr(href)',
         'from_page__description__css': '#description'
     }
 
