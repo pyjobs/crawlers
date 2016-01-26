@@ -45,6 +45,18 @@ Récupérez le projet:
 git clone https://github.com/pyjobs/crawlers.git pyjobs_crawlers
 ```
 
+Pour installer les dépendances, placez vous dans le répertoire ``pyjobs_crawlers``:
+
+```
+cd pyjobs_crawlers
+```
+
+Installez les dépendences python (il est conseillé de créer un [environnement virtuel](http://apprendre-python.com/page-virtualenv-python-environnement-virtuel)):
+
+```
+pip install -r requirements.txt
+```
+
 ## Ajouter une source d'annonces
 
 Ajouter une nouvelle source d'offres d'emplois [python](https://fr.wikipedia.org/wiki/Python_%28langage%29) consiste à ajouter un fichier dans le répertoire ``spiders``. Le contenu de ce fichier est détaillé plus bas.
