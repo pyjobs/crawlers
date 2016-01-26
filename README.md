@@ -83,7 +83,7 @@ class MonSiteSpider(JobSpider):
     logo_url = 'http://www.mon-site.com/logo.png'  # L'adresse du logo du site d'offres d'emplois
 
     _crawl_parameters = {
-        #  Paramètres à modifier après
+        #  Paramètres à ajouter, voir ci-après
     }
 
 # N'oubliez pas cette ligne
@@ -120,7 +120,7 @@ Les différentes paramètres d'extraction des informations d'offres sont:
 
 Ainsi que quelques paramètres nécéssaire au parcour des pages que nous allons voir ci-après.
 
-Un paramètre sera alorsd exprimé comme suis: prefix__paramètre__suffix. Exemple:
+Un paramètre sera alors exprimé sous la forme: prefix__paramètre__suffix. Exemple:
 
 ```
     _crawl_parameters = {
@@ -154,7 +154,7 @@ Avant de renseigner les paramètre de récupération d'informations d'offres d'e
 
 Vous devez ensuite renseigner les paramètres d'extraction des informations d'offres (``title``, ``publication_datetime``, etc.)
 
-#### Exemple
+#### Exemples
 
 ##### Minimaliste
 
@@ -253,7 +253,7 @@ class HumanCodersSpider(JobSpider):
     def _get_from_list__publication_datetime(self, node):
         raw_date = self._extract_first(node, 'from_list__publication_datetime')
         if raw_date:  # La date est sous la forme "24 août 2015"
-            raw_date_english = self._month_french_to_english(raw_date)  # On lma converti en Anglais
+            raw_date_english = self._month_french_to_english(raw_date)  # On la converti en Anglais
             return datetime.strptime(raw_date_english, '%d %B %Y')  # On extrait la date de ce texte
 
 # N'oubliez pas cette ligne
@@ -268,3 +268,5 @@ Dans un terminal, placez vous dans le dossier du [projet](#recuperer_le_projet) 
 ```
 pyjobs_crawlers/bin/test_spider pyjobs_crawlers.spiders.humancoders.HumanCodersSpider
 ```
+
+*NOTE*: Le paramètre sur structure ainsi: pyjobs_crawlers.spiders.nom_du_fichier.NomDeLaClasse
