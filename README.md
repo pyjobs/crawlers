@@ -117,6 +117,7 @@ Nous pourrons indiquer deux type d'expressions pour extraire l'information:
 * Une expression [CSS](https://fr.wikipedia.org/wiki/Feuilles_de_style_en_cascade): Sera exprimé par le suffix ``css``.
 
 *NOTE*: Retrouvez la [documentation Scrapy](http://doc.scrapy.org/en/1.0/topics/selectors.html) pour en savoir plus sur l'extraction.
+
 *NOTE*: Il est possible de donner une liste d'expressions. Elles seront testés une à une.
 
 Les différentes paramètres d'extraction des informations d'offres sont:
