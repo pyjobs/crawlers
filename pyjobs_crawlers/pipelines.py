@@ -8,7 +8,10 @@
 
 class RecordJobPipeline(object):
 
+    ACTION_SAVED = 'SAVED'
+
     def process_item(self, item, spider):
         spider.get_connector().add_job(job_item=item)
+        spider.get_connector().log(spider.name, self.ACTION_SAVED, item.url)
         return item
 
