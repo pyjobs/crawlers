@@ -393,7 +393,8 @@ class JobSpider(Spider):
                 return None
             raise
 
-    def _extract(self, container, selector_name, resolve_selector_name=True, selector_type=None, required=True):
+    def _extract(self, container, selector_name, resolve_selector_name=True, selector_type=None, required=True,
+                 no_resolve_selector_value=None):
         """
 
         :param container: html node
@@ -405,17 +406,21 @@ class JobSpider(Spider):
         if not resolve_selector_name and not selector_type:
             raise Exception('You must set "selector_type" parameter')
 
+        if not resolve_selector_name and not no_resolve_selector_value:
+            raise Exception('You must set "no_resolve_selector_value" parameter')
+
         if resolve_selector_name:
             selector_type, selector = self._get_resolved_selector(selector_name)
         else:
-            selector = selector_name
+            selector = no_resolve_selector_value
 
         if isinstance(selector, (list, tuple)):
             for selector_option in selector:
                 try:
                     return self._extract(
                             container,
-                            selector_option,
+                            selector_name=selector_name,
+                            no_resolve_selector_value=selector_option,
                             resolve_selector_name=False,
                             selector_type=selector_type,
                             required=required
