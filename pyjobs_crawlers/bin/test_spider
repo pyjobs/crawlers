@@ -4,12 +4,11 @@
 import json
 import os
 import sys
-from pprint import pprint
+
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
 
-from pyjobs_crawlers import StdOutputConnector
 from pyjobs_crawlers.run import run_crawl, StdOutputConnector
 
 errors_count = 0
