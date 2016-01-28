@@ -72,6 +72,7 @@ class JobSpider(Spider):
     label = None  # To be overwritten
     url = None  # To be overwritten
     logo_url = None  # To be overwritten
+    reformat_url = "{domain}/{found_url}"
 
     """Job item fields will be filled by overrideable methods"""
     _job_item_fields = [
@@ -359,7 +360,7 @@ class JobSpider(Spider):
             return url
         parsed_uri = urlparse.urlparse(self.url)
         domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-        return urlparse.urljoin(domain, url)
+        return self.reformat_url.format(domain=domain, found_url=url)
 
     def is_from_page_enabled(self):
         from_page_enabled = self._get_parameter('from_page_enabled', required=False)
