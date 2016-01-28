@@ -481,40 +481,41 @@ class JobSpider(Spider):
         for tag in self.extract_specific_tags(html_content):
             yield tag
 
-    def _month_french_to_english(self, datetime_str):
-        months = {
-            u'janvier': u'january',
-            u'février': u'february',
-            u'mars': u'march',
-            u'avril': u'april',
-            u'mai': u'may',
-            u'juin': u'june',
-            u'juillet': u'july',
-            u'août': u'august',
-            u'septembre': u'september',
-            u'octobre': u'october',
-            u'novembre': u'november',
-            u'décembre': u'december',
+    @staticmethod
+    def _month_french_to_english(datetime_str):
+        months = (
+            (u'janvier', u'january'),
+            (u'février', u'february'),
+            (u'mars', u'march'),
+            (u'avril', u'april'),
+            (u'mai', u'may'),
+            (u'juin', u'june'),
+            (u'juillet', u'july'),
+            (u'août', u'august'),
+            (u'septembre', u'september'),
+            (u'octobre', u'october'),
+            (u'novembre', u'november'),
+            (u'décembre', u'december'),
 
-            u'janv': u'january',
-            u'févr': u'february',
-            u'mars': u'march',
-            u'avril': u'april',
-            u'avr': u'april',
-            u'mai': u'may',
-            u'juin': u'june',
-            u'juil': u'july',
-            u'août': u'august',
-            u'sept': u'september',
-            u'oct': u'october',
-            u'nov': u'november',
-            u'déc': u'december',
-        }
+            (u'janv', u'january'),
+            (u'févr', u'february'),
+            (u'mars', u'march'),
+            (u'avril', u'april'),
+            (u'avr', u'april'),
+            (u'mai', u'may'),
+            (u'juin', u'june'),
+            (u'juil', u'july'),
+            (u'août', u'august'),
+            (u'sept', u'september'),
+            (u'oct', u'october'),
+            (u'nov', u'november'),
+            (u'déc', u'december'),
+        )
 
-        out = datetime_str
-        for key, value in months.items():
-            out = out.replace(key, value)
-        return out
+        for key, value in months:
+            if key in datetime_str:
+                return datetime_str.replace(key, value)
+        return datetime_str
 
     @staticmethod
     def close(spider, reason):
