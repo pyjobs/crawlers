@@ -25,10 +25,6 @@ class TestAfpySpider(SpiderTest):
             u"Développeur Python full stack",
             u"Développeur Python orienté FullStack",
             u"Développeur backend Python / Go H/F",
-            u"Développeur web Python / Javascript",
-            u"Jaccede recherche un développeur full-stack",
-            u"Lead Developer Python (H/F)",
-            u"DevOps Python/Go/Linux",
         ])
 
     def test_two_passage_with_one_more_job(self):
@@ -39,10 +35,6 @@ class TestAfpySpider(SpiderTest):
             u"Développeur Python full stack",
             u"Développeur Python orienté FullStack",
             u"Développeur backend Python / Go H/F",
-            u"Développeur web Python / Javascript",
-            u"Jaccede recherche un développeur full-stack",
-            u"Lead Developer Python (H/F)",
-            u"DevOps Python/Go/Linux",
         ])
 
         items = self._get_result_html_file(items=items, html_file='jobs_add_1.html')
