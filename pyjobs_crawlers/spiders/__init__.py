@@ -219,7 +219,8 @@ class JobSpider(Spider):
             next_page_url = self._get_from_list__next_page(response)
             if next_page_url:
                 yield Request(url=next_page_url)
-
+        except NotFound, exc:
+            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
         except StopCrawlJobList:
             pass
 
