@@ -23,7 +23,7 @@ class AfpyJobSpider(JobSpider):
         'from_page__company__xpath': ('.//h4/a/text()', './/h4/text()'),
         'from_page__company_url__xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
         'from_page__address__xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
-        'from_page__description__css': '#content-core',
+        'from_page__description__css': '#content',
         'from_page__tags__xpath': './div[@id="content-core"]/div[@id="content-core"]'
     }
 

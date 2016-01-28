@@ -12,6 +12,7 @@ class LolixJobSpider(JobSpider):
     label = 'Lolix'
     url = 'http://fr.lolix.org/'
     logo_url = 'http://fr.lolix.org/img/lolix/offer.png'
+    reformat_url = "{domain}/search/offre/{found_url}"
 
     _crawl_parameters = {
         'from_list__jobs_lists__xpath': '//body',
@@ -30,7 +31,9 @@ class LolixJobSpider(JobSpider):
 
     def _get_from_list__url(self, job_node):
         url = super(LolixJobSpider, self)._get_from_list__url(job_node)
-        return u"%s%s" % (self.JOB_OFFER_BASE_URL, url)
+        if url and url.find('http') is None:
+            return u"%s%s" % (self.JOB_OFFER_BASE_URL, url)
+        return url
 
     def _get_from_list__publication_datetime(self, job_node):
         date_text = self._extract_first(job_node, 'from_list__publication_datetime')

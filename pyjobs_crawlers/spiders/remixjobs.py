@@ -28,8 +28,8 @@ class RemixJobsSpider(JobSpider):
 
         feed_parser = feedparser.parse(response.body)
         for job_entry in feed_parser.entries:
-            job_url = feed_parser.entries[0].link
-            job_publication_date = datetime.fromtimestamp(mktime(feed_parser.entries[0].published_parsed))
+            job_url = job_entry.link
+            job_publication_date = datetime.fromtimestamp(mktime(job_entry.published_parsed))
 
             job_publication_time = mktime(job_publication_date.timetuple())
             last_job_publication_time = mktime(self._last_job_date.timetuple())
@@ -43,8 +43,8 @@ class RemixJobsSpider(JobSpider):
             request = Request(job_url, self.parse_job_page)
             request.meta['item'] = prepared_job
 
-            prepared_job['title'] = feed_parser.entries[0].title
-            prepared_job['description'] = feed_parser.entries[0].description
+            prepared_job['title'] = job_entry.title
+            prepared_job['description'] = job_entry.description
             prepared_job['publication_datetime'] = job_publication_date
 
             yield request
@@ -56,7 +56,7 @@ class RemixJobsSpider(JobSpider):
         job_node = response.css('#content .layer')
 
         url = response.url
-        title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
+        # title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
 
         job_infos = job_node.css('ul.job-infos')[0]
         company = job_infos.xpath('./li[1]/a/text()').extract_first().strip().rstrip(',')
@@ -66,7 +66,7 @@ class RemixJobsSpider(JobSpider):
         company_url = job_infos.xpath('./li[1]/a/@href').extract_first().strip()
 
         address = job_infos.xpath('./li[4]/text()').extract_first().strip().rstrip(',')
-        description = job_node.css('div.job-description').extract()
+        # description = job_node.css('div.job-description').extract()
 
         # 19 mars 2015,
         #
