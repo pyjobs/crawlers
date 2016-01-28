@@ -15,7 +15,7 @@ errors_count = 0
 
 
 def error_callback(failure, response, spider):
-    print("ERROR: (%s) %s:" % (response.url, str(failure.value)))
+    print("UNCATCH ERROR: (%s) %s:" % (response.url, str(failure.value)))
     print(str(failure))
 
 
@@ -28,9 +28,10 @@ if __name__ == '__main__':
     )
 
     jobs = spider.get_connector().get_jobs()
-    print('TERMINATED: %d job(s) found' % len(jobs))
 
     if len(jobs):
         for job in jobs:
             print('DETAILS FOR %s:' % job['url'])
             print(json.dumps(job.to_dict(), sort_keys=True, indent=4))
+
+    print('TERMINATED: %d job(s) found' % len(jobs))
