@@ -154,7 +154,7 @@ class JobSpider(Spider):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
 
-    def _get_parameter(self, parameter_name, required=False):
+    def get_parameter(self, parameter_name, required=False):
         """
 
         :param parameter_name: name of parameter
@@ -378,7 +378,7 @@ class JobSpider(Spider):
         return self.reformat_url.format(domain=domain, found_url=url)
 
     def is_from_page_enabled(self):
-        from_page_enabled = self._get_parameter('from_page_enabled', required=False)
+        from_page_enabled = self.get_parameter('from_page_enabled', required=False)
         return from_page_enabled is None or from_page_enabled
 
     def _item_satisfying(self, item):
@@ -465,11 +465,11 @@ class JobSpider(Spider):
         """
         css_parameter_name = "%s__css" % selector_name
         try:
-            return 'css', self._get_parameter(css_parameter_name, required=True)
+            return 'css', self.get_parameter(css_parameter_name, required=True)
         except ParameterNotFound:
             try:
                 xpath_parameter_name = "%s__xpath" % selector_name
-                return 'xpath', self._get_parameter(xpath_parameter_name, required=True)
+                return 'xpath', self.get_parameter(xpath_parameter_name, required=True)
             except ParameterNotFound:
                 pass
 
