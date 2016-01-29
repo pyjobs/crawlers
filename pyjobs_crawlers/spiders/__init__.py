@@ -154,19 +154,20 @@ class JobSpider(Spider):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
 
-    def get_parameter(self, parameter_name, required=False):
+    @classmethod
+    def get_parameter(cls, parameter_name, required=False):
         """
 
         :param parameter_name: name of parameter
         :param required: if parameter not found or null value will raise ParameterNotFound
         :return: mixed
         """
-        if parameter_name not in self._crawl_parameters:
+        if parameter_name not in cls._crawl_parameters:
             if required:
                 raise ParameterNotFound("Crawl Parameter \"%s\" is not set")
             return None
 
-        return self._crawl_parameters[parameter_name]
+        return cls._crawl_parameters[parameter_name]
 
     def _set_crawler(self, crawler):
         super(JobSpider, self)._set_crawler(crawler)
