@@ -495,6 +495,9 @@ class JobSpider(Spider):
         for tag in self.extract_specific_tags(html_content):
             yield tag
 
+    def get_crawl_parameters(self):
+        return self._crawl_parameters
+
     @staticmethod
     def _month_french_to_english(datetime_str):
         months = (
