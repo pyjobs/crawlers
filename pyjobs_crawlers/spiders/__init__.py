@@ -545,8 +545,8 @@ class JobSource(object):
         :rtype: pyjobs_crawlers.spiders.JobSource
         """
         return cls(
-            id=job_spider_class.name,
-            label=job_spider_class.label,
-            url=job_spider_class.url,
-            logo_url=job_spider_class.logo_url
+                id=job_spider_class.name,
+                label=job_spider_class.label,
+                url=job_spider_class.url,
+                logo_url=job_spider_class.logo_url
         )
