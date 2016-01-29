@@ -15,6 +15,10 @@ class RemixJobsSpider(JobSpider):
     url = 'https://remixjobs.com/'
     logo_url = 'https://remixjobs.com/images/press/logos/logo2-450-140.png'
 
+    _crawl_parameters = {
+        'from_page__tags__xpath': '.'
+    }
+
     def __init__(self, *args, **kwargs):
         super(RemixJobsSpider, self).__init__(*args, **kwargs)
         self._last_job_date = datetime(1970, 1, 1, 0, 0, 0)
@@ -63,10 +67,14 @@ class RemixJobsSpider(JobSpider):
         if not company:
             company = job_infos.xpath('./li[1]/text()').extract_first().strip().rstrip(',')
 
-        company_url = job_infos.xpath('./li[1]/a/@href').extract_first().strip()
+        # company_url = job_infos.xpath('./li[1]/a/@href').extract_first().strip()
 
         address = job_infos.xpath('./li[4]/text()').extract_first().strip().rstrip(',')
         # description = job_node.css('div.job-description').extract()
+
+        tags_html = self._extract_first(job_node, 'from_page__tags', required=False)
+        if tags_html:
+            item['tags'] = self.extract_tags(tags_html)
 
         # 19 mars 2015,
         #
@@ -82,7 +90,7 @@ class RemixJobsSpider(JobSpider):
         item['url'] = url  # used as uid
         item['source'] = self.name
         item['company'] = company
-        item['company_url'] = company_url
+        # item['company_url'] = company_url
         item['initial_crawl_datetime'] = datetime.now()
         item['status'] = JobItem.CrawlStatus.COMPLETED
 
