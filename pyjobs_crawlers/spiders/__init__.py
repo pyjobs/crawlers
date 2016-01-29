@@ -169,6 +169,11 @@ class JobSpider(Spider):
 
         return cls._crawl_parameters[parameter_name]
 
+    @classmethod
+    def has_parameter_for_field(cls, field_name):
+        return cls.get_parameter('from_page__' + field_name) \
+                or cls.get_parameter('from_list__' + field_name)
+
     def _set_crawler(self, crawler):
         super(JobSpider, self)._set_crawler(crawler)
         self._connector = self.settings.get('connector')
