@@ -171,8 +171,19 @@ class JobSpider(Spider):
 
     @classmethod
     def has_parameter_for_field(cls, field_name):
-        return cls.get_parameter('from_page__' + field_name) \
-                or cls.get_parameter('from_list__' + field_name)
+        try:
+            cls._get_resolved_selector('from_page__' + field_name)
+            return True
+        except ParameterNotFound:
+            pass
+
+        try:
+            cls._get_resolved_selector('from_list__' + field_name)
+            return True
+        except ParameterNotFound:
+            pass
+
+        return False
 
     def _set_crawler(self, crawler):
         super(JobSpider, self)._set_crawler(crawler)
@@ -463,7 +474,8 @@ class JobSpider(Spider):
         # The join of splited text remove \n \t etc ...
         return extract
 
-    def _get_resolved_selector(self, selector_name):
+    @classmethod
+    def _get_resolved_selector(cls, selector_name):
         """
 
         :param selector_name: The name of selector (withour suffix __xpath/__css)
@@ -471,11 +483,11 @@ class JobSpider(Spider):
         """
         css_parameter_name = "%s__css" % selector_name
         try:
-            return 'css', self.get_parameter(css_parameter_name, required=True)
+            return 'css', cls.get_parameter(css_parameter_name, required=True)
         except ParameterNotFound:
             try:
                 xpath_parameter_name = "%s__xpath" % selector_name
-                return 'xpath', self.get_parameter(xpath_parameter_name, required=True)
+                return 'xpath', cls.get_parameter(xpath_parameter_name, required=True)
             except ParameterNotFound:
                 pass
 
