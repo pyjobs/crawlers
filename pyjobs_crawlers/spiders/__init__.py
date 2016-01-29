@@ -28,6 +28,17 @@ class StopCrawlJobList(StopIteration):
     pass
 
 
+class JobFieldUncomputable(Exception):
+    pass
+
+
+class PublicationDatetimeUncomputable(JobFieldUncomputable):
+    @staticmethod
+    def fix_job_item(job_item):
+        job_item['publication_datetime'] = datetime.datetime.now()
+        job_item['publication_datetime_is_fake'] = True
+
+
 class Tag(object):
     def __init__(self, tag, iteration_nb=1):
         self.tag = tag
@@ -258,7 +269,10 @@ class JobSpider(Spider):
             for job_item_field in self._job_item_fields:
                 if not job_item[job_item_field]:  # Fill field only if not prefilled value
                     job_item_method_name = "_get_from_page__%s" % job_item_field
-                    job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
+                    try:
+                        job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
+                    except JobFieldUncomputable as exc:
+                        exc.fix_job_item(job_item)
 
         except NotFound, exc:
             # If required extraction fail, we log it
@@ -297,7 +311,7 @@ class JobSpider(Spider):
     def _get_from_list__publication_datetime(self, node):
         if self.is_from_page_enabled():
             return None
-        return datetime.datetime.now()
+        raise PublicationDatetimeUncomputable()
 
     def _get_from_list__company(self, node):
         return self._extract_first(node, 'from_list__company', required=False)
@@ -332,7 +346,7 @@ class JobSpider(Spider):
         return self._extract_first(node, 'from_page__title', required=True)
 
     def _get_from_page__publication_datetime(self, node):
-        return datetime.datetime.now()
+        raise PublicationDatetimeUncomputable()
 
     def _get_from_page__company(self, node):
         return self._extract_first(node, 'from_page__company', required=False)

@@ -26,6 +26,7 @@ class JobItem(scrapy.Item):
     company_url = scrapy.Field()
 
     publication_datetime = scrapy.Field()
+    publication_datetime_is_fake = scrapy.Field()
     initial_crawl_datetime = scrapy.Field()
 
     status = scrapy.Field()
