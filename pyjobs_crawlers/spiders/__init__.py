@@ -96,6 +96,9 @@ class JobSpider(Spider):
         'tags'
     ]
 
+    """Is possible to indicate what a field is collected here (in case of no _crawl_parameters usage)"""
+    _forced_collected_field = ()
+
     """Explicit list of available parameters"""
     _crawl_parameters = {
         'from_page_enabled': True,
@@ -171,6 +174,9 @@ class JobSpider(Spider):
 
     @classmethod
     def has_parameter_for_field(cls, field_name):
+        if field_name in cls._forced_collected_field:
+            return True
+
         try:
             cls._get_resolved_selector('from_page__' + field_name)
             return True

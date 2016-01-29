@@ -15,6 +15,10 @@ class RemixJobsSpider(JobSpider):
     url = 'https://remixjobs.com/'
     logo_url = 'https://remixjobs.com/images/press/logos/logo2-450-140.png'
 
+    _forced_collected_field = (
+        'tags', 'title', 'description', 'publication_datetime', 'company', 'address'
+    )
+
     _crawl_parameters = {
         'from_page__tags__xpath': '.'
     }
