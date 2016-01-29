@@ -1,42 +1,7 @@
 - address: "2 cit\xE9 Paradis"
   company: Sewan Communications
   company_url: http://www.sewan.fr/
-  description: "<div id=\"content-core\"> <div id=\"content-core\"> <div class=\"\
-    discreet\"> Cr\xE9\xE9 le 09/12/2015 11:32 </div> <div style=\"float : right;\
-    \ padding : 0 10px 10px 0\"> <a target=\"_blank\" href=\"http://www.sewan.fr/\"\
-    ><img src=\"http://www.afpy.org/jobs/developpeur-python-oriente-fullstack/image_medium\"\
-    \ alt=\"D\xE9veloppeur Python orient\xE9 FullStack\" title=\"D\xE9veloppeur Python\
-    \ orient\xE9 FullStack\" height=\"83\" width=\"200\"></a> </div> <h3>Profil</h3>\
-    \ <p>Vous \xEAtes un(e) passionn\xE9(e) de l\u2019informatique, dans le vrai sens\
-    \ du terme, et vous \xE9valuez votre travail au travers du prisme de la qualit\xE9\
-    .</p> <p><span>Vous \xEAtes</span> :</p> <ul> <li><span>Motiv\xE9(e) pour travailler\
-    \ dans une \xE9quipe jeune, dynamique et ultra-motiv\xE9e ;</span></li> <li><span>Organis\xE9\
-    (e), autonome et responsable ;</span></li> <li><span>\xC9vang\xE9liste des bonnes\
-    \ pratiques.</span></li> </ul> <p><span>Vous savez</span> :</p> <ul> <li><span>traduire\
-    \ des besoins en sp\xE9cifications fonctionnelles ;</span></li> <li><span>analyser\
-    \ des probl\xE9matiques et avez un esprit orient\xE9 solutions ;</span></li> <li><span>faire\
-    \ des tests unitaires et \xE9crire du code comment\xE9, lisible et fiable ;</span></li>\
-    \ <li><span>maintenir du code \xAB business critical \xBB en production.</span></li>\
-    \ </ul> <p><span>Vous souhaitez</span> :</p> <ul> <li><span>int\xE9grer une \xE9\
-    quipe jeune, agile et dynamique ;</span></li> <li><span>d\xE9montrer vos comp\xE9\
-    tences et les mettre en valeur dans la soci\xE9t\xE9 ;</span></li> <li><span>que\
-    \ votre travail ait un impact direct et imm\xE9diat sur le business ;</span></li>\
-    \ <li><span>monter en comp\xE9tence sur des sujets d\u2019expertise de votre choix\
-    \ ?</span></li> </ul> <p>Alors rejoignez-nous !</p> <p> </p> <h3>Environnement\
-    \ technique</h3> <ul> <li><span>Core technologies : Python 2.7, MySQL (Percona\
-    \ XtraDB), MongoDB</span></li> <li><span>Qualit\xE9 : Git, Jenkins, SonarQube,\
-    \ Redmine</span></li> <li><span>Front : JavaScript/HTML/PHP, Apache</span></li>\
-    \ <li><span>Syst\xE8me : Linux, nginx, VMware, Salt, Fabric</span></li> </ul>\
-    \ <p> </p> <h3>Environnement &amp; Avantages</h3> <ul> <li><span>Pair Programming\
-    \ et Peer Review</span></li> <li><span>R\xE9unions d\u2019\xE9quipe trimestrielles</span></li>\
-    \ <li><span>Ambiance calme, s\xE9rieuse et d\xE9tendue</span></li> <li><span>Sens\
-    \ de l\u2019humour recommand\xE9 !</span></li> <li><span>Au c\u0153ur de Paris\
-    \ 10e</span></li> <li><span>Locaux agr\xE9ables</span></li> <li><span>\xC9v\xE9\
-    nements internes r\xE9guliers</span></li> <li><span>Tickets restaurant \xE0 10\u20AC\
-    </span></li> <li><span>Mutuelle</span></li> </ul> <hr> <h4> <a target=\"_blank\"\
-    \ href=\"http://www.sewan.fr/\">Sewan Communications</a> </h4> <div class=\"row\"\
-    >2 cit\xE9 Paradis<br>75010 Paris</div> <div> <em>Contact:</em> <a href=\"mailto:recrutement@sewan.fr\"\
-    >RH</a> <span>0176210000</span> </div> </div> </div>"
+  description: "<div id=\"content\"> <div id=\"viewlet-above-content-title\"></div> <h1 id=\"parent-fieldname-title\" class=\"documentFirstHeading\"> Développeur Python orienté FullStack </h1> <div id=\"viewlet-below-content-title\"> </div> <div id=\"parent-fieldname-description\" class=\"documentDescription\"> Sewan est un opérateur nouvelle génération, 100% cloud, orienté sur l’expérience utilisateur. Nous sommes une société jeune, en forte croissance et innovante dont le métier est piloté par un système d’information développé in-house avec beaucoup de passion et d’enthousiasme. Notre philosophie : s’entourer de gens passionnés par ce qu’ils font et qui aiment travailler sur des projets qui sont utilisés au quotidien par des centaines de milliers d’utilisateurs. </div> <div id=\"viewlet-above-content-body\"></div> <div id=\"content-core\"> <div id=\"content-core\"> <div class=\"discreet\"> Créé le 09/12/2015 11:32 </div> <div style=\"float : right; padding : 0 10px 10px 0\"> <a target=\"_blank\" href=\"http://www.sewan.fr/\"><img src=\"http://www.afpy.org/jobs/developpeur-python-oriente-fullstack/image_medium\" alt=\"Développeur Python orienté FullStack\" title=\"Développeur Python orienté FullStack\" height=\"83\" width=\"200\"></a> </div> <h3>Profil</h3> <p>Vous êtes un(e) passionné(e) de l’informatique, dans le vrai sens du terme, et vous évaluez votre travail au travers du prisme de la qualité.</p> <p><span>Vous êtes</span> :</p> <ul> <li><span>Motivé(e) pour travailler dans une équipe jeune, dynamique et ultra-motivée ;</span></li> <li><span>Organisé(e), autonome et responsable ;</span></li> <li><span>Évangéliste des bonnes pratiques.</span></li> </ul> <p><span>Vous savez</span> :</p> <ul> <li><span>traduire des besoins en spécifications fonctionnelles ;</span></li> <li><span>analyser des problématiques et avez un esprit orienté solutions ;</span></li> <li><span>faire des tests unitaires et écrire du code commenté, lisible et fiable ;</span></li> <li><span>maintenir du code « business critical » en production.</span></li> </ul> <p><span>Vous souhaitez</span> :</p> <ul> <li><span>intégrer une équipe jeune, agile et dynamique ;</span></li> <li><span>démontrer vos compétences et les mettre en valeur dans la société ;</span></li> <li><span>que votre travail ait un impact direct et immédiat sur le business ;</span></li> <li><span>monter en compétence sur des sujets d’expertise de votre choix ?</span></li> </ul> <p>Alors rejoignez-nous !</p> <p> </p> <h3>Environnement technique</h3> <ul> <li><span>Core technologies : Python 2.7, MySQL (Percona XtraDB), MongoDB</span></li> <li><span>Qualité : Git, Jenkins, SonarQube, Redmine</span></li> <li><span>Front : JavaScript/HTML/PHP, Apache</span></li> <li><span>Système : Linux, nginx, VMware, Salt, Fabric</span></li> </ul> <p> </p> <h3>Environnement &amp; Avantages</h3> <ul> <li><span>Pair Programming et Peer Review</span></li> <li><span>Réunions d’équipe trimestrielles</span></li> <li><span>Ambiance calme, sérieuse et détendue</span></li> <li><span>Sens de l’humour recommandé !</span></li> <li><span>Au cœur de Paris 10e</span></li> <li><span>Locaux agréables</span></li> <li><span>Événements internes réguliers</span></li> <li><span>Tickets restaurant à 10€</span></li> <li><span>Mutuelle</span></li> </ul> <hr> <h4> <a target=\"_blank\" href=\"http://www.sewan.fr/\">Sewan Communications</a> </h4> <div class=\"row\">2 cité Paradis<br>75010 Paris</div> <div> <em>Contact:</em> <a href=\"mailto:recrutement@sewan.fr\">RH</a> <span>0176210000</span> </div> </div> </div> <div id=\"viewlet-below-content-body\"> <div class=\"visualClear\"><!-- --></div> <div class=\"documentActions\"> </div> </div> </div>"
   publication_datetime: '2015-12-09 11:32:00'
   source: afpy
   status: completed
@@ -46,54 +11,7 @@
 - address: null
   company: Coopengo
   company_url: null
-  description: "<div id=\"content-core\"> <div id=\"content-core\"> <div class=\"\
-    discreet\"> Cr\xE9\xE9 le 09/12/2015 16:34 </div> <div style=\"float : right;\
-    \ padding : 0 10px 10px 0\"> <img src=\"http://www.afpy.org/jobs/developpeur-python-full-stack/image_medium\"\
-    \ alt=\"D\xE9veloppeur Python full stack\" title=\"D\xE9veloppeur Python full\
-    \ stack\" height=\"150\" width=\"200\"> </div> <p><b>Notre approche</b></p> <p>-\
-    \ Utiliser au mieux les technologies d'aujourd'hui</p> <p>- Innover et contribuer\
-    \ \xE0 l'\xE9cosyst\xE8me open source</p> <p>- Animer une communaut\xE9 autour\
-    \ du produit et le faire \xE9voluer par la contribution</p> <p>- Faire simple\
-    \ et efficace </p> <p> </p> <p><b>Nos convictions</b></p> <p>- La technologie\
-    \ est un levier important pour se diff\xE9rencier dans le m\xE9tier de l'assurance</p>\
-    \ <p>- La bonne utilisation/exploitation des donn\xE9es est le plus gros challenge\
-    \ des acteurs Assurance aujourd'hui</p> <p>- L'ergonomie des outils de travail\
-    \ est essentielle au rendement et \xE0 l'efficacit\xE9 des op\xE9rations m\xE9\
-    tier</p> <p>- Une mod\xE9lisation de qualit\xE9 permet d\u2019adresser efficacement\
-    \ les probl\xE9matiques internationales</p> <p> </p> <p><b>Organisation</b></p>\
-    \ <p>- Notre produit, Coog, contient une application back office et une application\
-    \ front office, couvrant ainsi toute la cha\xEEne de valeur de l\u2019assurance.</p>\
-    \ <p>- Coog est construit en \xE9troite collaboration avec nos clients (it\xE9\
-    rations courtes)</p> <p>- Notre \xE9quipe R&amp;D joue un r\xF4le central pour\
-    \ :</p> <p style=\"padding-left: 30px; \"> - canaliser les contributions et g\xE9\
-    rer la roadmap</p> <p style=\"padding-left: 30px; \"> - mettre en place des r\xE8\
-    gles et des processus (outill\xE9s) pour p\xE9renniser le code</p> <p style=\"\
-    padding-left: 30px; \"> - assurer les \xE9volutions technologiques majeures et\
-    \ packager Coog</p> <p style=\"padding-left: 30px; \"> - assurer le support n\xE9\
-    cessaire aux projets</p> <p>- Les \xE9quipes delivery travaillent dans le cadre\
-    \ d'un ou plusieurs projet(s) client :</p> <p style=\"padding-left: 30px; \">\
-    \ - pour impl\xE9menter ses besoins sp\xE9cifiques</p> <p style=\"padding-left:\
-    \ 30px; \"> - pour impl\xE9menter ses besoins g\xE9n\xE9riques en contribuant\
-    \ \xE0 Coog</p> <p> </p> <p><b>Reconnaissances</b></p> <p>- Laur\xE9at Scientip\xF4\
-    le Initiative</p> <p>- Class\xE9e par Celent (Olivier Wyman) parmi les 50 meilleures\
-    \ solutions en Europe</p> <p>- Labellis\xE9 Jeune Entreprise Innovante par le\
-    \ Minist\xE8re de la Recherche</p> <p> </p> <p><b>Postes \xE0 pourvoir</b></p>\
-    \ <p>Pour accompagner sa croissance, Coopengo cherche \xE0 recruter plusieurs\
-    \ d\xE9veloppeurs (exp\xE9rience de 0 \xE0 5 ans) avec comme pr\xE9requis :</p>\
-    \ <p>- Passionn\xE9 par la mod\xE9lisation et le d\xE9veloppement</p> <p>- Organis\xE9\
-    , rigoureux et exigeant</p> <p>- Avoir une culture en technologie / \xEAtre force\
-    \ de proposition (notre produit est la somme d'apports individuels)</p> <p>- Partisans\
-    \ des solutions simples (bannir les usines \xE0 gaz)</p> <p>- Avoir une vision\
-    \ <i>full stack</i> quel que soit son positionnement (db, serveur, client)</p>\
-    \ <p>- Ma\xEEtrise de l\u2019anglais, technique <i>a minima</i>.</p> <p> </p>\
-    \ <p>CDI bas\xE9 \xE0 Paris / Besoin imm\xE9diat et d\xE9cision rapide / R\xE9\
-    mun\xE9ration attractive et fonction du profil</p> <p> </p> <p><b>Les technologies\
-    \ que vous utiliserez</b></p> <p>- Environnement de d\xE9veloppement : Linux /\
-    \ Git / Redmine</p> <p>- Langages : Python (Tryton), Javascript (Nodejs entre\
-    \ autres), Shell</p> <p>- Technologies : Nginx, Redis, PostgreSQL</p> <p>- Frameworks\
-    \ et outils : Gulp, Koajs, Backbonejs, Bootstrap</p> <hr> <h4>Coopengo</h4> <div>\
-    \ <em>Contact:</em> <a href=\"mailto:job@coopengo.com\">Rodolphe Henry</a> <span></span>\
-    \ </div> </div> </div>"
+  description: "<div id=\"content\"> <div id=\"viewlet-above-content-title\"></div> <h1 id=\"parent-fieldname-title\" class=\"documentFirstHeading\"> Développeur Python full stack </h1> <div id=\"viewlet-below-content-title\"> </div> <div id=\"parent-fieldname-description\" class=\"documentDescription\"> Coopengo est une start-up qui construit la nouvelle génération des solutions métier assurance. Elle a été fondée en 2012 par une jeune équipe avec un fort background technologie, delivery et métier Assurance. </div> <div id=\"viewlet-above-content-body\"></div> <div id=\"content-core\"> <div id=\"content-core\"> <div class=\"discreet\"> Créé le 09/12/2015 16:34 </div> <div style=\"float : right; padding : 0 10px 10px 0\"> <img src=\"http://www.afpy.org/jobs/developpeur-python-full-stack/image_medium\" alt=\"Développeur Python full stack\" title=\"Développeur Python full stack\" height=\"150\" width=\"200\"> </div> <p><b>Notre approche</b></p> <p>- Utiliser au mieux les technologies d'aujourd'hui</p> <p>- Innover et contribuer à l'écosystème open source</p> <p>- Animer une communauté autour du produit et le faire évoluer par la contribution</p> <p>- Faire simple et efficace </p> <p> </p> <p><b>Nos convictions</b></p> <p>- La technologie est un levier important pour se différencier dans le métier de l'assurance</p> <p>- La bonne utilisation/exploitation des données est le plus gros challenge des acteurs Assurance aujourd'hui</p> <p>- L'ergonomie des outils de travail est essentielle au rendement et à l'efficacité des opérations métier</p> <p>- Une modélisation de qualité permet d’adresser efficacement les problématiques internationales</p> <p> </p> <p><b>Organisation</b></p> <p>- Notre produit, Coog, contient une application back office et une application front office, couvrant ainsi toute la chaîne de valeur de l’assurance.</p> <p>- Coog est construit en étroite collaboration avec nos clients (itérations courtes)</p> <p>- Notre équipe R&amp;D joue un rôle central pour :</p> <p style=\"padding-left: 30px; \"> - canaliser les contributions et gérer la roadmap</p> <p style=\"padding-left: 30px; \"> - mettre en place des règles et des processus (outillés) pour pérenniser le code</p> <p style=\"padding-left: 30px; \"> - assurer les évolutions technologiques majeures et packager Coog</p> <p style=\"padding-left: 30px; \"> - assurer le support nécessaire aux projets</p> <p>- Les équipes delivery travaillent dans le cadre d'un ou plusieurs projet(s) client :</p> <p style=\"padding-left: 30px; \"> - pour implémenter ses besoins spécifiques</p> <p style=\"padding-left: 30px; \"> - pour implémenter ses besoins génériques en contribuant à Coog</p> <p> </p> <p><b>Reconnaissances</b></p> <p>- Lauréat Scientipôle Initiative</p> <p>- Classée par Celent (Olivier Wyman) parmi les 50 meilleures solutions en Europe</p> <p>- Labellisé Jeune Entreprise Innovante par le Ministère de la Recherche</p> <p> </p> <p><b>Postes à pourvoir</b></p> <p>Pour accompagner sa croissance, Coopengo cherche à recruter plusieurs développeurs (expérience de 0 à 5 ans) avec comme prérequis :</p> <p>- Passionné par la modélisation et le développement</p> <p>- Organisé, rigoureux et exigeant</p> <p>- Avoir une culture en technologie / être force de proposition (notre produit est la somme d'apports individuels)</p> <p>- Partisans des solutions simples (bannir les usines à gaz)</p> <p>- Avoir une vision <i>full stack</i> quel que soit son positionnement (db, serveur, client)</p> <p>- Maîtrise de l’anglais, technique <i>a minima</i>.</p> <p> </p> <p>CDI basé à Paris / Besoin immédiat et décision rapide / Rémunération attractive et fonction du profil</p> <p> </p> <p><b>Les technologies que vous utiliserez</b></p> <p>- Environnement de développement : Linux / Git / Redmine</p> <p>- Langages : Python (Tryton), Javascript (Nodejs entre autres), Shell</p> <p>- Technologies : Nginx, Redis, PostgreSQL</p> <p>- Frameworks et outils : Gulp, Koajs, Backbonejs, Bootstrap</p> <hr> <h4>Coopengo</h4> <div> <em>Contact:</em> <a href=\"mailto:job@coopengo.com\">Rodolphe Henry</a> <span></span> </div> </div> </div> <div id=\"viewlet-below-content-body\"> <div class=\"visualClear\"><!-- --></div> <div class=\"documentActions\"> </div> </div> </div>"
   publication_datetime: '2015-12-09 16:34:00'
   source: afpy
   status: completed
@@ -103,57 +21,7 @@
 - address: 46 rue Notre-Dame des Victoires
   company: NeoXam
   company_url: http://www.neoxam.com/
-  description: "<div id=\"content-core\"> <div id=\"content-core\"> <div class=\"\
-    discreet\"> Cr\xE9\xE9 le 18/01/2016 12:08 </div> <div style=\"float : right;\
-    \ padding : 0 10px 10px 0\"> <a target=\"_blank\" href=\"http://www.neoxam.com/\"\
-    ><img src=\"http://www.afpy.org/jobs/developpeur-python-c-confirme-h-f/image_medium\"\
-    \ alt=\"D\xE9veloppeur Python/C Confirm\xE9 (H/F)\" title=\"D\xE9veloppeur Python/C\
-    \ Confirm\xE9 (H/F)\" height=\"80\" width=\"200\"></a> </div> <div class=\"section\"\
-    \ id=\"societe\"> <h3>Soci\xE9t\xE9</h3> <p>NeoXam, \xE9diteur international de\
-    \ progiciels financiers, recherche les meilleurs talents pour leur permettre d'exprimer\
-    \ tout leur potentiel.</p> <p>NeoXam con\xE7oit et int\xE8gre des solutions logicielles\
-    \ pour les soci\xE9t\xE9s de gestion d'actifs et de march\xE9s de capitaux. NeoXam\
-    \ assure la couverture compl\xE8te de la cha\xEEne de valeur financi\xE8re : de\
-    \ la gestion des donn\xE9es et du front-office jusqu'au back office. Pour aider\
-    \ le secteur financier \xE0 relever des d\xE9fis complexes, NeoXam a cr\xE9\xE9\
-    \ le mod\xE8le \xAB Best of Hybrid \xBB.</p> <p>Gr\xE2ce \xE0 ses 400 collaborateurs,\
-    \ NeoXam sert plus de 150 clients dans 25 pays. NeoXam est bas\xE9 en France,\
-    \ avec des bureaux en Europe, aux Etats-Unis, en Asie, en Afrique et au Moyen-Orient.</p>\
-    \ <p>Notre engagement envers l'excellence, notre forte expertise, ainsi que notre\
-    \ regard ax\xE9 sur le futur et le monde entier nous poussent \xE0 \xEAtre r\xE9\
-    actifs et \xE0 la pointe des nouvelles technologies et des tendances du march\xE9\
-    .</p> <p>Vous d\xE9couvrirez la synergie entre nos m\xE9tiers, produits et \xE9\
-    quipes et vous participerez \xE0 un v\xE9ritable projet d'entreprise en d\xE9\
-    veloppement, gr\xE2ce \xE0 nos collaborateurs \xE0 l'esprit entrepreneurial, agile\
-    \ et multiculturel.</p> </div> <div class=\"section\" id=\"activites-principales\"\
-    > <h3>Activit\xE9s principales</h3> <ul class=\"simple\"> <li>Concevoir les fonctionnalit\xE9\
-    s de l'application en r\xE9ponse aux demandes des architectes,</li> <li>Contribuer\
-    \ \xE0 la programmation de la solution avec les technologies retenues,</li> <li>Prendre\
-    \ en compte des \xE9l\xE9ments de performance (volum\xE9trie, organisation des\
-    \ traitements...),</li> <li>\xC9voluer dans une \xE9quipe fonctionnant en m\xE9\
-    thodologie Scrum,</li> <li>Fournir le statut d'avancement des sp\xE9cifications\
-    \ et d\xE9veloppements, les tests unitaires associ\xE9s et assurer la qualit\xE9\
-    \ des livrables,</li> <li>Contribuer \xE0 la recette et \xE0 l'\xE9laboration\
-    \ de jeux d'essai.</li> </ul> </div> <div class=\"section\" id=\"formation-et-experience-professionnelle\"\
-    > <h3>Formation et exp\xE9rience professionnelle</h3> <ul class=\"simple\"> <li>Ecole\
-    \ d'ing\xE9nieur, BAC + 5 ou \xE9quivalent,</li> <li>Vous avez une exp\xE9rience\
-    \ confirm\xE9e et similaire de minimum 3-5 ans.</li> </ul> </div> <div class=\"\
-    section\" id=\"connaissances-requises\"> <h3>Connaissances requises</h3> <ul class=\"\
-    simple\"> <li>Python &amp; C: tr\xE8s bon niveau</li> <li>Unix ou Linux: connaissances\
-    \ standards,</li> <li>Connaissances des environnements de d\xE9veloppement: subversion,\
-    \ tests unitaires, jira, bamboo, int\xE9gration continue,</li> <li>SQL: standard,</li>\
-    \ <li>Des connaissances en Glib, Pyrex et Sybase seraient un plus,</li> <li>La\
-    \ langue de travail est le fran\xE7ais, les documents et commentaires de code\
-    \ sont en anglais.</li> </ul> </div> <div class=\"section\" id=\"competences-requises\"\
-    > <h3>Comp\xE9tences requises</h3> <ul class=\"simple\"> <li>Rigueur,</li> <li>Capacit\xE9\
-    s d'analyse et esprit de synth\xE8se,</li> <li>Capacit\xE9 \xE0 travailler en\
-    \ \xE9quipe,</li> <li>Cr\xE9ativit\xE9,</li> <li>Gout du challenge.</li> </ul>\
-    \ </div> <div class=\"section\" id=\"localisation\"> <h3>Localisation</h3> <p>Poste\
-    \ situ\xE9 en plein c\u0153ur de Paris, dans le 2\xE8me arrondissement \xE0 Bourse.</p>\
-    \ </div> <hr> <h4> <a target=\"_blank\" href=\"http://www.neoxam.com/\">NeoXam</a>\
-    \ </h4> <div class=\"row\">46 rue Notre-Dame des Victoires<br>75002 Paris</div>\
-    \ <div> <em>Contact:</em> <a href=\"mailto:olivier.mansion@neoxam.com\">Olivier\
-    \ Mansion</a> <span></span> </div> </div> </div>"
+  description: "<div id=\"content\"> <div id=\"viewlet-above-content-title\"></div> <h1 id=\"parent-fieldname-title\" class=\"documentFirstHeading\"> Développeur Python/C Confirmé (H/F) </h1> <div id=\"viewlet-below-content-title\"> </div> <div id=\"parent-fieldname-description\" class=\"documentDescription\"> Afin de renforcer ses équipes de développement, NeoXam recherche un Développeur Python/C pour sa business unit back office. Au sein de l’équipe Développement Python, vous participerez au projet de refonte du compilateur d'un langage de programmation de quatrième génération et au développement de sa machine virtuelle associée. </div> <div id=\"viewlet-above-content-body\"></div> <div id=\"content-core\"> <div id=\"content-core\"> <div class=\"discreet\"> Créé le 18/01/2016 12:08 </div> <div style=\"float : right; padding : 0 10px 10px 0\"> <a target=\"_blank\" href=\"http://www.neoxam.com/\"><img src=\"http://www.afpy.org/jobs/developpeur-python-c-confirme-h-f/image_medium\" alt=\"Développeur Python/C Confirmé (H/F)\" title=\"Développeur Python/C Confirmé (H/F)\" height=\"80\" width=\"200\"></a> </div> <div class=\"section\" id=\"societe\"> <h3>Société</h3> <p>NeoXam, éditeur international de progiciels financiers, recherche les meilleurs talents pour leur permettre d'exprimer tout leur potentiel.</p> <p>NeoXam conçoit et intègre des solutions logicielles pour les sociétés de gestion d'actifs et de marchés de capitaux. NeoXam assure la couverture complète de la chaîne de valeur financière : de la gestion des données et du front-office jusqu'au back office. Pour aider le secteur financier à relever des défis complexes, NeoXam a créé le modèle « Best of Hybrid ».</p> <p>Grâce à ses 400 collaborateurs, NeoXam sert plus de 150 clients dans 25 pays. NeoXam est basé en France, avec des bureaux en Europe, aux Etats-Unis, en Asie, en Afrique et au Moyen-Orient.</p> <p>Notre engagement envers l'excellence, notre forte expertise, ainsi que notre regard axé sur le futur et le monde entier nous poussent à être réactifs et à la pointe des nouvelles technologies et des tendances du marché.</p> <p>Vous découvrirez la synergie entre nos métiers, produits et équipes et vous participerez à un véritable projet d'entreprise en développement, grâce à nos collaborateurs à l'esprit entrepreneurial, agile et multiculturel.</p> </div> <div class=\"section\" id=\"activites-principales\"> <h3>Activités principales</h3> <ul class=\"simple\"> <li>Concevoir les fonctionnalités de l'application en réponse aux demandes des architectes,</li> <li>Contribuer à la programmation de la solution avec les technologies retenues,</li> <li>Prendre en compte des éléments de performance (volumétrie, organisation des traitements...),</li> <li>Évoluer dans une équipe fonctionnant en méthodologie Scrum,</li> <li>Fournir le statut d'avancement des spécifications et développements, les tests unitaires associés et assurer la qualité des livrables,</li> <li>Contribuer à la recette et à l'élaboration de jeux d'essai.</li> </ul> </div> <div class=\"section\" id=\"formation-et-experience-professionnelle\"> <h3>Formation et expérience professionnelle</h3> <ul class=\"simple\"> <li>Ecole d'ingénieur, BAC + 5 ou équivalent,</li> <li>Vous avez une expérience confirmée et similaire de minimum 3-5 ans.</li> </ul> </div> <div class=\"section\" id=\"connaissances-requises\"> <h3>Connaissances requises</h3> <ul class=\"simple\"> <li>Python &amp; C: très bon niveau</li> <li>Unix ou Linux: connaissances standards,</li> <li>Connaissances des environnements de développement: subversion, tests unitaires, jira, bamboo, intégration continue,</li> <li>SQL: standard,</li> <li>Des connaissances en Glib, Pyrex et Sybase seraient un plus,</li> <li>La langue de travail est le français, les documents et commentaires de code sont en anglais.</li> </ul> </div> <div class=\"section\" id=\"competences-requises\"> <h3>Compétences requises</h3> <ul class=\"simple\"> <li>Rigueur,</li> <li>Capacités d'analyse et esprit de synthèse,</li> <li>Capacité à travailler en équipe,</li> <li>Créativité,</li> <li>Gout du challenge.</li> </ul> </div> <div class=\"section\" id=\"localisation\"> <h3>Localisation</h3> <p>Poste situé en plein cœur de Paris, dans le 2ème arrondissement à Bourse.</p> </div> <hr> <h4> <a target=\"_blank\" href=\"http://www.neoxam.com/\">NeoXam</a> </h4> <div class=\"row\">46 rue Notre-Dame des Victoires<br>75002 Paris</div> <div> <em>Contact:</em> <a href=\"mailto:olivier.mansion@neoxam.com\">Olivier Mansion</a> <span></span> </div> </div> </div> <div id=\"viewlet-below-content-body\"> <div class=\"visualClear\"><!-- --></div> <div class=\"documentActions\"> </div> </div> </div>"
   publication_datetime: '2016-01-18 12:08:00'
   source: afpy
   status: completed
@@ -163,57 +31,7 @@
 - address: null
   company: null
   company_url: null
-  description: "<div id=\"content-core\"> <div id=\"archetypes-fieldname-text-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-TextField\"> <label class=\"formQuestion\"><span>Corps\
-    \ de texte</span>:</label> <br> <div id=\"parent-fieldname-text-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> <p>Externatic, le hub d\u2019opportunit\xE9s IT et web dans l\u2019\
-    ouest.</p> <p>Cabinet de recrutement technologique nous vous trouvons des postes\
-    \ chez des clients finaux (startup, \xE9diteur, DSI, agences digitales, etc. =&gt;\
-    \ pas de SSII) depuis plus de 5 ans.</p> <p>Chaque offre d\u2019emploi correspond\
-    \ \xE0 un poste reel.</p> <p>Pour une startup bas\xE9e \xE0 Nantes, nous recherchons\
-    \ un(e) d\xE9veloppeur Go - Python H/F.</p> <p>L\u2019entreprise<br>Cette startup\
-    \ \xE9dite une solution web et mobile pour le monde de l\u2019agriculture. Avec\
-    \ un impact soci\xE9tal et environnemental fort, le projet est \xE9galement un\
-    \ vrai d\xE9fi technique.<br>L\u2019entreprise est financ\xE9e et connait une\
-    \ croissance forte de son nombre de clients payant, elle cherche donc \xE0 compl\xE9\
-    ter ses \xE9quipes techniques.<br>Le logiciel SaaS et mobile vient centraliser\
-    \ des donn\xE9es collect\xE9es par des objets connect\xE9s et recoup\xE9es par\
-    \ des informations disponibles notamment en open data.</p> <p>#IOT #BIGDATA #DATAVISUALISATION\
-    \ #PYTON #GOLANG</p> <p>Vous</p> <p>\u2022 Vous ma\xEEtrisez les technologies\
-    \ backend type Python, Go, C + frameworks associ\xE9s<br>\u2022 Vous connaissez\
-    \ lez bases de donn\xE9es typ\xE9es NoSQL (Cassandra, etc.) <br>\u2022 Vous maitrisez\
-    \ les technologies web (API Rest, etc.)<br>\u2022 Vous avez une culture devops<br>\u2022\
-    \ Etre familiaris\xE9 avec les m\xE9thodes agiles (scrum, xp,...) est un plus</p>\
-    \ <p> </p> <p>Les +<br>\u2022 Dans le centre de Nantes<br>\u2022 Startup \xE0\
-    \ impact positif pour la plan\xE8te<br>\u2022 Gros potentiel d\u2019\xE9volution</p>\
-    \ <p><br>POSTE EN FIXE (HORS SSII) \u2013 CDI SUR NANTES</p> <p><br>N\u2019h\xE9\
-    sitez pas \xE0 me contacter si vous avez des questions / souhaitez des \xE9l\xE9\
-    ments compl\xE9mentaires \xE0 benjamin.casseron (chez) externatic.fr</p> </div>\
-    \ </div> <div id=\"archetypes-fieldname-sourceUrl-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Url</span>:</label>\
-    \ <br> <span id=\"parent-fieldname-sourceUrl-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> http://www.externatic.fr/offres-emploi/technique/nantes/developpeur-backend-go-python-hf-562\
-    \ </span> </div> <div id=\"archetypes-fieldname-company-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Companie</span>:</label>\
-    \ <br> <span id=\"parent-fieldname-company-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> externatic </span> </div> <div id=\"archetypes-fieldname-image-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-ImageField\"> <label class=\"formQuestion\"><span>Logo</span>:</label>\
-    \ <br> <div class=\"field\"> </div> <div class=\"field\"> </div> </div> <div id=\"\
-    archetypes-fieldname-address-d3a4c6d86c514007bd5537df86a83902\" class=\"field\
-    \ ArchetypesField-LinesField\"> <label class=\"formQuestion\"><span>Adresse</span>:</label>\
-    \ <br> <span>11 impasse juton, 44000 NANTES</span><br> </div> <div id=\"archetypes-fieldname-remoteUrl-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Web\
-    \ site</span>:</label> <br> <span id=\"parent-fieldname-remoteUrl-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> http://www.externatic.fr </span> </div> <div id=\"archetypes-fieldname-contact-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Contact</span>:</label>\
-    \ <br> <span id=\"parent-fieldname-contact-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> benjamin casseron </span> </div> <div id=\"archetypes-fieldname-email-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Email</span>:</label>\
-    \ <br> <span id=\"parent-fieldname-email-d3a4c6d86c514007bd5537df86a83902\" class=\"\
-    \"> benjamin.casseron@externatic.fr </span> </div> <div id=\"archetypes-fieldname-phone-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>T\xE9\
-    l\xE9phone</span>:</label> <br> <span id=\"parent-fieldname-phone-d3a4c6d86c514007bd5537df86a83902\"\
-    \ class=\"\"> 0687283685 </span> </div> </div>"
+  description: "<div id=\"content\"> <div id=\"viewlet-above-content-title\"></div> <h1 id=\"parent-fieldname-title\" class=\"documentFirstHeading\"> Développeur backend Python / Go H/F </h1> <div id=\"viewlet-below-content-title\"> </div> <div id=\"parent-fieldname-description\" class=\"documentDescription\"> Poste Vous travaillez sur la partie back end du logiciel (environnement big data) : • En contexte agile, vous assurez la conception, le développement et le maintien du code en : o Python (3.4) avec Django (1.8) et o Golang avec Gin-Gonic o C • Vous assurez le traitement de grandes bases de données en : o influxDB / TSBD o Cassandra • Vous concevez / développez / maintenez les API REST/JSON Le tout donc en contexte technologique open source. </div> <div id=\"viewlet-above-content-body\"></div> <div id=\"content-core\"> <div id=\"archetypes-fieldname-text-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-TextField\"> <label class=\"formQuestion\"><span>Corps de texte</span>:</label> <br> <div id=\"parent-fieldname-text-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> <p>Externatic, le hub d’opportunités IT et web dans l’ouest.</p> <p>Cabinet de recrutement technologique nous vous trouvons des postes chez des clients finaux (startup, éditeur, DSI, agences digitales, etc. =&gt; pas de SSII) depuis plus de 5 ans.</p> <p>Chaque offre d’emploi correspond à un poste reel.</p> <p>Pour une startup basée à Nantes, nous recherchons un(e) développeur Go - Python H/F.</p> <p>L’entreprise<br>Cette startup édite une solution web et mobile pour le monde de l’agriculture. Avec un impact sociétal et environnemental fort, le projet est également un vrai défi technique.<br>L’entreprise est financée et connait une croissance forte de son nombre de clients payant, elle cherche donc à compléter ses équipes techniques.<br>Le logiciel SaaS et mobile vient centraliser des données collectées par des objets connectés et recoupées par des informations disponibles notamment en open data.</p> <p>#IOT #BIGDATA #DATAVISUALISATION #PYTON #GOLANG</p> <p>Vous</p> <p>• Vous maîtrisez les technologies backend type Python, Go, C + frameworks associés<br>• Vous connaissez lez bases de données typées NoSQL (Cassandra, etc.) <br>• Vous maitrisez les technologies web (API Rest, etc.)<br>• Vous avez une culture devops<br>• Etre familiarisé avec les méthodes agiles (scrum, xp,...) est un plus</p> <p> </p> <p>Les +<br>• Dans le centre de Nantes<br>• Startup à impact positif pour la planète<br>• Gros potentiel d’évolution</p> <p><br>POSTE EN FIXE (HORS SSII) – CDI SUR NANTES</p> <p><br>N’hésitez pas à me contacter si vous avez des questions / souhaitez des éléments complémentaires à benjamin.casseron (chez) externatic.fr</p> </div> </div> <div id=\"archetypes-fieldname-sourceUrl-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Url</span>:</label> <br> <span id=\"parent-fieldname-sourceUrl-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> http://www.externatic.fr/offres-emploi/technique/nantes/developpeur-backend-go-python-hf-562 </span> </div> <div id=\"archetypes-fieldname-company-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Companie</span>:</label> <br> <span id=\"parent-fieldname-company-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> externatic </span> </div> <div id=\"archetypes-fieldname-image-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-ImageField\"> <label class=\"formQuestion\"><span>Logo</span>:</label> <br> <div class=\"field\"> </div> <div class=\"field\"> </div> </div> <div id=\"archetypes-fieldname-address-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-LinesField\"> <label class=\"formQuestion\"><span>Adresse</span>:</label> <br> <span>11 impasse juton, 44000 NANTES</span><br> </div> <div id=\"archetypes-fieldname-remoteUrl-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Web site</span>:</label> <br> <span id=\"parent-fieldname-remoteUrl-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> http://www.externatic.fr </span> </div> <div id=\"archetypes-fieldname-contact-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Contact</span>:</label> <br> <span id=\"parent-fieldname-contact-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> benjamin casseron </span> </div> <div id=\"archetypes-fieldname-email-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Email</span>:</label> <br> <span id=\"parent-fieldname-email-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> benjamin.casseron@externatic.fr </span> </div> <div id=\"archetypes-fieldname-phone-d3a4c6d86c514007bd5537df86a83902\" class=\"field ArchetypesField-StringField\"> <label class=\"formQuestion\"><span>Téléphone</span>:</label> <br> <span id=\"parent-fieldname-phone-d3a4c6d86c514007bd5537df86a83902\" class=\"\"> 0687283685 </span> </div> </div> <div id=\"viewlet-below-content-body\"> <div class=\"visualClear\"><!-- --></div> <div class=\"documentActions\"> </div> </div> </div>"
 #  publication_datetime: '2016-01-22 15:23:40.002797'
   source: afpy
   status: completed
