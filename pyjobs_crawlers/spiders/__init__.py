@@ -541,18 +541,21 @@ class JobSpider(Spider):
 
 
 class JobSource(object):
-    def __init__(self, id, label, url, logo_url):
+    def __init__(self, id, label, url, logo_url, spider_class, base_class):
         self.logo_url = logo_url
         self.label = label
         self.id = id
         self.url = url
+        self.spider_class = spider_class
+        self.base_class = base_class
 
     @classmethod
-    def from_job_spider(cls, job_spider_class):
+    def from_job_spider(cls, job_spider_class, base_class=JobSpider):
         """
 
         Return a JobSource instance from a pyjobs_crawlers.spiders.JobSpider class
 
+        :param base_class: Class base of spider class
         :param job_spider_class: The JobCrawler class
         :type job_spider_class: pyjobs_crawlers.spiders.JobSpider
         :return: pyjobs_crawlers.JobSource instance
@@ -562,5 +565,7 @@ class JobSource(object):
                 id=job_spider_class.name,
                 label=job_spider_class.label,
                 url=job_spider_class.url,
-                logo_url=job_spider_class.logo_url
+                logo_url=job_spider_class.logo_url,
+                spider_class=job_spider_class,
+                base_class=base_class
         )
