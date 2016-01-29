@@ -5,26 +5,19 @@ import json
 import os
 import sys
 
-
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
 
-from pyjobs_crawlers.run import run_crawl, StdOutputConnector
 
-errors_count = 0
-
-
-def error_callback(failure, response, spider):
-    print("UNCATCH ERROR: (%s) %s:" % (response.url, str(failure.value)))
-    print(str(failure))
+from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector, stdout_error_callback
 
 
 if __name__ == '__main__':
     connector = StdOutputConnector()
-    spider = run_crawl(
-            spider_module_name=sys.argv[1],
+    spider = crawl_from_class_name(
+            spider_class_name=sys.argv[1],
             connector=connector,
-            spider_error_callback=error_callback
+            spider_error_callback=stdout_error_callback
     )
 
     jobs = spider.get_connector().get_jobs()

@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 import datetime
 import glob
-import optparse
+from contextlib import contextmanager
 from importlib import import_module
 from multiprocessing import Pool
 from os.path import dirname, isfile, basename
 
 import fasteners
 from scrapy import signals
-from scrapy.cmdline import _get_commands_dict, _run_command
-from scrapy.utils.project import get_project_settings
 from scrapy.crawler import CrawlerProcess
 from scrapy.xlib.pydispatch import dispatcher
 from slugify import slugify
+
+from pyjobs_crawlers.tools import get_spiders_classes
+
+
+def stdout_error_callback(failure, response, spider):
+    print("UNCATCH ERROR: (%s) %s:" % (response.url, str(failure.value)))
+    print(str(failure))
 
 
 def get_spiders_files(spiders_directory=None):
@@ -30,83 +35,77 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def run_crawl(spider_module_name, connector, spider_error_callback=None):
+def crawl_from_class_name(spider_class_name, connector, spider_error_callback=None):
+    """
+    Do the crawn job (see crawl function) from spider class name (eg. pyjobs_crawlers.spiders.myspider.MySpiderClass)
+    :param spider_class_name:
+    :param connector:
+    :param spider_error_callback:
+    :return:
+    """
+    module_name = '.'.join(spider_class_name.split('.')[:-1])
+    class_name = spider_class_name.split('.')[-1]
+
+    spider_module = import_module(module_name)
+    spider_class = getattr(spider_module, class_name)
+
+    return crawl([spider_class], connector, spider_error_callback)[0]
+
+
+def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback):
+    """
+    Launch crawl job for JobSpider class
+    :param debug: (bool) Activate or disable debug
+    :param spider_error_callback: callback foir spider errors (see http://doc.scrapy.org/en/latest/topics/signals.html#spider-error)
+    :param connector: Connector instance
+    :param spiders_classes: JobSpider class list
+    :return: spider instance
+    """
+    if debug:
+        dispatcher.connect(spider_error_callback, signals.spider_error)
+
     process = CrawlerProcess({
         'ITEM_PIPELINES': {
-           'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
+            'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
         },
         'connector': connector,
         'LOG_ENABLED': False
     })
 
-    if spider_error_callback:
-        dispatcher.connect(spider_error_callback, signals.spider_error)
+    for spider_class in spiders_classes:
+        process.crawl(spider_class)
 
-    module_name = '.'.join(spider_module_name.split('.')[:-1])
-    class_name = spider_module_name.split('.')[-1]
-
-    spider_module = import_module(module_name)
-    spider_class = getattr(spider_module, class_name)
-
-    process.crawl(spider_class)
-    spider = list(process.crawlers)[0].spider
+    spiders = []
+    for crawler in list(process.crawlers):
+        spiders.append(crawler.spider)
     process.start()
 
-    return spider
+    return spiders
 
 
-def crawl(site_file_name, connector_class):
-    """
-
-    Launch crawl job for JobSpider file
-    TODO - B.S. - 20160115: Exploiter la doc (http://doc.scrapy.org/en/1.0/topics/practices.html#run-from-script)
-                            pour réecrire cette fonction.
-
-    :param connector: Connector with pyjobs_crawler caller
-    :param site_file_name: python file considered as JobSpider
-    :return:
-    """
-    connector = connector_class()
-    cmdname = 'runspider'
-    settings = get_project_settings()
-    cmds = _get_commands_dict(settings=settings, inproject=True)
-
-    parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(),
-                                   conflict_handler='resolve')
-    cmd = cmds[cmdname]
-    parser.usage = "scrapy %s %s" % (cmdname, cmd.syntax())
-    parser.description = cmd.long_desc()
-    settings.setdict(cmd.default_settings, priority='command')
-
-    # Add our connector to config
-    settings.set('connector', connector)
-
-    cmd.settings = settings
-    cmd.add_options(parser)
-    opts, args = parser.parse_args(args=[site_file_name])
-    cmd.process_options(args, opts)
-    cmd.crawler_process = CrawlerProcess(settings)
-
-    _run_command(cmd, args, opts)
-
-
-def start_crawl_process(process_params):
-    site_file_name, connector_class = process_params
-
+@contextmanager
+def _get_lock(lock_name):
     # Lock to prevent simultaneous crawnling process
-    lock_name = "pyjobs_crawl_%s" % slugify(basename(site_file_name))
+    lock_name = "pyjobs_crawl_%s" % lock_name
     lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
     lock_gotten = lock.acquire(blocking=False)
 
     try:
-        if lock_gotten:
-            crawl(site_file_name, connector_class)
-        else:
-            print("Crawl of \"%s\" already running" % site_file_name)
-            # TODO - B.S. - 20160114: On le dit ailleurs (log) que le process est déjà en cours ?
+        yield lock_gotten
     finally:
         if lock_gotten:
             lock.release()
+
+
+def start_crawl_process(process_params):
+    spider_class, connector_class, debug = process_params
+
+    lock_name = slugify(basename(spider_class))
+    with _get_lock(lock_name) as acquired:
+        if acquired:
+            crawl([spider_class], connector_class, debug)
+        else:
+            print("Crawl process of \"%s\" already running" % lock_name)
 
 
 def start_crawlers(connector_class, processes=1, debug=False):
@@ -114,22 +113,28 @@ def start_crawlers(connector_class, processes=1, debug=False):
 
     Start spider processes
 
+    :param processes:
+    :param connector_class:
+    :param debug:
     :return:
     """
-    # Creation of a process by site
-    spiders_files = get_spiders_files()
+    spiders_classes = get_spiders_classes()
 
-    if debug:
-        crawl(spiders_files[0], connector_class)
-        print('debug finished')
-        exit()
+    if processes == 0:
+        connector = connector_class()
+        with _get_lock('ALL') as acquired:
+            if acquired:
+                crawl(spiders_classes, connector, debug)
+            else:
+                print("Crawl process of 'ALL' already running")
+            return
 
     # split list in x list of processes count elements
-    spider_files_chunks = [spiders_files[x:x + processes] for x in range(0, len(spiders_files), processes)]
+    spider_classes_chunks = [spiders_classes[x:x + processes] for x in range(0, len(spiders_classes), processes)]
 
     # Start one cycle of processes by chunk
-    for spider_files_chunk in spider_files_chunks:
-        process_params_chunk = [(spider_file, connector_class) for spider_file in spider_files_chunk]
+    for spider_classes_chunk in spider_classes_chunks:
+        process_params_chunk = [(spider_class, connector_class, debug) for spider_class in spider_classes_chunk]
         p = Pool(len(process_params_chunk))
         p.map(start_crawl_process, process_params_chunk)
 
@@ -138,6 +143,7 @@ class Connector(object):
     """
     Connector class have to be used to insert caller context in pyjobs_crawler context
     """
+
     def job_exist(self, job_public_id):
         raise NotImplementedError()
 
