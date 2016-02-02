@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from datetime import datetime
 from pyjobs_crawlers.spiders import JobSpider, JobSource
 
@@ -41,5 +42,11 @@ class AfpyJobSpider(JobSpider):
                     "Error during publication date extraction: %s" % str(exc)
             )
             return super(AfpyJobSpider, self)._get_from_page__publication_datetime(job_container)
+
+    def _get_from_page__description(self, node):
+        description = super(AfpyJobSpider, self)._get_from_page__description(node)
+        if description:
+            return re.sub('<h1[^>]*?>.*?</h1>', '', description)
+        return description
 
 source = JobSource.from_job_spider(AfpyJobSpider)
