@@ -52,9 +52,10 @@ def crawl_from_class_name(spider_class_name, connector, spider_error_callback=No
     return crawl([spider_class], connector, spider_error_callback)[0]
 
 
-def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback):
+def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback, scrapy_settings=None):
     """
     Launch crawl job for JobSpider class
+    :param scrapy_settings: dict of setting merged with CrawlerProcess default settings
     :param debug: (bool) Activate or disable debug
     :param spider_error_callback: callback foir spider errors (see http://doc.scrapy.org/en/latest/topics/signals.html#spider-error)
     :param connector: Connector instance
@@ -64,13 +65,18 @@ def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_
     if debug:
         dispatcher.connect(spider_error_callback, signals.spider_error)
 
-    process = CrawlerProcess({
+    settings = {
         'ITEM_PIPELINES': {
             'pyjobs_crawlers.pipelines.RecordJobPipeline': 1,
         },
         'connector': connector,
-        'LOG_ENABLED': False
-    })
+        'LOG_ENABLED': False,
+        'DOWNLOAD_DELAY': 1 if not debug else 0,
+    }
+    if scrapy_settings:
+        settings.update(scrapy_settings)
+
+    process = CrawlerProcess(settings)
 
     for spider_class in spiders_classes:
         process.crawl(spider_class)
