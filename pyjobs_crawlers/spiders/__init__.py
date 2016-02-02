@@ -71,12 +71,26 @@ class JobSpider(Spider):
         u'cdi',
         u'cdd',
         u'télétravail',
+        u'télé-travail',
         u'stage',
         u'freelance',
         u'mysql'
         u'postgresql',
-        u'django'
+        u'django',
+        u'flask',
+        u'turbogears',
+        u'turbo gears',
+        u'web2py'
     ]
+
+    CONDITION_TAGS = (
+        u'cdd',
+        u'cdi',
+        u'freelance',
+        u'stage',
+        u'télétravail',
+        u'télé-travail'
+    )
 
     start_urls = []  # To be overwritten
     name = 'no-name'  # To be overwritten
