@@ -17,10 +17,10 @@ class AfpyJobSpider(JobSpider):
         'from_list__jobs__xpath': '//div[@class="jobitem"]',
         'from_list__url__xpath': './a/@href',
         'from_list__next_page__xpath': '//div[@class="listingBar"]/span[@class="next"]/a/@href',
+        'from_list__publication_datetime__css': '.discreet::text',
 
         'from_page__container__xpath': '//div[@id="content"]',
         'from_page__title__xpath': './h1[@id="parent-fieldname-title"]/text()',
-        'from_page__publication_datetime__xpath': './div[@id="content-core"]/div[@id="content-core"]/div[@class="discreet"]/text()',
         'from_page__company__xpath': ('.//h4/a/text()', './/h4/text()'),
         'from_page__company_url__xpath': './div[@id="content-core"]/div[@id="content-core"]/h4/a/@href',
         'from_page__address__xpath': './/h4[1]/following-sibling::div[@class="row"]/text()',
@@ -28,11 +28,11 @@ class AfpyJobSpider(JobSpider):
         'from_page__tags__xpath': './div[@id="content-core"]/div[@id="content-core"]'
     }
 
-    def _get_from_page__publication_datetime(self, job_container):
+    def _get_from_list__publication_datetime(self, job_container):
         try:
-            publication_date_text = self._extract_first(job_container, 'from_page__publication_datetime')
+            publication_date_text = self._extract_first(job_container, 'from_list__publication_datetime')
             if publication_date_text:
-                publication_date_text_clean = publication_date_text.replace(u'Créé le ', '')
+                publication_date_text_clean = publication_date_text.replace(u'Créé le ', '').replace(u' par', '')
                 return datetime.strptime(publication_date_text_clean, '%d/%m/%Y %H:%M')
             return super(AfpyJobSpider, self)._get_from_page__publication_datetime(job_container)
         except Exception, exc:
