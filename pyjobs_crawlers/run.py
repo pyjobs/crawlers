@@ -151,15 +151,44 @@ class Connector(object):
     """
 
     def job_exist(self, job_public_id):
+        """
+        Check if job exist in your database
+        :param job_public_id: job identifier, actually pyjobs_crawler use the job URL
+        :rtype: bool
+        :return: True if job exist in your database
+        """
         raise NotImplementedError()
 
     def get_most_recent_job_date(self, source):
+        """
+        Return the most recent publication_datetime of job for a given source.
+        USed to stop crawling if we read an already crawled and saved job.
+        :param source: source name (eg. 'afpy', 'lolix', ...)
+        :type source: str
+        :return: most recent publication_datetime of job for a given source
+        :rtype: datetime.datetime
+        """
         raise NotImplementedError()
 
     def add_job(self, job_item):
+        """
+        Save job in your database
+        :param job_item: the scrapy job item
+        :type job_item: pyjobs_crawlers.items.JobItem
+        :return:
+        """
         raise NotImplementedError()
 
     def log(self, source, action, more=None):
+        """
+        :param source: source name (eg. 'afpy', 'lolix', ...)
+        :type source: str
+        :param action: action identifier
+        :type action: str
+        :param more: more information about action
+        :type more: str
+        :return:
+        """
         pass
 
 
