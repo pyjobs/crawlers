@@ -64,12 +64,12 @@ Ajouter une nouvelle source d'offres d'emplois [python](https://fr.wikipedia.org
 
 * ``Page liste de jobs``: Ce sont les pages qui liste les offres d'emplois. Elle ne contiennent généralement qu'une partie des informations concernant l'offre. Ces pages doivent contenir des lien vers la ``Page du job``.
 * ``Page du job``: C'est la page qui contient la plus grande partie des informations sur l'offre d'emploi.
-* ``Crawl``: Action de lire le contenu d'une page web pour en extraire des information.
+* ``Crawl``: Action de lire le contenu d'une page web pour en extraire des informations.
 * ``Spider``: Objet ([classe](https://fr.wikipedia.org/wiki/Classe_%28informatique%29) [python](https://fr.wikipedia.org/wiki/Python_%28langage%29)) qui effectue le crawl des pages contenant les offres d'emplois.
 
 ### Méthode de récupération
 
-Le ``Spider`` va parcourir la page de liste de jobs à la recherche d'offres d'emplois. Pour chacune des offres d'emplois trouvé le ``Spider`` récupérera la page et la parcourera également. 
+Le ``Spider`` va parcourir la page de liste de jobs à la recherche d'offres d'emplois. Pour chacune des offres d'emplois trouvées le ``Spider`` récupérera la page et la parcourera également. 
 
 Nous devrons fournir au ``Spider`` le paramètrage nécessaire (sous forme d'expression [XPATH](https://fr.wikipedia.org/wiki/XPath) ou [CSS](https://fr.wikipedia.org/wiki/Feuilles_de_style_en_cascade)) pour extraire les informations relatives aux offres d'empois.
 
@@ -106,15 +106,15 @@ source = JobSource.from_job_spider(MonSiteSpider)
 
 Le ``Spider`` permet d'extraire les informations relative aux offres d'emplois à deux moment différents:
 
-* Lors de sa découverte sur la ``Page liste de jobs``. Ce contexte sera exprimé par le préfix ``from_list``.
-* Lors de la lecture de la ``Page du job``. Ce contexte sera exprimé par le préfix ``from_page``.
+* Lors de sa découverte sur la ``Page liste de jobs``. Ce contexte sera exprimé par le préfixe ``from_list``.
+* Lors de la lecture de la ``Page du job``. Ce contexte sera exprimé par le préfixe ``from_page``.
 
 Nous pourrons indiquer deux type d'expressions pour extraire l'information:
 
-* Une expression [XPATH](https://fr.wikipedia.org/wiki/XPath): Sera exprimé par le suffix ``xpath``.
-* Une expression [CSS](https://fr.wikipedia.org/wiki/Feuilles_de_style_en_cascade): Sera exprimé par le suffix ``css``.
+* Une expression [XPATH](https://fr.wikipedia.org/wiki/XPath): Sera exprimé par le suffixe ``xpath``.
+* Une expression [CSS](https://fr.wikipedia.org/wiki/Feuilles_de_style_en_cascade): Sera exprimé par le suffixe ``css``.
 
-*NOTE*: Retrouvez la [documentation Scrapy](http://doc.scrapy.org/en/1.0/topics/selectors.html) pour en savoir plus sur l'extraction.
+*NOTE*: Référez-vous à la [documentation Scrapy](http://doc.scrapy.org/en/1.0/topics/selectors.html) pour en savoir plus sur l'extraction.
 
 *NOTE*: Il est possible de donner une liste d'expressions. Elles seront testés une à une.
 
@@ -130,7 +130,7 @@ Les différentes paramètres d'extraction des informations d'offres sont:
 
 *NOTE*: Il est possible de désactiver l'étape ``from_page`` si les informations de la ``Page liste de jobs`` vous suffisent avec le paramètre ``from_page_enabled`` (ex. ``'from_page_enabled': False``).
 
-Ainsi que quelques paramètres nécéssaire au parcour des pages que nous allons voir ci-après.
+Ainsi que quelques paramètres nécéssaire au parcours des pages que nous allons voir ci-après.
 
 Un paramètre sera alors exprimé sous la forme: prefix__paramètre__suffix. Exemple:
 
@@ -155,11 +155,11 @@ Il est possible de personnaliser la récupération de chaque données en surchar
 
 #### Paramètrer le Spider
 
-Avant de renseigner les paramètre de récupération d'informations d'offres d'emploi vous devez renseigner les paramètres permettant le parcour des pages.
+Avant de renseigner les paramètre de récupération d'informations d'offres d'emploi vous devez renseigner les paramètres permettant le parcours des pages.
 
-*NOTE*: Ces paramètres concerne le parcour de la ``Page liste de jobs``, ils doivent donc être préfixé de ``from_list``:
+*NOTE*: Ces paramètres concerne le parcours de la ``Page liste de jobs``, ils doivent donc être préfixé de ``from_list``:
 
-* ``jobs_lists``: Éxpression pour récupérer la ou les listes d'offres d'emplois dans la ``Page liste de jobs``. Par défaut saisir "//body". **obligatoire**.
+* ``jobs_lists``: Éxpression pour récupérer la ou les listes d'offres d'emplois dans la ``Page liste de jobs``. Par défaut saisir "//body" en XPATH ou "body" en CSS. **obligatoire**.
 * ``jobs``: Éxpression pour récupérer une annonce dans une liste d'annonces extraite par ``jobs_lists``.  **obligatoire**.
 * ``url``: Épression pour récupérer l'url de la ``Page du job`` dans l'annonce estraite par ``jobs``.  **obligatoire**.
 * ``next_page``: Éxpression pour récupérer l'url de la prochaine ``Page liste de jobs``.
