@@ -36,5 +36,5 @@ class JobItem(scrapy.Item):
         self_dict = dict(self)
         self_dict['publication_datetime'] = str(self_dict['publication_datetime'])
         self_dict['initial_crawl_datetime'] = str(self_dict['initial_crawl_datetime'])
-        self_dict['tags'] = [tag.tag for tag in list(self_dict['tags'])]
+        self_dict['tags'] = [tag for tag in list(self_dict['tags'])]
         return self_dict
