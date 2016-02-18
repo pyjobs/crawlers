@@ -28,7 +28,8 @@ class AlsaCreationsSpider(JobSpider):
         'from_page__company_url__css': '#second a[itemprop=url]::attr(href)',
         'from_page__address__css': '#premier b[itemprop=jobLocation]::text',
         'from_page__description__css': '#premier p[itemprop=description]',
-        'from_page__tags__css': '#premier p[itemprop=skills] b::text',
+        # FIXME - D.A. - 2016-02-18 - tags are not working well
+        # 'from_page__tags__css': '#premier p[itemprop=skills]::text',
     }
 
     def _get_from_page__publication_datetime(self, job_node):
@@ -37,13 +38,13 @@ class AlsaCreationsSpider(JobSpider):
             return date_text
         return super(AlsaCreationsSpider, self)._get_from_list__publication_datetime(job_node)
 
-    def _get_from_page__tags(self, job_node):
-        # TODO - 2016-02-18 - D.A.
-        # Use the standard tags methods to extract tags (according to base list
-        tags = self._extract_all(job_node, 'from_page__tags')
-        if tags:
-            return tags
-        return super(AlsaCreationsSpider, self)._get_from_page__tags(job_node)
+    # def _get_from_page__tags(self, job_node):
+    #     # TODO - 2016-02-18 - D.A. - Make tags import ok
+    #     # Use the standard tags methods to extract tags (according to base list
+    #     tags = self._extract_all(job_node, 'from_page__tags')
+    #     if tags:
+    #         return tags
+    #     return super(AlsaCreationsSpider, self)._get_from_page__tags(job_node)
 
 
 # N'oubliez pas cette ligne
