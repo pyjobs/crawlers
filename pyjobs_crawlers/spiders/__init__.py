@@ -24,6 +24,10 @@ class NotCrawlable(Exception):
     pass
 
 
+class StopCrawlJobLists(StopIteration):
+    pass
+
+
 class StopCrawlJobList(StopIteration):
     pass
 
@@ -339,46 +343,57 @@ class JobSpider(Spider):
 
         try:
             for jobs in self._get_from_list__jobs_lists(response):
-                for job in self._get_from_list__jobs(jobs):
-                    # first we check url. If the job exists, then skip crawling
-                    # (it means that the page has already been crawled
-                    try:
-                        url = self._get_from_list__url(job)
-                    except NotCrawlable:
-                        continue
+                try:
+                    for job in self._get_from_list__jobs(jobs):
+                        job_item = JobItem()
+                        # first we check url. If the job exists, then skip crawling
+                        # (it means that the page has already been crawled
+                        try:
+                            url = self._get_from_list__url(job)
+                            job_item['url'] = url
+                        except NotCrawlable:
+                            continue
 
-                    if self.get_connector().job_exist(url):
-                        self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
-                        raise StopCrawlJobList()
+                        self._check_marker(job_item)
 
-                    request = Request(url, self.parse_job_page)
-                    prefilled_job_item = self._get_prefilled_job_item(job, url)
-                    request.meta['item'] = prefilled_job_item
+                        request = Request(url, self.parse_job_page)
+                        prefilled_job_item = self._get_prefilled_job_item(job_item, job, url)
+                        request.meta['item'] = prefilled_job_item
 
-                    if self.is_from_page_enabled():
-                        yield request
-                    else:
-                        yield prefilled_job_item
+                        if self.is_from_page_enabled():
+                            yield request
+                        else:
+                            yield prefilled_job_item
+                        self._check_can_continue()
 
-                    if not self._can_continue():
-                        return
+                except StopCrawlJobList:
+                    pass
 
             next_page_url = self._get_from_list__next_page(response)
             if next_page_url:
                 yield Request(url=next_page_url)
         except NotFound, exc:
             self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
-        except StopCrawlJobList:
-            pass
+        except StopCrawlJobLists:
+            return
 
-    def _get_prefilled_job_item(self, job_node, url):
+    def _check_marker(self, job_item):
+        """
+        Check if crawler must continue job crawling or not. Raise StopCrawlJobList to stop current
+        job list iteration or StopCrawlJobLists to stop all job list iteration.
+        :param job_item:
+        :return:
+        """
+        if self.get_connector().job_exist(job_item['url']):
+            self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, job_item['url'])
+            raise StopCrawlJobList()
+
+    def _get_prefilled_job_item(self, job_item, job_node, url):
         """
 
         :param job_node: html node containg the job
         :return: JobItem filled with founded data
         """
-        job_item = JobItem()
-
         job_item['status'] = JobItem.CrawlStatus.PREFILLED
         job_item['source'] = self.name
         job_item['initial_crawl_datetime'] = datetime.datetime.now()
@@ -653,7 +668,7 @@ class JobSpider(Spider):
     def get_crawl_parameters(self):
         return self._crawl_parameters
 
-    def _can_continue(self):
+    def _check_can_continue(self):
         if self._debug:
             return False
         return True
