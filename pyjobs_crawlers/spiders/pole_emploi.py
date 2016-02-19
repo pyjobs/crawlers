@@ -20,7 +20,7 @@ class PoleEmploiSpider(JobSpider):
         'from_list__url__css': 'a::attr(href)',
         'from_list__title__css': 'a.title::text',
         'from_list__company__css': 'span.company span[itemprop=name]::text',
-        'from_list__next_page__css': 'a#bottomLienPageSuivante',
+        'from_list__next_page__css': None,
         # FIXME - D.A. - 2016-02-19 - next page is protected by javascript
         # This is not a problem for us (we crawl every 15 minutes
         'from_page__container__css': '#offre-body',
