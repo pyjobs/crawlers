@@ -28,7 +28,7 @@ class PoleEmploiSpider(JobSpider):
         'from_page__publication_datetime__css': 'span[itemprop=datePosted]::text',
         'from_page__company__css': '#second h3.nom::text',
         'from_page__address__css': 'li[itemprop=addressRegion]::text',
-        'from_page__description__css': '#offre-body div',
+        'from_page__description__css': '#offre-body p[itemprop=description]',
         'from_page__tags__css': 'p[itemprop=description]::text',
     }
 
