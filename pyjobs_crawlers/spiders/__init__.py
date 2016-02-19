@@ -128,7 +128,6 @@ class JobSpider(Spider):
         u'html',
         u'http',
         u'imagemagick',
-        u'ios',
         u'j2ee',
         u'java',
         u'javascript',
@@ -141,7 +140,6 @@ class JobSpider(Spider):
         u'linux',
         u'mapreduce',
         u'mesos',
-        u'moa',
         u'mongodb',
         u'mysql',
         u'ness',
@@ -152,7 +150,6 @@ class JobSpider(Spider):
         u'php',
         u'postgresql',
         u'python',
-        u'r',
         u'reactjs',
         u'react.js',
         u'redhat',
@@ -171,7 +168,6 @@ class JobSpider(Spider):
         u'swift',
         u'tomcat',
         u'tornado',
-        u'ux',
         u'varnish',
         u'versioning',
         u'web',
@@ -351,6 +347,7 @@ class JobSpider(Spider):
                         try:
                             url = self._get_from_list__url(job)
                             job_item['url'] = url
+
                         except NotCrawlable:
                             continue
 
@@ -370,6 +367,7 @@ class JobSpider(Spider):
                     pass
 
             next_page_url = self._get_from_list__next_page(response)
+
             if next_page_url:
                 yield Request(url=next_page_url)
         except NotFound, exc:
@@ -412,7 +410,6 @@ class JobSpider(Spider):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
         job_item = response.meta['item']
-
         try:
             job_container = self._get_from_page__container(response)
             job_item['url'] = response.url
@@ -610,7 +607,7 @@ class JobSpider(Spider):
                     )
                 except NotFound:
                     pass  # We raise after iterate selectors options
-            raise NotFound("Can't found value for %s" % selector_name)
+            raise NotFound("Can't find list value for %s" % selector_name)
 
         if selector_type == 'css':
             extract = container.css(selector)
