@@ -345,7 +345,7 @@ class JobSpider(Spider):
                     try:
                         url = self._get_from_list__url(job)
                     except NotCrawlable:
-                        break
+                        continue
 
                     if self.get_connector().job_exist(url):
                         self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, url)
