@@ -173,7 +173,7 @@ class SpiderTest(FunctionalTest):
             self.assertEqual(
                     expected_job[field_name],
                     result_job_as_dict[field_name],
-                    msg="Field \"%s\" of job \"%s\" field must be %s, actual is %s" % (
+                    msg="Field \"%s\" of job \"%s\" is %s and must be %s" % (
                         field_name,
                         result_job_as_dict['title'],
                         expected_job[field_name],

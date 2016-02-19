@@ -4,7 +4,7 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
-
+import re
 import urlparse
 from scrapy.utils.response import get_base_url
 from scrapy import Spider, Item, Field, Request
@@ -126,7 +126,6 @@ class JobSpider(Spider):
         u'haproxy',
         u'hbase',
         u'html',
-        u'http',
         u'imagemagick',
         u'j2ee',
         u'java',
@@ -647,7 +646,7 @@ class JobSpider(Spider):
 
     def _extract_common_tags(self, html_content):
         for tag in self.COMMON_TAGS:
-            weight = html_content.count(tag)
+            weight = len(re.findall(ur"(?<!-)\b%s\b(?!-)" % tag, html_content, flags=re.MULTILINE))
             if weight:
                 yield Tag(tag, weight)
 
