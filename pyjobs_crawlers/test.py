@@ -165,6 +165,11 @@ class SpiderTest(FunctionalTest):
                         'file://' + self._test_dir
                 )
 
+            # Exception for description field (simplify html for exclude space errors)
+            if field_name == 'description':
+                expected_job[field_name] = expected_job[field_name].replace(' ', '')
+                result_job_as_dict[field_name] = result_job_as_dict[field_name].replace(' ', '')
+
             self.assertEqual(
                     expected_job[field_name],
                     result_job_as_dict[field_name],
