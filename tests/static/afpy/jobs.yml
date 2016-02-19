@@ -5,7 +5,7 @@
   publication_datetime: '2015-12-09 11:32:00'
   source: afpy
   status: completed
-  tags: [sql, apache, git, html, http, java, javascript, jenkins, linux, mongodb, mysql, ness, php, python, r, ux]
+  tags: [sql, apache, git, html, http, java, javascript, jenkins, linux, mongodb, mysql, ness, php, python]
   title: "D\xE9veloppeur Python orient\xE9 FullStack"
   url: __tests_dir__static/afpy/jobs/developpeur-python-oriente-fullstack
 - address: null
@@ -15,7 +15,7 @@
   publication_datetime: '2015-12-09 16:34:00'
   source: afpy
   status: completed
-  tags: [cdi, sql, bootstrap, git, http, java, javascript, linux, postgresql, python, r, shell, ux]
+  tags: [cdi, sql, bootstrap, git, http, java, javascript, linux, postgresql, python,  shell]
   title: "D\xE9veloppeur Python full stack"
   url: __tests_dir__static/afpy/jobs/developpeur-python-full-stack
 - address: 46 rue Notre-Dame des Victoires
@@ -25,7 +25,7 @@
   publication_datetime: '2016-01-18 12:08:00'
   source: afpy
   status: completed
-  tags: [sql, http, jira, linux, python, r, ux]
+  tags: [sql, http, jira, linux, python]
   title: "D\xE9veloppeur Python/C Confirm\xE9 (H/F)"
   url: __tests_dir__static/afpy/jobs/developpeur-python-c-confirme-h-f
 - address: null
