@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pyjobs/crawlers.svg?branch=master)](https://travis-ci.org/pyjobs/crawlers)
+
 # PyJobs Crawlers
 
 Crawlers pour le service d'agrégation d'offres d'emploi pyjobs.
