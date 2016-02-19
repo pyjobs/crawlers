@@ -148,7 +148,6 @@ class JobSpider(Spider):
         u'php',
         u'postgresql',
         u'python',
-        u'r',
         u'reactjs',
         u'react.js',
         u'redhat',
@@ -343,6 +342,7 @@ class JobSpider(Spider):
                     # (it means that the page has already been crawled
                     try:
                         url = self._get_from_list__url(job)
+
                     except NotCrawlable:
                         break
 
@@ -360,6 +360,7 @@ class JobSpider(Spider):
                         yield prefilled_job_item
 
             next_page_url = self._get_from_list__next_page(response)
+
             if next_page_url:
                 yield Request(url=next_page_url)
         except NotFound, exc:
@@ -393,7 +394,6 @@ class JobSpider(Spider):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
         job_item = response.meta['item']
-
         try:
             job_container = self._get_from_page__container(response)
             job_item['url'] = response.url
@@ -591,7 +591,7 @@ class JobSpider(Spider):
                     )
                 except NotFound:
                     pass  # We raise after iterate selectors options
-            raise NotFound("Can't found value for %s" % selector_name)
+            raise NotFound("Can't find list value for %s" % selector_name)
 
         if selector_type == 'css':
             extract = container.css(selector)
