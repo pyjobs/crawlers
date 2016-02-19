@@ -32,6 +32,12 @@ class LinuxJobsSpider(JobSpider):
         'from_page__tags__css': 'div.container div.row:nth-child(4) div.col-md-9'
     }
 
+    def _get_from_list__jobs(self, node):
+        jobs = super(LinuxJobsSpider, self)._get_from_list__jobs(node)
+        if jobs:
+            return jobs[::-1]  # Reverse jobs list (they are in asc order)
+        return jobs
+
     def _get_from_list__url(self, jobs_node):
         if len(jobs_node.css('h4')) < 1: # If no h4, then, this is not a job
             raise NotCrawlable()
