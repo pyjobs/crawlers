@@ -167,9 +167,10 @@ class JobSpider(Spider):
 
     _requireds = ('title', 'publication_datetime', 'description')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, debug=False, *args, **kwargs):
         super(JobSpider, self).__init__(*args, **kwargs)
         self._connector = None
+        self._debug = debug
 
     @classmethod
     def get_parameter(cls, parameter_name, required=False):
@@ -263,6 +264,9 @@ class JobSpider(Spider):
                         yield request
                     else:
                         yield prefilled_job_item
+
+                    if not self._can_continue():
+                        return
 
             next_page_url = self._get_from_list__next_page(response)
             if next_page_url:
@@ -535,6 +539,11 @@ class JobSpider(Spider):
 
     def get_crawl_parameters(self):
         return self._crawl_parameters
+
+    def _can_continue(self):
+        if self._debug:
+            return False
+        return True
 
     @staticmethod
     def _month_french_to_english(datetime_str):

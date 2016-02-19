@@ -35,7 +35,7 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def crawl_from_class_name(spider_class_name, connector, spider_error_callback=None):
+def crawl_from_class_name(spider_class_name, connector, spider_error_callback=None, **kwargs):
     """
     Do the crawn job (see crawl function) from spider class name (eg. pyjobs_crawlers.spiders.myspider.MySpiderClass)
     :param spider_class_name:
@@ -49,7 +49,7 @@ def crawl_from_class_name(spider_class_name, connector, spider_error_callback=No
     spider_module = import_module(module_name)
     spider_class = getattr(spider_module, class_name)
 
-    return crawl([spider_class], connector, spider_error_callback)[0]
+    return crawl([spider_class], connector, spider_error_callback=spider_error_callback, **kwargs)[0]
 
 
 def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback, scrapy_settings=None):
@@ -79,7 +79,7 @@ def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_
     process = CrawlerProcess(settings)
 
     for spider_class in spiders_classes:
-        process.crawl(spider_class)
+        process.crawl(spider_class, debug=debug)
 
     spiders = []
     for crawler in list(process.crawlers):

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # -*- coding: utf-8 -*-
+import argparse
 import json
 import os
 import sys
@@ -8,16 +9,29 @@ import sys
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
 
-
 from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector, stdout_error_callback
 
+parser = argparse.ArgumentParser(description='Test spider command')
+parser.add_argument('spider',
+                    metavar='SPIDER',
+                    type=str,
+                    help='Spider module name')
+parser.add_argument('-a',
+                    '--all',
+                    action='store_true',
+                    default=False,
+                    dest='all',
+                    help='Crawl all urls (by default, only one job is crawled)')
 
 if __name__ == '__main__':
+    parsed_args = parser.parse_args()
     connector = StdOutputConnector()
+
     spider = crawl_from_class_name(
-            spider_class_name=sys.argv[1],
-            connector=connector,
-            spider_error_callback=stdout_error_callback
+        spider_class_name=parsed_args.spider,
+        connector=connector,
+        spider_error_callback=stdout_error_callback,
+        debug=not parsed_args.all
     )
 
     jobs = spider.get_connector().get_jobs()
@@ -27,4 +41,6 @@ if __name__ == '__main__':
             print('DETAILS FOR %s:' % job['url'])
             print(json.dumps(job.to_dict(), sort_keys=True, indent=4))
 
-    print('TERMINATED: %d job(s) found' % len(jobs))
+    print('TERMINATED: %d job(s) found %s' %
+          (len(jobs),
+           "(Only one job has been crawled, for crawl normally, add --all parameter)" if not parsed_args.all else ''))
