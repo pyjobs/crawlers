@@ -286,19 +286,25 @@ class JobSpider(Spider):
         if field_name in cls._forced_collected_field:
             return True
 
+        if not cls.has_from_page_parameter_for_field(field_name):
+            return cls.has_from_list_parameter_for_field(field_name)
+        return True
+
+    @classmethod
+    def has_from_page_parameter_for_field(cls, field_name):
         try:
             cls._get_resolved_selector('from_page__' + field_name)
             return True
         except ParameterNotFound:
-            pass
+            return False
 
+    @classmethod
+    def has_from_list_parameter_for_field(cls, field_name):
         try:
             cls._get_resolved_selector('from_list__' + field_name)
             return True
         except ParameterNotFound:
-            pass
-
-        return False
+            return False
 
     def _set_crawler(self, crawler):
         super(JobSpider, self)._set_crawler(crawler)
@@ -475,7 +481,7 @@ class JobSpider(Spider):
     def _get_from_list__tags(self, node):
         tags_html = self._extract_first(node, 'from_list__tags', required=False)
         if tags_html:
-            return self.extract_tags(tags_html)
+            return list(self.extract_tags(tags_html))
         return []
 
     #
@@ -510,7 +516,7 @@ class JobSpider(Spider):
     def _get_from_page__tags(self, node):
         tags_html = self._extract_first(node, 'from_page__tags', required=False)
         if tags_html:
-            return self.extract_tags(tags_html)
+            return list(self.extract_tags(tags_html))
         return []
 
     #

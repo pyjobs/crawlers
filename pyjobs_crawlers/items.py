@@ -32,9 +32,23 @@ class JobItem(scrapy.Item):
     status = scrapy.Field()
     tags = scrapy.Field()
 
-    def to_dict(self):
+    def to_dict(self, clean=False):
+        """
+
+        :param clean: remove keys where value is None, []
+        :return:
+        """
         self_dict = dict(self)
-        self_dict['publication_datetime'] = str(self_dict['publication_datetime'])
-        self_dict['initial_crawl_datetime'] = str(self_dict['initial_crawl_datetime'])
-        self_dict['tags'] = [tag.tag for tag in list(self_dict['tags'])]
+        if 'publication_datetime' in self_dict:
+            self_dict['publication_datetime'] = str(self_dict['publication_datetime'])
+
+        if 'initial_crawl_datetime' in self_dict:
+            self_dict['initial_crawl_datetime'] = str(self_dict['initial_crawl_datetime'])
+
+        if 'tags' in self_dict:
+            self_dict['tags'] = [tag.tag for tag in list(self_dict['tags'])]
+
+        if clean:
+            return dict((k, v) for k, v in self_dict.iteritems() if v)
+
         return self_dict

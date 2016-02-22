@@ -25,15 +25,20 @@ class SpiderTest(FunctionalTest):
     _dump_format = '%s'
     _replace = ''
 
-    def _crawl(self, start_file_path, fake_url, items=[]):
+    def _crawl(self, start_file_path, fake_url, items=None, connector=None):
         """
 
         :param start_file_path: file path of start file
         :param fake_url: The fake url for Request
+        :param connector: Connector instance
         :param items: List of jobs item to use as "job database". Default is empty list
         :return: list of job items
         """
-        connector = SpiderTestConnector(items)
+        if items is None:
+            items = []
+
+        if connector is None:
+            connector = SpiderTestConnector(items)
 
         request = Request(url=fake_url)
         start_response = fake_response_from_file(
@@ -95,7 +100,7 @@ class SpiderTest(FunctionalTest):
             elif isinstance(response_item, Item):
                 yield response_item
 
-    def _get_result_html_file(self, html_file, items=[]):
+    def _get_result_html_file(self, html_file, items=None, connector=None):
         """
         :type items: list
         :param html_file: html file to start crawl
@@ -104,6 +109,7 @@ class SpiderTest(FunctionalTest):
         return self._crawl(
                 start_file_path=os.path.join(self._dump_dir, html_file),
                 items=items,
+                connector=connector,
                 fake_url=self._start_url
         )
 
@@ -185,6 +191,7 @@ class SpiderTest(FunctionalTest):
 class SpiderTestConnector(Connector):
     def __init__(self, saved_jobs=[]):
         self.saved_jobs = saved_jobs
+        self.logs = []
 
     def get_most_recent_job_date(self, source):
         last_date = datetime.datetime(1970, 1, 1, 0, 0, 0)
@@ -201,6 +208,9 @@ class SpiderTestConnector(Connector):
             if job['url'] == job_public_id:
                 return True
         return False
+
+    def log(self, source, action, more=None):
+        self.logs.append((source, action, more))
 
 
 def fake_response_from_file(file_path, request, response_class=Response):

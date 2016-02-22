@@ -2,9 +2,8 @@
 import unittest
 
 from tests.functional.spiders import afpy
-from tests.functional.spiders import warnings
 
-test_modules = [afpy, warnings]
+test_modules = [afpy, ]
 
 suite = unittest.TestSuite()
 
