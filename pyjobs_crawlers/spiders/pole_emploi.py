@@ -20,7 +20,7 @@ class PoleEmploiSpider(JobSpider):
         'from_list__url__css': 'a::attr(href)',
         'from_list__title__css': 'a.title::text',
         'from_list__company__css': 'span.company span[itemprop=name]::text',
-        'from_list__next_page__css': 'a#bottomLienPageSuivante',
+        'from_list__next_page__css': None,
         # FIXME - D.A. - 2016-02-19 - next page is protected by javascript
         # This is not a problem for us (we crawl every 15 minutes
         'from_page__container__css': '#offre-body',
@@ -28,7 +28,7 @@ class PoleEmploiSpider(JobSpider):
         'from_page__publication_datetime__css': 'span[itemprop=datePosted]::text',
         'from_page__company__css': '#second h3.nom::text',
         'from_page__address__css': 'li[itemprop=addressRegion]::text',
-        'from_page__description__css': '#offre-body div',
+        'from_page__description__css': '#offre-body p[itemprop=description]',
         'from_page__tags__css': 'p[itemprop=description]::text',
     }
 
@@ -41,3 +41,4 @@ class PoleEmploiSpider(JobSpider):
 
 # N'oubliez pas cette ligne
 source = JobSource.from_job_spider(PoleEmploiSpider)
+

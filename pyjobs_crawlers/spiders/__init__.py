@@ -749,3 +749,4 @@ class JobSource(object):
                 spider_class=job_spider_class,
                 base_class=base_class
         )
+
