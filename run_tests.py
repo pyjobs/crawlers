@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-test_modules = [
-    'tests.functional.spiders.afpy.TestAfpySpider',
-    'tests.functional.checks.TestChecks',
-    ]
+from tests.functional.spiders import afpy
+from tests.functional.spiders import warnings
+
+test_modules = [afpy, warnings]
 
 suite = unittest.TestSuite()
 
-for t in test_modules:
-    try:
-        # If the module defines a suite() function, call it to get the suite.
-        mod = __import__(t, globals(), locals(), ['suite'])
-        suitefn = getattr(mod, 'suite')
-        suite.addTest(suitefn())
-    except (ImportError, AttributeError):
-        # else, just load all the test cases from the module.
-        suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
+for test_module in test_modules:
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(test_module))
 
 test_result = unittest.TextTestRunner().run(suite)
 
