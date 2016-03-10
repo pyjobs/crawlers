@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pyjobs/crawlers.svg?branch=master)](https://travis-ci.org/pyjobs/crawlers)
+[![Build Status](https://travis-ci.org/pyjobs/crawlers.svg?branch=master)](https://travis-ci.org/pyjobs/crawlers) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pyjobs/crawlers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pyjobs/crawlers/?branch=master)
 
 # PyJobs Crawlers
 
