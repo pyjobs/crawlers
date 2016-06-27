@@ -51,8 +51,10 @@ def get_sources(spiders_directory=None):
 def get_spider_class(spider_name, spiders_directory=None):
     spider_class = None
 
-    if spider_name in get_spiders_modules_names(spiders_directory):
-        spider_module = import_module(get_spider_module_name(spider_name))
+    spider_module_name = get_spider_module_name(spider_name)
+
+    if spider_module_name in get_spiders_modules_names(spiders_directory):
+        spider_module = import_module(spider_module_name)
         for module_attribute_name in dir(spider_module):
             module_attribute = getattr(spider_module, module_attribute_name)
             if inspect.isclass(module_attribute) \
