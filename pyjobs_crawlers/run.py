@@ -12,7 +12,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.xlib.pydispatch import dispatcher
 from slugify import slugify
 
-from pyjobs_crawlers.tools import get_spiders_classes
+import pyjobs_crawlers.tools
 
 
 def stdout_error_callback(failure, response, spider):
@@ -114,6 +114,14 @@ def start_crawl_process(process_params):
             print("Crawl process of \"%s\" already running" % lock_name)
 
 
+def start_crawler(connector_class, spider_name, debug=False):
+    start_crawl_process([
+        pyjobs_crawlers.tools.get_spider_class(spider_name),
+        connector_class,
+        debug
+    ])
+
+
 def start_crawlers(connector_class, processes=1, debug=False):
     """
 
@@ -124,7 +132,7 @@ def start_crawlers(connector_class, processes=1, debug=False):
     :param debug:
     :return:
     """
-    spiders_classes = get_spiders_classes()
+    spiders_classes = pyjobs_crawlers.tools.get_spiders_classes()
 
     if processes == 0:
         connector = connector_class()
