@@ -106,7 +106,7 @@ def _get_lock(lock_name):
 def start_crawl_process(process_params):
     spider_class, connector_class, debug = process_params
 
-    lock_name = slugify(basename(spider_class))
+    lock_name = slugify(spider_class.__name__)
     with _get_lock(lock_name) as acquired:
         if acquired:
             crawl([spider_class], connector_class, debug)
