@@ -316,6 +316,17 @@ class JobSpider(Spider):
         :param connector: Connecteur
         :return:
         """
+        import pyjobs_crawlers.run
+
+        if not isinstance(connector, pyjobs_crawlers.run.Connector):
+            raise TypeError(
+                    "{}{}{}".format(
+                            "Connector should be of type Connector, got : ",
+                            type(connector),
+                            "."
+                    )
+            )
+
         self._connector = connector
 
     def get_connector(self):
