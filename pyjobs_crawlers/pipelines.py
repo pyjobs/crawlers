@@ -14,4 +14,3 @@ class RecordJobPipeline(object):
         spider.get_connector().add_job(job_item=item)
         spider.get_connector().log(spider.name, self.ACTION_SAVED, item['url'])
         return item
-

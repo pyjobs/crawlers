@@ -4,11 +4,13 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
+import datetime
 import re
 import urlparse
+
+from scrapy import Spider, Request
 from scrapy.utils.response import get_base_url
-from scrapy import Spider, Item, Field, Request
-import datetime
+
 from pyjobs_crawlers.items import JobItem
 
 

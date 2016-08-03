@@ -4,7 +4,7 @@ import glob
 from contextlib import contextmanager
 from importlib import import_module
 from multiprocessing import Pool
-from os.path import dirname, isfile, basename
+from os.path import dirname, isfile
 
 import fasteners
 from scrapy import signals
