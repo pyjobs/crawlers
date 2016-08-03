@@ -321,13 +321,8 @@ class JobSpider(Spider):
         import pyjobs_crawlers.run
 
         if not isinstance(connector, pyjobs_crawlers.run.Connector):
-            raise TypeError(
-                    "{}{}{}".format(
-                            "Connector should be of type Connector, got : ",
-                            type(connector),
-                            "."
-                    )
-            )
+            error_type = pyjobs_crawlers.run.Connector
+            raise TypeError('connector shoudl be of type %s.', error_type)
 
         self._connector = connector
 
