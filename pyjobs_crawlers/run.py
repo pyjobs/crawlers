@@ -16,17 +16,18 @@ import pyjobs_crawlers.tools
 
 
 def stdout_error_callback(failure, response, spider):
-    print("UNCATCH ERROR: (%s) %s:" % (response.url, str(failure.value)))
+    print("UNCAUGHT ERROR: [%s] (%s) %s:"
+          % (spider.name, response.url, str(failure.value)))
     print(str(failure))
 
 
 def get_spiders_files(spiders_directory=None):
     """
+    Returns a list of every file in spiders_directory.
 
-    Return list of filename corresponding to JobSpider
-
-    :param spiders_directory: Path where search JobSpiders
-    :return: list of filename
+    :param spiders_directory: the path where you want the search to occur. If no
+    spiders_directory is specified, this function will search in this ./spiders/
+    :return: returns a list of every filename in the directory spiders_directory
     """
     if spiders_directory is None:
         spiders_directory = dirname(__file__) + '/spiders/'
@@ -37,11 +38,15 @@ def get_spiders_files(spiders_directory=None):
 
 def crawl_from_class_name(spider_class_name, connector, spider_error_callback=None, **kwargs):
     """
-    Do the crawn job (see crawl function) from spider class name (eg. pyjobs_crawlers.spiders.myspider.MySpiderClass)
-    :param spider_class_name:
-    :param connector:
-    :param spider_error_callback:
-    :return:
+    Performs a crawling operation, using the specified parameters and the
+    specified spider class.
+
+    :param spider_class_path: the classpath of the spider which will perform the
+    crawling operation, eg.: pyjobs_crawlers.spiders.afpy.AfpyJobSpider
+    :param connector: the connector which will be used by the spider
+    :param spider_error_callback: the callback the spider will use in case an
+    error that hasn't been handled occur
+    :return: the spider that has been used to perform the crawling operation
     """
     module_name = '.'.join(spider_class_name.split('.')[:-1])
     class_name = spider_class_name.split('.')[-1]
@@ -54,13 +59,17 @@ def crawl_from_class_name(spider_class_name, connector, spider_error_callback=No
 
 def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback, scrapy_settings=None):
     """
-    Launch crawl job for JobSpider class
-    :param scrapy_settings: dict of setting merged with CrawlerProcess default settings
-    :param debug: (bool) Activate or disable debug
-    :param spider_error_callback: callback foir spider errors (see http://doc.scrapy.org/en/latest/topics/signals.html#spider-error)
-    :param connector: Connector instance
-    :param spiders_classes: JobSpider class list
-    :return: spider instance
+    Launches a crawling job for each JobSpider classes in spiders_classes.
+
+    :param scrapy_settings: a dictionary of settings, which will be merged with
+    CrawlerProcess' default settings
+    settings
+    :param debug: activate or disable debug
+    :param spider_error_callback: callback for unhandled spider errors, more
+    details on http://doc.scrapy.org/en/latest/topics/signals.html#spider-error
+    :param connector: an instance of a Connector class
+    :param spiders_classes: a list of JobSpider classes
+    :return: a list of the spider instances used to perform the crawling
     """
     if debug:
         dispatcher.connect(spider_error_callback, signals.spider_error)
@@ -91,7 +100,7 @@ def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_
 
 @contextmanager
 def _get_lock(lock_name):
-    # Lock to prevent simultaneous crawnling process
+    # Lock preventing simultaneous crawling processes
     lock_name = "pyjobs_crawl_%s" % lock_name
     lock = fasteners.InterProcessLock('/tmp/%s' % lock_name)
     lock_gotten = lock.acquire(blocking=False)
@@ -114,73 +123,81 @@ def start_crawl_process(process_params):
             print("Crawl process of \"%s\" already running" % lock_name)
 
 
-def start_crawler(connector_class, spider_name, debug=False):
-    start_crawl_process([
-        pyjobs_crawlers.tools.get_spider_class(spider_name),
-        connector_class,
-        debug
-    ])
+def crawl_from_spider_file_name(spider_file_name, connector,
+                                spider_error_callback=None, **kwargs):
+    spider_class = pyjobs_crawlers.tools.get_spider_class(spider_file_name)
+    return crawl([spider_class], connector,
+                 spider_error_callback=spider_error_callback, **kwargs)[0]
 
 
-def start_crawlers(connector_class, processes=1, debug=False):
+def start_crawlers(connector_class, num_processes=1, debug=False):
     """
+    Starts a spider process for each spider class in the project
 
-    Start spider processes
-
-    :param processes:
-    :param connector_class:
-    :param debug:
-    :return:
+    :param num_processes: the number of simultaneous crawling processes
+    :param connector_class: the connector class that should be used by the
+    spiders
+    :param debug: activate/deactivate debugging
     """
-    spiders_classes = pyjobs_crawlers.tools.get_spiders_classes()
+    spider_classes = pyjobs_crawlers.tools.get_spiders_classes()
 
-    if processes == 0:
+    if num_processes == 0:
         connector = connector_class()
         with _get_lock('ALL') as acquired:
             if acquired:
-                crawl(spiders_classes, connector, debug)
+                crawl(spider_classes, connector, debug)
             else:
                 print("Crawl process of 'ALL' already running")
             return
 
-    # split list in x list of processes count elements
-    spider_classes_chunks = [spiders_classes[x:x + processes] for x in range(0, len(spiders_classes), processes)]
+    # Splits the spider_classes list in x lists of size num_processes
+    spider_classes_chunks = list()
+    for x in range(0, len(spider_classes), num_processes):
+        spider_classes_chunks.append(spider_classes[x:x + num_processes])
 
-    # Start one cycle of processes by chunk
+    # Start num_processes number of crawling processes
     for spider_classes_chunk in spider_classes_chunks:
-        process_params_chunk = [(spider_class, connector_class, debug) for spider_class in spider_classes_chunk]
+        process_params_chunk = [(spider_class, connector_class, debug)
+                                for spider_class in spider_classes_chunk]
         p = Pool(len(process_params_chunk))
         p.map(start_crawl_process, process_params_chunk)
 
 
 class Connector(object):
     """
-    Connector class have to be used to insert caller context in pyjobs_crawler context
+    This class has to be used to insert caller context in pyjobs_crawler
+    context.
     """
 
     def job_exist(self, job_public_id):
         """
-        Check if job exist in your database
-        :param job_public_id: job identifier, actually pyjobs_crawler use the job URL
+        Check if the crawled job already exists in your database.
+
+        :param job_public_id: job identifier, for instance pyjobs_crawler uses
+        the job URL
         :rtype: bool
-        :return: True if job exist in your database
+        :return: True if job exists in your database, False otherwise
         """
         raise NotImplementedError()
 
     def get_most_recent_job_date(self, source):
         """
-        Return the most recent publication_datetime of job for a given source.
-        USed to stop crawling if we read an already crawled and saved job.
+        Returns the most recent publication_datetime of job for a given source.
+        It will be used to stop crawling if we read an already crawled and saved
+        job offer.
+
         :param source: source name (eg. 'afpy', 'lolix', ...)
         :type source: str
-        :return: most recent publication_datetime of job for a given source
         :rtype: datetime.datetime
+        :return: the most recent publication_datetime of job offers crawled from
+        a given source
         """
         raise NotImplementedError()
 
     def add_job(self, job_item):
         """
-        Save job in your database
+        Saves the job offer in your database
+
         :param job_item: the scrapy job item
         :type job_item: pyjobs_crawlers.items.JobItem
         :return:

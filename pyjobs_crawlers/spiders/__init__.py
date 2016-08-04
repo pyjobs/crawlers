@@ -346,7 +346,7 @@ class JobSpider(Spider):
 
     def parse_job_list_page(self, response):
         """
-        Pasring of job list
+        Parsing of a job list page
         """
         self.get_connector().log(self.name, self.ACTION_CRAWL_LIST,
                                  response.url)
