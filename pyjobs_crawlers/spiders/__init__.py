@@ -348,7 +348,8 @@ class JobSpider(Spider):
         """
         Pasring of job list
         """
-        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST, response.url)
+        self.get_connector().log(self.name, self.ACTION_CRAWL_LIST,
+                                 response.url)
 
         try:
             for jobs in self._get_from_list__jobs_lists(response):
@@ -367,7 +368,8 @@ class JobSpider(Spider):
                         self._check_marker(job_item)
 
                         request = Request(url, self.parse_job_page)
-                        prefilled_job_item = self._get_prefilled_job_item(job_item, job, url)
+                        prefilled_job_item = self._get_prefilled_job_item(
+                            job_item, job, url)
                         request.meta['item'] = prefilled_job_item
 
                         if self.is_from_page_enabled():
@@ -384,7 +386,8 @@ class JobSpider(Spider):
             if next_page_url:
                 yield Request(url=next_page_url)
         except NotFound, exc:
-            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
+            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR,
+                                     str(exc))
         except StopCrawlJobLists:
             return
 
@@ -396,7 +399,8 @@ class JobSpider(Spider):
         :return:
         """
         if self.get_connector().job_exist(job_item['url']):
-            self.get_connector().log(self.name, self.ACTION_MARKER_FOUND, job_item['url'])
+            self.get_connector().log(self.name, self.ACTION_MARKER_FOUND,
+                                     job_item['url'])
             raise StopCrawlJobList()
 
     def _get_prefilled_job_item(self, job_item, job_node, url):
@@ -412,7 +416,8 @@ class JobSpider(Spider):
 
         for job_item_field in self._job_item_fields:
             job_item_method_name = "_get_from_list__%s" % job_item_field
-            job_item[job_item_field] = getattr(self, job_item_method_name)(job_node)
+            job_item[job_item_field] = getattr(self, job_item_method_name)(
+                job_node)
 
         return job_item
 
@@ -428,16 +433,19 @@ class JobSpider(Spider):
             job_item['url'] = response.url
 
             for job_item_field in self._job_item_fields:
-                if not job_item[job_item_field]:  # Fill field only if not prefilled value
+                if not job_item[
+                    job_item_field]:  # Fill field only if not prefilled value
                     job_item_method_name = "_get_from_page__%s" % job_item_field
                     try:
-                        job_item[job_item_field] = getattr(self, job_item_method_name)(job_container)
+                        job_item[job_item_field] = getattr(
+                            self, job_item_method_name)(job_container)
                     except JobFieldUncomputable as exc:
                         exc.fix_job_item(job_item)
 
         except NotFound, exc:
             # If required extraction fail, we log it
-            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR, str(exc))
+            self.get_connector().log(self.name, self.ACTION_CRAWL_ERROR,
+                                     str(exc))
 
         # If some of required job properties are missing, job is INVALID
         if self._item_satisfying(job_item):
@@ -460,7 +468,8 @@ class JobSpider(Spider):
         return self._extract(node, 'from_list__jobs', required=True)
 
     def _get_from_list__url(self, node):
-        extracted_url = self._extract_first(node, 'from_list__url', required=True)
+        extracted_url = self._extract_first(node, 'from_list__url',
+                                            required=True)
         return self._get_absolute_url(extracted_url)
 
     def _get_from_list__next_page(self, node):
@@ -478,13 +487,15 @@ class JobSpider(Spider):
         return self._extract_first(node, 'from_list__company', required=False)
 
     def _get_from_list__company_url(self, node):
-        return self._extract_first(node, 'from_list__company_url', required=False)
+        return self._extract_first(node, 'from_list__company_url',
+                                   required=False)
 
     def _get_from_list__address(self, node):
         return self._extract_first(node, 'from_list__address', required=False)
 
     def _get_from_list__description(self, node):
-        return self._extract_first(node, 'from_list__description', required=False)
+        return self._extract_first(node, 'from_list__description',
+                                   required=False)
 
     def _get_from_list__tags(self, node):
         tags_html = self._extract_first(node, 'from_list__tags', required=False)
@@ -513,13 +524,15 @@ class JobSpider(Spider):
         return self._extract_first(node, 'from_page__company', required=False)
 
     def _get_from_page__company_url(self, node):
-        return self._extract_first(node, 'from_page__company_url', required=False)
+        return self._extract_first(node, 'from_page__company_url',
+                                   required=False)
 
     def _get_from_page__address(self, node):
         return self._extract_first(node, 'from_page__address', required=False)
 
     def _get_from_page__description(self, node):
-        return self._extract_first(node, 'from_page__description', required=True)
+        return self._extract_first(node, 'from_page__description',
+                                   required=True)
 
     def _get_from_page__tags(self, node):
         tags_html = self._extract_first(node, 'from_page__tags', required=False)
@@ -539,7 +552,8 @@ class JobSpider(Spider):
         return self.reformat_url.format(domain=domain, found_url=url)
 
     def is_from_page_enabled(self):
-        from_page_enabled = self.get_parameter('from_page_enabled', required=False)
+        from_page_enabled = self.get_parameter('from_page_enabled',
+                                               required=False)
         return from_page_enabled is None or from_page_enabled
 
     def _item_satisfying(self, item):
@@ -562,7 +576,8 @@ class JobSpider(Spider):
         :return: string
         """
         try:
-            return ' '.join(self._extract(container, selector_name, required=True).extract_first().split())
+            return ' '.join(self._extract(container, selector_name,
+                                          required=True).extract_first().split())
         except NotFound:
             if not required:
                 return None
@@ -578,7 +593,8 @@ class JobSpider(Spider):
         """
         items = []
         try:
-            for tag_node in self._extract(container, selector_name, required=True):
+            for tag_node in self._extract(container, selector_name,
+                                          required=True):
                 items.append(tag_node.extract().strip())
             return items
         except NotFound:
@@ -586,7 +602,8 @@ class JobSpider(Spider):
                 return []
             raise
 
-    def _extract(self, container, selector_name, resolve_selector_name=True, selector_type=None, required=True,
+    def _extract(self, container, selector_name, resolve_selector_name=True,
+                 selector_type=None, required=True,
                  no_resolve_selector_value=None):
         """
 
@@ -600,7 +617,8 @@ class JobSpider(Spider):
             raise Exception('You must set "selector_type" parameter')
 
         if not resolve_selector_name and not no_resolve_selector_value:
-            raise Exception('You must set "no_resolve_selector_value" parameter')
+            raise Exception(
+                'You must set "no_resolve_selector_value" parameter')
 
         if resolve_selector_name:
             selector_type, selector = self._get_resolved_selector(selector_name)
@@ -611,12 +629,12 @@ class JobSpider(Spider):
             for selector_option in selector:
                 try:
                     return self._extract(
-                            container,
-                            selector_name=selector_name,
-                            no_resolve_selector_value=selector_option,
-                            resolve_selector_name=False,
-                            selector_type=selector_type,
-                            required=required
+                        container,
+                        selector_name=selector_name,
+                        no_resolve_selector_value=selector_option,
+                        resolve_selector_name=False,
+                        selector_type=selector_type,
+                        required=required
                     )
                 except NotFound:
                     pass  # We raise after iterate selectors options
@@ -649,18 +667,20 @@ class JobSpider(Spider):
         except ParameterNotFound:
             try:
                 xpath_parameter_name = "%s__xpath" % selector_name
-                return 'xpath', cls.get_parameter(xpath_parameter_name, required=True)
+                return 'xpath', cls.get_parameter(xpath_parameter_name,
+                                                  required=True)
             except ParameterNotFound:
                 pass
 
         raise ParameterNotFound(
-                "Crawl Parameter \"%s\" or (\"%s\") is not set" %
-                (css_parameter_name, xpath_parameter_name)
+            "Crawl Parameter \"%s\" or (\"%s\") is not set" %
+            (css_parameter_name, xpath_parameter_name)
         )
 
     def _extract_common_tags(self, html_content):
         for tag in self.COMMON_TAGS:
-            weight = len(re.findall(ur"(?<!-)\b%s\b(?!-)" % tag, html_content, flags=re.MULTILINE))
+            weight = len(re.findall(ur"(?<!-)\b%s\b(?!-)" % tag, html_content,
+                                    flags=re.MULTILINE))
             if weight:
                 yield Tag(tag, weight)
 
@@ -724,7 +744,8 @@ class JobSpider(Spider):
         if reason == 'finished':
             spider.get_connector().log(spider.name, spider.ACTION_FINISHED)
         else:
-            spider.get_connector().log(spider.name, spider.ACTION_UNEXPECTED_END, reason)
+            spider.get_connector().log(spider.name,
+                                       spider.ACTION_UNEXPECTED_END, reason)
         return Spider.close(spider, reason)
 
 
@@ -750,11 +771,10 @@ class JobSource(object):
         :rtype: pyjobs_crawlers.spiders.JobSource
         """
         return cls(
-                id=job_spider_class.name,
-                label=job_spider_class.label,
-                url=job_spider_class.url,
-                logo_url=job_spider_class.logo_url,
-                spider_class=job_spider_class,
-                base_class=base_class
+            id=job_spider_class.name,
+            label=job_spider_class.label,
+            url=job_spider_class.url,
+            logo_url=job_spider_class.logo_url,
+            spider_class=job_spider_class,
+            base_class=base_class
         )
-
