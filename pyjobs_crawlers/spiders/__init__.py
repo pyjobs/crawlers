@@ -376,7 +376,9 @@ class JobSpider(Spider):
                             yield request
                         else:
                             yield prefilled_job_item
-                        self._check_can_continue()
+
+                        if not self._check_can_continue():
+                            break
 
                 except StopCrawlJobList:
                     pass
