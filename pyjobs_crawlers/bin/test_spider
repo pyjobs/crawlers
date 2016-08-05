@@ -16,32 +16,94 @@ parser = argparse.ArgumentParser(description='Test spider command')
 parser.add_argument('spider',
                     metavar='SPIDER',
                     type=str,
-                    help='Spider module name')
-parser.add_argument('-a',
-                    '--all',
+                    help='Spider module name '
+                         '(eg. pyjobs_crawlers.spiders.afpy.AfpyJobSpider)')
+parser.add_argument('-l',
+                    '--job-list-url',
+                    default=None,
+                    dest='job_list_page_url',
+                    help='An url pointing to a job list web page you want to '
+                         'test against the job list parser of the specified '
+                         'spider class (non recursive by default, see -r). '
+                         'Cannot be used simultaneously with -j.')
+parser.add_argument('-r',
+                    '--recursive',
                     action='store_true',
                     default=False,
-                    dest='all',
-                    help='Crawl all urls (by default, only one job is crawled)')
+                    dest='recursive_crawling',
+                    help='Add this argument in case you want the parsing of '
+                         'job list pages to be recursive.')
+parser.add_argument('-s',
+                    '--single-job-offers',
+                    action='store_true',
+                    default=False,
+                    dest='single_job_offer',
+                    help='Only crawl the first scrapped job offer page url (by '
+                         'default, every job offers listed on the page list '
+                         'are crawled).')
+parser.add_argument('-p',
+                    '--job-page-url',
+                    default=None,
+                    dest='job_offer_page_url',
+                    help='An url pointing to a job offer web page you want to '
+                         'test against the job page parser of the specified '
+                         'spider class. Cannot be used simultaneously with -j.')
 
 if __name__ == '__main__':
     parsed_args = parser.parse_args()
     connector = StdOutputConnector()
 
+    # spider = crawl_from_spider_file_name(
+    #     parsed_args.spider,
+    #     connector,
+    #     spider_error_callback=stdout_error_callback,
+    #     debug=not parsed_args.all
+    # )
+
+    # TODO: If spider isn't specified or isn't a valid package: raise an error
+    # TODO: If there are mutually exclusive arguments: raise an error
+
+    debugging_options = {}
+    if parsed_args.job_list_page_url:
+        debugging_options['job_list_crawling'] = {
+            'url': parsed_args.job_list_page_url,
+            'recursive': parsed_args.recursive_crawling,
+            'single_job_offer': parsed_args.single_job_offer
+        }
+    elif parsed_args.job_offer_page_url:
+        debugging_options['job_offer_crawling'] = {
+            'url': parsed_args.job_offer_page_url
+        }
+    else:
+        debugging_options = None
+
     spider = crawl_from_class_name(
-        spider_class_name=parsed_args.spider,
+        spider_class_path=parsed_args.spider,
         connector=connector,
         spider_error_callback=stdout_error_callback,
-        debug=not parsed_args.all
+        debugging_options=debugging_options
     )
 
-    jobs = spider.get_connector().get_jobs()
+    job_offers = spider.get_connector().get_jobs()
 
-    if len(jobs):
-        for job in jobs:
+    num_job_offers = len(job_offers)
+
+    if num_job_offers > 0:
+        for job in job_offers:
             print('DETAILS FOR %s:' % job['url'])
             print(json.dumps(job.to_dict(), sort_keys=True, indent=4))
 
-    print('TERMINATED: %d job(s) found %s' %
-          (len(jobs),
-           "(Only one job has been crawled, for crawl normally, add --all parameter)" if not parsed_args.all else ''))
+    result_analysis_msg = 'Crawling operations are now over. ' \
+                          'Here are some results for you: ' \
+                          '%s job offer(s) have been scrapped.' % num_job_offers
+
+    if parsed_args.single_job_offer:
+        single_job_offer_msg = \
+            'Bear in mind that you used -s (or --single-job-offer), meaning ' \
+            'that only one job offer has been crawled per job list pages. If ' \
+            'you want to crawl every job offers on the list pages, just ' \
+            'remove this argument from your call to this script.'
+        result_analysis_msg = '%s\n%s' % (result_analysis_msg,
+                                            single_job_offer_msg)
+
+    print result_analysis_msg

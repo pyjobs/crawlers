@@ -36,7 +36,9 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
-def crawl_from_class_name(spider_class_name, connector, spider_error_callback=None, **kwargs):
+def crawl_from_class_name(spider_class_path, connector,
+                          spider_error_callback=None,
+                          debugging_options=None, **kwargs):  # TODO: docstring
     """
     Performs a crawling operation, using the specified parameters and the
     specified spider class.
@@ -48,23 +50,38 @@ def crawl_from_class_name(spider_class_name, connector, spider_error_callback=No
     error that hasn't been handled occur
     :return: the spider that has been used to perform the crawling operation
     """
-    module_name = '.'.join(spider_class_name.split('.')[:-1])
-    class_name = spider_class_name.split('.')[-1]
+    module_name = '.'.join(spider_class_path.split('.')[:-1])
+    class_name = spider_class_path.split('.')[-1]
 
     spider_module = import_module(module_name)
     spider_class = getattr(spider_module, class_name)
 
-    return crawl([spider_class], connector, spider_error_callback=spider_error_callback, **kwargs)[0]
+    return crawl([spider_class], connector,
+                 spider_error_callback=spider_error_callback,
+                 debugging_options=debugging_options, **kwargs)[0]
 
 
-def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_error_callback, scrapy_settings=None):
+def crawl(spiders_classes, connector, debug=False,
+          spider_error_callback=stdout_error_callback,
+          debugging_options=None, scrapy_settings=None):
     """
     Launches a crawling job for each JobSpider classes in spiders_classes.
 
     :param scrapy_settings: a dictionary of settings, which will be merged with
     CrawlerProcess' default settings
     settings
-    :param debug: activate or disable debug
+    :param debugging_options: enable and configure, or disable debugging. This
+    parameter must be a dictionary of the following form:
+    {
+        'job_list_crawling': {
+            'url': 'www.my_job_list_url.com',
+            'recursive': (True|False),
+            'single_job_offer': (True|False)
+        },
+        'job_offer_crawling': {
+            'url': 'www.my_job_page_url.com'
+        }
+    }
     :param spider_error_callback: callback for unhandled spider errors, more
     details on http://doc.scrapy.org/en/latest/topics/signals.html#spider-error
     :param connector: an instance of a Connector class
@@ -88,7 +105,7 @@ def crawl(spiders_classes, connector, debug=False, spider_error_callback=stdout_
     process = CrawlerProcess(settings)
 
     for spider_class in spiders_classes:
-        process.crawl(spider_class, debug=debug)
+        process.crawl(spider_class, debugging_options=debugging_options)
 
     spiders = []
     for crawler in list(process.crawlers):
