@@ -25,14 +25,15 @@ parser.add_argument('-l',
                     help='An url pointing to a job list web page you want to '
                          'test against the job list parser of the specified '
                          'spider class (non recursive by default, see -r). '
-                         'Cannot be used simultaneously with -j.')
+                         'Cannot be used simultaneously with -p.')
 parser.add_argument('-r',
                     '--recursive',
                     action='store_true',
                     default=False,
                     dest='recursive_crawling',
                     help='Add this argument in case you want the parsing of '
-                         'job list pages to be recursive.')
+                         'job list pages to be recursive. This argument is '
+                         'only useful if used along with -l.')
 parser.add_argument('-s',
                     '--single-job-offers',
                     action='store_true',
@@ -40,14 +41,15 @@ parser.add_argument('-s',
                     dest='single_job_offer',
                     help='Only crawl the first scrapped job offer page url (by '
                          'default, every job offers listed on the page list '
-                         'are crawled).')
+                         'are crawled). This argument is only useful is used '
+                         'along with -l.')
 parser.add_argument('-p',
                     '--job-page-url',
                     default=None,
                     dest='job_offer_page_url',
                     help='An url pointing to a job offer web page you want to '
                          'test against the job page parser of the specified '
-                         'spider class. Cannot be used simultaneously with -j.')
+                         'spider class. Cannot be used simultaneously with -l.')
 
 if __name__ == '__main__':
     parsed_args = parser.parse_args()
