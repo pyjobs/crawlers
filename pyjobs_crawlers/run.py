@@ -38,13 +38,14 @@ def get_spiders_files(spiders_directory=None):
 
 def crawl_from_class_name(spider_class_path, connector,
                           spider_error_callback=None,
-                          debugging_options=None, **kwargs):  # TODO: docstring
+                          debugging_options=None, **kwargs):
     """
     Performs a crawling operation, using the specified parameters and the
     specified spider class.
 
     :param spider_class_path: the classpath of the spider which will perform the
     crawling operation, eg.: pyjobs_crawlers.spiders.afpy.AfpyJobSpider
+    :param debugging_options: enable and configure, or disable debugging
     :param connector: the connector which will be used by the spider
     :param spider_error_callback: the callback the spider will use in case an
     error that hasn't been handled occur
