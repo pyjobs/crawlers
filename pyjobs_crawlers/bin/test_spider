@@ -104,6 +104,6 @@ if __name__ == '__main__':
             'you want to crawl every job offers on the list pages, just ' \
             'remove this argument from your call to this script.'
         result_analysis_msg = '%s\n%s' % (result_analysis_msg,
-                                            single_job_offer_msg)
+                                          single_job_offer_msg)
 
     print result_analysis_msg
