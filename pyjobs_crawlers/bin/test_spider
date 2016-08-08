@@ -17,8 +17,8 @@ parser = argparse.ArgumentParser(description='Test spider command')
 parser.add_argument('spider',
                     metavar='SPIDER',
                     type=str,
-                    help='Spider module name '
-                         '(eg. pyjobs_crawlers.spiders.afpy.AfpyJobSpider)')
+                    help='Spider classpath '
+                         '(eg. pyjobs_crawlers.spiders.afpy.AfpyJobSpider).')
 parser.add_argument('-d',
                     '--debug-crawling',
                     action='store_true',
