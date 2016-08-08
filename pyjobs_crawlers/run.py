@@ -131,12 +131,12 @@ def _get_lock(lock_name):
 
 
 def start_crawl_process(process_params):
-    spider_class, connector_class, debug = process_params
+    spider_class, connector_class = process_params
 
     lock_name = slugify(spider_class.__name__)
     with _get_lock(lock_name) as acquired:
         if acquired:
-            crawl([spider_class], connector_class, debug)
+            crawl([spider_class], connector_class)
         else:
             print("Crawl process of \"%s\" already running" % lock_name)
 
@@ -148,14 +148,13 @@ def crawl_from_spider_file_name(spider_file_name, connector,
                  spider_error_callback=spider_error_callback, **kwargs)[0]
 
 
-def start_crawlers(connector_class, num_processes=1, debug=False):
+def start_crawlers(connector_class, num_processes=1):
     """
     Starts a spider process for each spider class in the project
 
     :param num_processes: the number of simultaneous crawling processes
     :param connector_class: the connector class that should be used by the
     spiders
-    :param debug: activate/deactivate debugging
     """
     spider_classes = pyjobs_crawlers.tools.get_spiders_classes()
 
@@ -163,7 +162,7 @@ def start_crawlers(connector_class, num_processes=1, debug=False):
         connector = connector_class()
         with _get_lock('ALL') as acquired:
             if acquired:
-                crawl(spider_classes, connector, debug)
+                crawl(spider_classes, connector)
             else:
                 print("Crawl process of 'ALL' already running")
             return
@@ -175,7 +174,7 @@ def start_crawlers(connector_class, num_processes=1, debug=False):
 
     # Start num_processes number of crawling processes
     for spider_classes_chunk in spider_classes_chunks:
-        process_params_chunk = [(spider_class, connector_class, debug)
+        process_params_chunk = [(spider_class, connector_class)
                                 for spider_class in spider_classes_chunk]
         p = Pool(len(process_params_chunk))
         p.map(start_crawl_process, process_params_chunk)
