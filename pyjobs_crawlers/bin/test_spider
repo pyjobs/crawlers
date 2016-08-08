@@ -5,6 +5,7 @@ import argparse
 import json
 import os
 import sys
+from importlib import import_module
 
 from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector
 from pyjobs_crawlers.run import stdout_error_callback
@@ -68,19 +69,70 @@ parser.add_argument('-p',
                          'test against the job page parser of the specified '
                          'spider class. Cannot be used simultaneously with -l.')
 
+
+def check_spider_classpath(arguments):
+    err_msg = ''
+    module_name = ''
+    class_name = ''
+    try:
+        module_name = '.'.join(arguments.spider.split('.')[:-1])
+        class_name = arguments.spider.split('.')[-1]
+
+        spider_module = import_module(module_name)
+        getattr(spider_module, class_name)
+    except ValueError:
+        err_msg = 'empty module name'
+    except ImportError:
+        err_msg = 'module [%s] does not exist' % module_name
+    except AttributeError:
+        err_msg = 'class [%s] does not exist in module [%s]' % (class_name,
+                                                                module_name)
+    finally:
+        if err_msg:
+            print 'The specified spider classpath: [%s], is wrong: %s.' % (
+                arguments.spider, err_msg)
+            exit()
+
+
+def check_arguments(arguments):
+    check_spider_classpath(arguments)
+
+    if not arguments.debug_crawling:
+        if arguments.job_list_page_url \
+                or arguments.recursive_crawling \
+                or arguments.crawl_offers_from_list \
+                or arguments.single_job_offer \
+                or arguments.job_offer_page_url:
+            print "You shouldn't use debugging parameters without the " \
+                  "debugging flag: -d or --debug-crawling.\n"
+            parser.print_help()
+            exit()
+
+    if arguments.job_list_page_url and arguments.job_offer_page_url:
+        print '-l and -p are mutually exclusive.\n'
+        parser.print_help()
+        exit()
+
+    if arguments.job_offer_page_url and arguments.recursive_crawling:
+        print '-r cannot be used with -p.\n'
+        parser.print_help()
+        exit()
+
+    if arguments.job_offer_page_url and arguments.crawl_offers_from_list:
+        print '-o cannot be used with -p.\n'
+        parser.print_help()
+        exit()
+
+    if arguments.job_offer_page_url and arguments.single_job_offer:
+        print '-s cannot be used with -p.\n'
+        parser.print_help()
+        exit()
+
 if __name__ == '__main__':
     parsed_args = parser.parse_args()
     connector = StdOutputConnector()
 
-    # spider = crawl_from_spider_file_name(
-    #     parsed_args.spider,
-    #     connector,
-    #     spider_error_callback=stdout_error_callback,
-    #     debug=not parsed_args.all
-    # )
-
-    # TODO: If spider isn't specified or isn't a valid package: raise an error
-    # TODO: If there are mutually exclusive arguments: raise an error
+    check_arguments(parsed_args)
 
     debugging_options = None
 
