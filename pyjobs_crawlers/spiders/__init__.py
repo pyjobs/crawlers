@@ -317,7 +317,10 @@ class JobSpider(Spider):
             job_list_crawling_options = debugging_options['job_list_crawling']
 
             self._job_list_crawling = True
-            self.start_urls = [job_list_crawling_options['url']]
+
+            if 'url' in job_list_crawling_options:
+                self.start_urls = [job_list_crawling_options['url']]
+
             self._job_list_crawling_options['recursive'] = \
                 job_list_crawling_options['recursive']
             self._job_list_crawling_options['single_job_offer'] = \
