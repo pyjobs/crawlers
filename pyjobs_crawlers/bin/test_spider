@@ -138,19 +138,13 @@ if __name__ == '__main__':
 
     if parsed_args.debug_crawling:
         debugging_options = {}
-        if parsed_args.job_list_page_url:
-            debugging_options['job_list_crawling'] = {
-                'url': parsed_args.job_list_page_url,
-                'recursive': parsed_args.recursive_crawling,
-                'single_job_offer': parsed_args.single_job_offer,
-                'crawl_offers_from_list': parsed_args.crawl_offers_from_list
-            }
-        elif parsed_args.job_offer_page_url:
+        if parsed_args.job_offer_page_url:
             debugging_options['job_offer_crawling'] = {
                 'url': parsed_args.job_offer_page_url
             }
         else:
             debugging_options['job_list_crawling'] = {
+                'url': parsed_args.job_list_page_url,
                 'recursive': parsed_args.recursive_crawling,
                 'single_job_offer': parsed_args.single_job_offer,
                 'crawl_offers_from_list': parsed_args.crawl_offers_from_list

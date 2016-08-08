@@ -318,7 +318,7 @@ class JobSpider(Spider):
 
             self._job_list_crawling = True
 
-            if 'url' in job_list_crawling_options:
+            if job_list_crawling_options['url']:
                 self.start_urls = [job_list_crawling_options['url']]
 
             self._job_list_crawling_options['recursive'] = \
