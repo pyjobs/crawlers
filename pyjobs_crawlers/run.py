@@ -61,7 +61,7 @@ def crawl_from_class_name(spider_class_path, connector,
                  debugging_options=debugging_options, **kwargs)[0]
 
 
-def crawl(spiders_classes, connector, debug=False,
+def crawl(spiders_classes, connector,
           spider_error_callback=stdout_error_callback,
           debugging_options=None, scrapy_settings=None):
     """
@@ -88,7 +88,7 @@ def crawl(spiders_classes, connector, debug=False,
     :param spiders_classes: a list of JobSpider classes
     :return: a list of the spider instances used to perform the crawling
     """
-    if debug:
+    if debugging_options:
         dispatcher.connect(spider_error_callback, signals.spider_error)
 
     settings = {
@@ -97,7 +97,7 @@ def crawl(spiders_classes, connector, debug=False,
         },
         'connector': connector,
         'LOG_ENABLED': False,
-        'DOWNLOAD_DELAY': 1 if not debug else 0,
+        'DOWNLOAD_DELAY': 1 if not debugging_options else 0,
     }
     if scrapy_settings:
         settings.update(scrapy_settings)
