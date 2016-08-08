@@ -34,6 +34,15 @@ parser.add_argument('-r',
                     help='Add this argument in case you want the parsing of '
                          'job list pages to be recursive. This argument is '
                          'only useful if used along with -l.')
+parser.add_argument('-o',
+                    '--crawl-offers-from-list',
+                    action='store_true',
+                    default=False,
+                    dest='crawl_offers_from_list',
+                    help='Add this argument in case you not only want to parse '
+                         'the job offers list, but also crawl the job offers '
+                         'scrapped from this list. This argument is only '
+                         'useful if used along with -l.')
 parser.add_argument('-s',
                     '--single-job-offers',
                     action='store_true',
@@ -70,7 +79,8 @@ if __name__ == '__main__':
         debugging_options['job_list_crawling'] = {
             'url': parsed_args.job_list_page_url,
             'recursive': parsed_args.recursive_crawling,
-            'single_job_offer': parsed_args.single_job_offer
+            'single_job_offer': parsed_args.single_job_offer,
+            'crawl_offers_from_list': parsed_args.crawl_offers_from_list
         }
     elif parsed_args.job_offer_page_url:
         debugging_options['job_offer_crawling'] = {

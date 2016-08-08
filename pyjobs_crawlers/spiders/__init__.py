@@ -323,6 +323,9 @@ class JobSpider(Spider):
             self._job_list_crawling_options['single_job_offer'] = \
                 job_list_crawling_options['single_job_offer']
 
+            self._crawl_parameters['from_page_enabled'] = \
+                job_list_crawling_options['crawl_offers_from_list']
+
             return
 
         if 'job_offer_crawling' in debugging_options:
