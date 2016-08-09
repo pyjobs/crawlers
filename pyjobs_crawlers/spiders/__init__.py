@@ -520,7 +520,7 @@ class JobSpider(Spider):
             for job_item_field in self._job_item_fields:
                 # Only set this field's value if it wasn't set while parsing the
                 # job list
-                if job_item[job_item_field]:
+                if job_item_field in job_item and job_item[job_item_field]:
                     continue
 
                 job_item_method_name = "_get_from_page__%s" % job_item_field
