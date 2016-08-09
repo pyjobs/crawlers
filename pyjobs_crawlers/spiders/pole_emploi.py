@@ -11,7 +11,7 @@ class PoleEmploiSpider(JobSpider):
     start_urls = ['http://candidat.pole-emploi.fr/candidat/rechercheoffres/resultats/A_python_FRANCE_01___P__________INDIFFERENT_______________________']
     label = u'Pôle Emploi'
     url = u'http://candidat.pole-emploi.fr/'
-    logo_url = u'http://www.pole-emploi.fr/accueil/image/site/logo/logo-pole-emploi_region.png'
+    logo_url = u'http://www.pole-emploi.fr/accueil/file/sitemodel/pefr/images/accueil/header-logo-pole-emploi-mono.png'
 
     _crawl_parameters = {
         'from_page_enabled': True,
