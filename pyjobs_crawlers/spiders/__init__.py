@@ -473,10 +473,12 @@ class JobSpider(Spider):
             # request, which will cause the crawling operation to stop after the
             # first list page has been crawled. If recursive is set to be True,
             # then we yield a request to the next job list page.
-            if self._job_list_crawling_options['recursive']:
-                next_page_url = self._get_from_list__next_page(response)
-                if next_page_url:
-                    yield Request(url=next_page_url)
+            next_page_url = self._get_from_list__next_page(response)
+            log_msg = next_page_url if next_page_url else 'URL NOT FOUND'
+            self.get_connector().log(self.name, 'NEXT_PAGE_URL', log_msg)
+
+            if next_page_url and self._job_list_crawling_options['recursive']:
+                yield Request(url=next_page_url)
         except NotFound as exc:
             self.get_connector().log(self.name,
                                      self.ACTION_CRAWL_ERROR, str(exc))
