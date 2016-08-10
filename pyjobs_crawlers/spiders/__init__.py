@@ -311,8 +311,6 @@ class JobSpider(Spider):
             raise TypeError('debugging_options should be of type: %s.' % dict)
 
         # Debugging configuration
-        self._regular_crawling = False
-
         if 'job_list_crawling' in debugging_options:
             job_list_crawling_options = debugging_options['job_list_crawling']
 
