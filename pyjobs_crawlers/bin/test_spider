@@ -135,7 +135,7 @@ def check_spider_classpath(arguments):
     if err_msg:
         print 'The specified spider classpath: [%s], is wrong: %s.' \
               % (arguments.spider, err_msg)
-        exit()
+        exit(-1)
 
 if __name__ == '__main__':
     parsed_args = parser.parse_args()
