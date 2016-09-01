@@ -61,19 +61,17 @@ class RemixJobsSpider(JobSpider):
         self.get_connector().log(self.name, self.ACTION_CRAWL_JOB, response.url)
 
         item = response.meta['item']  # prefilled item
-        job_node = response.css('#content .layer')
+        job_node = response.css('.content')
 
         url = response.url
         # title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
 
-        job_infos = job_node.css('ul.job-infos')[0]
-        company = job_infos.xpath('./li[1]/a/text()').extract_first().strip().rstrip(',')
-        if not company:
-            company = job_infos.xpath('./li[1]/text()').extract_first().strip().rstrip(',')
+        # job_infos = job_node.css('ul.job-infos')[0]
+        company_info = response.css('.company-infos')[0]
+        company = "".join(company_info.css('.company-title > a::text').extract())
 
-        # company_url = job_infos.xpath('./li[1]/a/@href').extract_first().strip()
-
-        address = job_infos.xpath('./li[4]/text()').extract_first().strip().rstrip(',')
+        address = ", ".join(company_info.css('.address').xpath('.//text()').extract())
+        company_url = ''.join(company_info.css('.website > a::attr(href)').extract())
         # description = job_node.css('div.job-description').extract()
 
         tags_html = self._extract_first(job_node, 'from_page__tags', required=False)
@@ -94,10 +92,11 @@ class RemixJobsSpider(JobSpider):
         item['url'] = url  # used as uid
         item['source'] = self.name
         item['company'] = company
-        # item['company_url'] = company_url
+        item['company_url'] = company_url
         item['initial_crawl_datetime'] = datetime.now()
         item['status'] = JobItem.CrawlStatus.COMPLETED
 
         yield item
+
 
 source = JobSource.from_job_spider(RemixJobsSpider)
