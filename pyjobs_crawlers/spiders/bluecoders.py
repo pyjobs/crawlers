@@ -20,6 +20,7 @@ class BlueCodersSpider(JobSpider):
         'from_list__url__xpath': '@href',
         'from_list__title__xpath': "li/div/div[contains(@class,'job-title-container')]/h4/text()",
         'from_list__publication_datetime__xpath': "li/div/div[contains(@class,'job-infos')]/p[contains(@class,'duration')]/span/text()",
+        'from_list__address__xpath': "li/div/div[contains(@class,'job-infos')]/p[2]/span[2]/text()",
         'from_list__tags__xpath': "li/div/div[contains(@class,'job-title-container')]/div/ul/li/img/@alt",
 
         'from_page__container__xpath': "/html/body/main/div/div/div[contains(@class,'card')]/div",
