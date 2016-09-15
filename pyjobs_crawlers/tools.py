@@ -26,11 +26,14 @@ def get_spiders_files(spiders_directory=None):
             and not file.endswith('__init__.py')]
 
 
+def get_spider_module_name(spider_file):
+    return "pyjobs_crawlers.spiders.%s" % basename(spider_file.replace('.py', ''))
+
+
 def get_spiders_modules_names(spiders_directory=None):
     modules = []
     for spider_file in get_spiders_files(spiders_directory):
-        module_name = "pyjobs_crawlers.spiders.%s" % basename(spider_file.replace('.py', ''))
-        modules.append(module_name)
+        modules.append(get_spider_module_name(spider_file))
     return modules
 
 
@@ -43,6 +46,24 @@ def get_sources(spiders_directory=None):
         spider_source = getattr(spider_module, 'source')
         sources[spider_source.id] = spider_source
     return sources
+
+
+def get_spider_class(spider_name, spiders_directory=None):
+    spider_class = None
+
+    spider_module_name = get_spider_module_name(spider_name)
+
+    if spider_module_name in get_spiders_modules_names(spiders_directory):
+        spider_module = import_module(spider_module_name)
+        for module_attribute_name in dir(spider_module):
+            module_attribute = getattr(spider_module, module_attribute_name)
+            if inspect.isclass(module_attribute) \
+                    and module_attribute is not JobSpider \
+                    and issubclass(module_attribute, JobSpider):
+                spider_class = module_attribute
+                break
+
+    return spider_class
 
 
 def get_spiders_classes(spiders_directory=None):

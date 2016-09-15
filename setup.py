@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-import pyjobs_crawlers
 
 setup(
     name='pyjobs_crawler',

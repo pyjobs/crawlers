@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import unittest
+
 import yaml
 
 from pyjobs_crawlers.spiders.afpy import AfpyJobSpider

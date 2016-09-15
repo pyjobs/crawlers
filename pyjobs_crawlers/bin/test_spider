@@ -5,42 +5,192 @@ import argparse
 import json
 import os
 import sys
+from importlib import import_module
+
+from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector
+from pyjobs_crawlers.run import stdout_error_callback
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
 
-from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector, stdout_error_callback
-
 parser = argparse.ArgumentParser(description='Test spider command')
 parser.add_argument('spider',
-                    metavar='SPIDER',
+                    metavar='SPIDER_CLASSPATH',
                     type=str,
-                    help='Spider module name')
-parser.add_argument('-a',
-                    '--all',
-                    action='store_true',
-                    default=False,
-                    dest='all',
-                    help='Crawl all urls (by default, only one job is crawled)')
+                    help='Spider classpath '
+                         '(eg. pyjobs_crawlers.spiders.afpy.AfpyJobSpider).')
+
+main_parser_subparsers = parser.add_subparsers(
+    title='Debugging mode',
+    description='Use the debug command to enter a specific debug mode.',
+    help='You must choose between one of these subcommands.',
+    dest='debug_mode'
+)
+
+list_parser = main_parser_subparsers.add_parser(
+    'list', description='Debugging operations regarding job list pages. '
+                        'You must provide a JOB_LIST_PAGE_URL. The script will '
+                        'then use this URL as its starting point to crawl a '
+                        'job offers list page, using the optional '
+                        'job offers list page specific debugging crawling '
+                        'arguments you provided this script with.',
+    help='Debug spiders job offer list pages crawling, using an URL of your '
+         'choice.'
+)
+list_parser.add_argument('job_list_page_url',
+                         metavar='JOB_LIST_PAGE_URL',
+                         type=str,
+                         help='An URL pointing to a job list web page you want '
+                              'to test against the job list parser of the '
+                              'specified spider class (non recursive by '
+                              'default, see -r).')
+list_parser.add_argument('-r',
+                         '--recursive',
+                         action='store_true',
+                         default=False,
+                         dest='recursive_crawling',
+                         help='Add this argument in case you want the parsing '
+                              'of job list pages to be recursive.')
+list_parser.add_argument('-o',
+                         '--crawl-offers-from-list',
+                         action='store_true',
+                         default=False,
+                         dest='crawl_offers_from_list',
+                         help='Add this argument in case you not only want to '
+                              'parse the job offers list, but also crawl the '
+                              'job offers scrapped from this list.')
+list_parser.add_argument('-s',
+                         '--single-job-offers',
+                         action='store_true',
+                         default=False,
+                         dest='single_job_offer',
+                         help='Only crawl the first scrapped job offer page '
+                              'URL (by default, every job offers listed on the '
+                              'job list pages are crawled).')
+
+offer_parser = main_parser_subparsers.add_parser(
+    'offer',
+    description='Debugging operations regarding job offer pages. '
+                'You must provide a JOB_OFFER_PAGE_URL. The script will then '
+                'use this URL as its starting point to crawl a job offer page.',
+    help='Debug spiders job offer pages crawling, using an URL of your choice.'
+)
+offer_parser.add_argument('job_offer_page_url',
+                          metavar='JOB_OFFER_PAGE_URL',
+                          type=str,
+                          help='An URL pointing to a job offer web page you '
+                               'want to test against the job page parser of '
+                               'the specified spider class.')
+
+default_parser = main_parser_subparsers.add_parser(
+    'default', description='Debugging operations regarding spiders using '
+                           'the default start URLs specified in the spider '
+                           'class.',
+    help='Debug spiders using the default start URLs specified in the spider '
+         'class.'
+)
+default_parser.add_argument('-r',
+                            '--recursive',
+                            action='store_true',
+                            default=False,
+                            dest='recursive_crawling',
+                            help='Add this argument in case you want the '
+                                 'parsing of job list pages to be recursive.')
+default_parser.add_argument('-o',
+                            '--crawl-offers-from-list',
+                            action='store_true',
+                            default=False,
+                            dest='crawl_offers_from_list',
+                            help='Add this argument in case you not only want '
+                                 'to parse the job offers list, but also crawl '
+                                 'the job offers scrapped from this list.')
+default_parser.add_argument('-s',
+                            '--single-job-offers',
+                            action='store_true',
+                            default=False,
+                            dest='single_job_offer',
+                            help='Only crawl the first scrapped job offer '
+                                 'page URL (by default, every job offers '
+                                 'listed on the job list pages are crawled).')
+
+
+def check_spider_classpath(arguments):
+    err_msg = ''
+    module_name = ''
+    class_name = ''
+    try:
+        module_name = '.'.join(arguments.spider.split('.')[:-1])
+        class_name = arguments.spider.split('.')[-1]
+
+        spider_module = import_module(module_name)
+        getattr(spider_module, class_name)
+    except ValueError:
+        err_msg = 'empty module name'
+    except ImportError:
+        err_msg = 'module [%s] does not exist' % module_name
+    except AttributeError:
+        err_msg = 'class [%s] does not exist in module [%s]' % (class_name,
+                                                                module_name)
+
+    if err_msg:
+        print 'The specified spider classpath: [%s], is wrong: %s.' \
+              % (arguments.spider, err_msg)
+        exit(-1)
 
 if __name__ == '__main__':
     parsed_args = parser.parse_args()
     connector = StdOutputConnector()
 
+    check_spider_classpath(parsed_args)
+
+    debugging_options = {}
+
+    if parsed_args.debug_mode == 'list':
+        debugging_options['job_list_crawling'] = {
+            'url': parsed_args.job_list_page_url,
+            'recursive': parsed_args.recursive_crawling,
+            'single_job_offer': parsed_args.single_job_offer,
+            'crawl_offers_from_list': parsed_args.crawl_offers_from_list
+        }
+    elif parsed_args.debug_mode == 'offer':
+        debugging_options['job_offer_crawling'] = {
+            'url': parsed_args.job_offer_page_url
+        }
+    else:
+        debugging_options['job_list_crawling'] = {
+            'url': None,
+            'recursive': parsed_args.recursive_crawling,
+            'single_job_offer': parsed_args.single_job_offer,
+            'crawl_offers_from_list': parsed_args.crawl_offers_from_list
+        }
+
     spider = crawl_from_class_name(
-        spider_class_name=parsed_args.spider,
+        spider_class_path=parsed_args.spider,
         connector=connector,
         spider_error_callback=stdout_error_callback,
-        debug=not parsed_args.all
+        debugging_options=debugging_options
     )
 
-    jobs = spider.get_connector().get_jobs()
+    job_offers = spider.get_connector().get_jobs()
 
-    if len(jobs):
-        for job in jobs:
+    num_job_offers = len(job_offers)
+
+    if num_job_offers > 0:
+        for job in job_offers:
             print('DETAILS FOR %s:' % job['url'])
             print(json.dumps(job.to_dict(), sort_keys=True, indent=4))
 
-    print('TERMINATED: %d job(s) found %s' %
-          (len(jobs),
-           "(Only one job has been crawled, for crawl normally, add --all parameter)" if not parsed_args.all else ''))
+    result_analysis_msg = 'Crawling operations are now over. ' \
+                          'Here are some results for you: ' \
+                          '%s job offer(s) have been scrapped.' % num_job_offers
+
+    if parsed_args.debug_mode != 'offer' and parsed_args.single_job_offer:
+        single_job_offer_msg = \
+            'Bear in mind that you used -s (or --single-job-offer), meaning ' \
+            'that only one job offer has been crawled per job list pages. If ' \
+            'you want to crawl every job offers on the list pages, just ' \
+            'remove this argument from your call to this script.'
+        result_analysis_msg = '%s\n%s' % (result_analysis_msg,
+                                          single_job_offer_msg)
+
+    print result_analysis_msg
