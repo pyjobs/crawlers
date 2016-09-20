@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from pyjobs_crawlers.spiders import JobSpider, JobSource
 
 
@@ -21,15 +22,17 @@ class AlsaCreationsSpider(JobSpider):
         'from_list__title__css': 'td.mlink a.intitule::text',
 
         'from_page__container__css': 'div.fiche',
-        'from_page__title__css': '#premier h2[itemprop=title]',
+        'from_page__title__css': '#premier h2[itemprop=title]::text',
         'from_page__publication_datetime__css': 'p.navinfo time::attr(datetime)',
         'from_page__company__css': '#second h3.nom::text',
         'from_page__company_url__css': '#second a[itemprop=url]::attr(href)',
         'from_page__address__css': '#premier b[itemprop=jobLocation]::text',
         'from_page__description__css': '#premier p[itemprop=description]',
-        # FIXME - D.A. - 2016-02-18 - tags are not working well
-        # 'from_page__tags__css': '#premier p[itemprop=skills]::text',
+        'from_page__tags__css': '#premier p[itemprop=skills] b::text',
     }
+
+    def _get_from_list__publication_datetime(self, job_node):
+        return datetime.now() 
 
     def _get_from_page__publication_datetime(self, job_node):
         date_text = self._extract_first(job_node, 'from_page__publication_datetime')

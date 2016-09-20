@@ -20,9 +20,9 @@ class HumanCodersSpider(JobSpider):
         'from_list__url__css': 'div.job_title h2 a::attr(href)',
         'from_list__title__css': 'div.job_title h2 a::text',
         'from_list__publication_datetime__css': 'div.date::text',
-        'from_list__tags__xpath': '.',
+        'from_list__tags__css': 'ul.tags li p::text',
         'from_list__company__css': 'div.company span.company_name::text',
-
+        'from_list__address__css': 'div.location::text',
         'from_page__container__css': 'body',
         'from_page__company_url__css': 'div.company_url a::attr(href)',
         'from_page__description__css': '#description'

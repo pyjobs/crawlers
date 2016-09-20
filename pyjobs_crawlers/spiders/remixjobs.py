@@ -6,7 +6,7 @@ import feedparser
 from scrapy import Request
 
 from pyjobs_crawlers.items import JobItem
-from pyjobs_crawlers.spiders import JobSpider, JobSource
+from pyjobs_crawlers.spiders import JobSpider, JobSource, Tag
 
 
 class RemixJobsSpider(JobSpider):
@@ -22,7 +22,7 @@ class RemixJobsSpider(JobSpider):
     )
 
     _crawl_parameters = {
-        'from_page__tags__xpath': '.'
+        'from_page__tags__css': 'ul.tags li a::text'
     }
 
     def __init__(self, *args, **kwargs):
@@ -76,9 +76,9 @@ class RemixJobsSpider(JobSpider):
         company_url = ''.join(company_info.css('.website > a::attr(href)').extract())
         # description = job_node.css('div.job-description').extract()
 
-        tags_html = self._extract_first(job_node, 'from_page__tags', required=False)
+        tags_html = self._extract_all(job_node, 'from_page__tags', required=False)
         if tags_html:
-            item['tags'] = self.extract_tags(tags_html)
+            item['tags'] = [Tag(tag, 1) for tag in tags_html]
 
         # 19 mars 2015,
         #

@@ -7,7 +7,6 @@ from os.path import dirname, basename
 
 from pyjobs_crawlers.spiders import JobSpider
 
-common_tags = JobSpider.COMMON_TAGS
 condition_tags = JobSpider.CONDITION_TAGS
 
 

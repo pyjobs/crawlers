@@ -95,112 +95,6 @@ class JobSpider(Spider):
     """
     ACTION_CRAWL_ERROR = 'CRAWLING_ERROR'
 
-    COMMON_TAGS = [
-        u'angular',
-        u'cdi',
-        u'cdd',
-        u'django',
-        u'flask',
-        u'freelance',
-        u'hadoop',
-        u'javascript'
-        u'mysql'
-        u'postgresql',
-        u'spark',
-        u'sql',
-        u'stage',
-        u'turbogears',
-        u'turbo gears',
-        u'télétravail',
-        u'télé-travail',
-        u'web2py',
-        u'accessibilité',
-        u'ajax',
-        u'android',
-        u'angular',
-        u'angularjs',
-        u'angular js',
-        u'angular.js',
-        u'apache',
-        u'backbone.js',
-        u'bash',
-        u'bootstrap',
-        u'cassandra',
-        u'centos',
-        u'cloud computing',
-        u'cms',
-        u'couchdb',
-        u'crm',
-        u'css',
-        u'data',
-        u'debian',
-        u'design pattens',
-        u'django',
-        u'docker',
-        u'drupal',
-        u'elasticsearch',
-        u'elastic search',
-        u'elk',
-        u'erp',
-        u'ffmpeg',
-        u'flume',
-        u'git',
-        u'gnu',
-        u'hadoop',
-        u'haproxy',
-        u'hbase',
-        u'html',
-        u'imagemagick',
-        u'j2ee',
-        u'java',
-        u'javascript',
-        u'jenkins',
-        u'jira',
-        u'jquery',
-        u'kafka',
-        u'kubernetes',
-        u'lamp',
-        u'linux',
-        u'mapreduce',
-        u'mesos',
-        u'mongodb',
-        u'mysql',
-        u'ness',
-        u'node.js',
-        u'nosql',
-        u'odoo',
-        u'openstack',
-        u'php',
-        u'postgresql',
-        u'python',
-        u'reactjs',
-        u'react.js',
-        u'redhat',
-        u'responsive-design',
-        u'ruby',
-        u'ruby on rails',
-        u'référencement',
-        u'saas',
-        u'scala',
-        u'seo',
-        u'shell',
-        u'solr',
-        u'spark',
-        u'spring',
-        u'suse',
-        u'swift',
-        u'tomcat',
-        u'tornado',
-        u'varnish',
-        u'versioning',
-        u'web',
-        u'web services',
-        u'websockets',
-        u'xhtml',
-        u'xml',
-        u'zend'
-    ]
-
     CONDITION_TAGS = (
         u'cdd',
         u'cdi',
@@ -499,6 +393,12 @@ class JobSpider(Spider):
             job_item[job_item_field] = getattr(self, job_item_method_name)(
                 job_node)
 
+
+        for tag in JobSpider.CONDITION_TAGS:
+            if tag in u'{} {}'.format(job_item['title'], job_item['description']).lower():
+                 job_item['tags'].append(Tag(tag, 1))
+
+ 
         return job_item
 
     def parse_job_page(self, response):
@@ -530,6 +430,11 @@ class JobSpider(Spider):
                         self, job_item_method_name)(job_container)
                 except JobFieldUncomputable as exc:
                     exc.fix_job_item(job_item)
+
+            for tag in JobSpider.CONDITION_TAGS:
+                if tag in u'{} {}'.format(job_item['title'], job_item['description']).lower():
+                    job_item['tags'].append(Tag(tag, 1))
+
         except NotFound as exc:
             # Log when a required field extraction failed
             self.get_connector().log(self.name,
@@ -587,10 +492,8 @@ class JobSpider(Spider):
                                    required=False)
 
     def _get_from_list__tags(self, node):
-        tags_html = self._extract_first(node, 'from_list__tags', required=False)
-        if tags_html:
-            return list(self.extract_tags(tags_html))
-        return []
+        tags = [Tag(tag, 1) for tag in self._extract_all(node, 'from_list__tags', False)]
+        return tags
 
     #
     # END - Job list page methods
@@ -624,10 +527,8 @@ class JobSpider(Spider):
                                    required=True)
 
     def _get_from_page__tags(self, node):
-        tags_html = self._extract_first(node, 'from_page__tags', required=False)
-        if tags_html:
-            return list(self.extract_tags(tags_html))
-        return []
+        tags = [Tag(tag, 1) for tag in self._extract_all(node, 'from_page__tags', False)]
+        return tags
 
     #
     # END - Job page methods
@@ -770,24 +671,6 @@ class JobSpider(Spider):
 
         raise ParameterNotFound("Crawl Parameter \"%s\" or (\"%s\") is not set"
                                 % (css_parameter_name, xpath_parameter_name))
-
-    def _extract_common_tags(self, html_content):
-        for tag in self.COMMON_TAGS:
-            weight = len(re.findall(ur"(?<!-)\b%s\b(?!-)" % tag, html_content,
-                                    flags=re.MULTILINE))
-            if weight:
-                yield Tag(tag, weight)
-
-    def extract_specific_tags(self, html_content):
-        return []
-
-    def extract_tags(self, html_content):
-        html_content = html_content.lower()
-        for tag in self._extract_common_tags(html_content):
-            yield tag
-
-        for tag in self.extract_specific_tags(html_content):
-            yield tag
 
     def get_crawl_parameters(self):
         return self._crawl_parameters

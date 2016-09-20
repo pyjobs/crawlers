@@ -21,6 +21,8 @@ class PoleEmploiSpider(JobSpider):
         'from_list__title__css': 'a.title::text',
         'from_list__company__css': 'span.company span[itemprop=name]::text',
         'from_list__next_page__css': None,
+        'from_list__publication_datetime__css': 'td[itemprop="datePosted"]::text',
+        'from_list__address__css': '[itemprop="jobLocation"] span::text',
         # FIXME - D.A. - 2016-02-19 - next page is protected by javascript
         # This is not a problem for us (we crawl every 15 minutes
         'from_page__container__css': '#offre-body',
@@ -31,6 +33,12 @@ class PoleEmploiSpider(JobSpider):
         'from_page__description__css': '#offre-body p[itemprop=description]',
         'from_page__tags__css': 'p[itemprop=description]::text',
     }
+
+    def _get_from_list__publication_datetime(self, job_node):
+        date_text = self._extract_first(job_node, 'from_list__publication_datetime')
+        if date_text:
+            return datetime.strptime(date_text, '%d/%m/%Y')
+        return super(PoleEmploiSpider, self)._get_from_page__publication_datetime(job_node)
 
     def _get_from_page__publication_datetime(self, job_node):
         date_text = self._extract_first(job_node, 'from_page__publication_datetime')

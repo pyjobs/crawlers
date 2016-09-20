@@ -19,6 +19,8 @@ class LinuxJobsSpider(JobSpider):
         'from_list__jobs_lists__css': '.container .list-group',
         'from_list__jobs__css': ' .list-group-item',
         'from_list__url__xpath': './@href',
+        #'from_list__publication_datetime__css': 'h4:last-child::text',
+        'from_list__publication_datetime__css': '.',
 
         'from_page__container__css': '.container',
         'from_page__title__css': 'div.container div.row:nth-child(2) h2::text',
@@ -30,7 +32,7 @@ class LinuxJobsSpider(JobSpider):
         ),
         'from_page__address__css': 'div.container div.row:nth-child(2) .col-md-9 h4:nth-child(4)::text',
         'from_page__description__css': 'div.container div.row:nth-child(4) div.col-md-9',
-        'from_page__tags__css': 'div.container div.row:nth-child(4) div.col-md-9'
+        # 'from_page__tags__css': 'div.container div.row:nth-child(4) div.col-md-9'
     }
 
     def _get_from_list__jobs(self, node):
@@ -43,6 +45,14 @@ class LinuxJobsSpider(JobSpider):
         if len(jobs_node.css('h4')) < 1: # If no h4, then, this is not a job
             raise NotCrawlable()
         return super(LinuxJobsSpider, self)._get_from_list__url(jobs_node)
+
+    def _get_from_list__publication_datetime(self, jobs_node):
+        try:
+            publication_datetime_str = self._extract_first(jobs_node, 'from_list__publication_datetime')
+            publication_datetime_str_english = self._month_french_to_english(publication_datetime_str)
+            return datetime.strptime(publication_datetime_str_english, '%d %B %Y')
+        except:
+            return datetime.now()
 
     def _get_from_page__publication_datetime(self, job_container):
         publication_datetime_str = self._extract_first(job_container, 'from_page__publication_datetime')
