@@ -24,7 +24,7 @@ class LesJeudisSpider(JobSpider):
         'from_list__tags__css': 'p[itemprop="skills"] a::text',
         'from_list__address__css': 'span[itemprop="jobLocation"]::text',
         'from_list__company__css': 'div[itemprop="hiringOrganization"] a::text',
-        'from_list__company_url__css': 'div[itemprop="hiringOrganization"] a::attr(href)',
+        # 'from_list__company_url__css': 'div[itemprop="hiringOrganization"] a::attr(href)',
 
         'from_page__description__css': 'div.job-content',
         'from_page__publication_datetime__css': 'p.info span:nth-child(2)',
