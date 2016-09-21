@@ -31,7 +31,7 @@ class PoleEmploiSpider(JobSpider):
         'from_page__company__css': '#second h3.nom::text',
         'from_page__address__css': 'li[itemprop=addressRegion]::text',
         'from_page__description__css': '#offre-body p[itemprop=description]',
-        'from_page__tags__css': 'p[itemprop=description]::text',
+        # 'from_page__tags__css': 'p[itemprop=description]::text',
     }
 
     def _get_from_list__publication_datetime(self, job_node):
