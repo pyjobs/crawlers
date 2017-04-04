@@ -281,4 +281,4 @@ Dans un terminal, placez vous dans le dossier du [projet](#recuperer_le_projet) 
 pyjobs_crawlers/bin/test_spider pyjobs_crawlers.spiders.humancoders.HumanCodersSpider
 ```
 
-*NOTE*: Le paramètre sur structure ainsi: pyjobs_crawlers.spiders.nom_du_fichier.NomDeLaClasse
+*NOTE*: Le paramètre se structure ainsi: pyjobs_crawlers.spiders.nom_du_fichier.NomDeLaClasse
