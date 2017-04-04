@@ -7,11 +7,11 @@ import os
 import sys
 from importlib import import_module
 
-from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector
-from pyjobs_crawlers.run import stdout_error_callback
-
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(current_dir, '../../'))
+
+from pyjobs_crawlers.run import crawl_from_class_name, StdOutputConnector
+from pyjobs_crawlers.run import stdout_error_callback
 
 parser = argparse.ArgumentParser(description='Test spider command')
 parser.add_argument('spider',

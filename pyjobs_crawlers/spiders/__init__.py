@@ -712,6 +712,41 @@ class JobSpider(Spider):
         return datetime_str
 
     @staticmethod
+    def _month_french_to_number(datetime_str):
+        months = (
+            (u'janvier', u'01'),
+            (u'février', u'02'),
+            (u'mars', u'03'),
+            (u'avril', u'04'),
+            (u'mai', u'05'),
+            (u'juin', u'06'),
+            (u'juillet', u'07'),
+            (u'août', u'08'),
+            (u'septembre', u'09'),
+            (u'octobre', u'10'),
+            (u'novembre', u'11'),
+            (u'décembre', u'12'),
+
+            (u'janv', u'01'),
+            (u'févr', u'02'),
+            (u'mars', u'03'),
+            (u'avr', u'04'),
+            (u'mai', u'05'),
+            (u'juin', u'06'),
+            (u'juil', u'07'),
+            (u'août', u'08'),
+            (u'sept', u'09'),
+            (u'oct', u'10'),
+            (u'nov', u'11'),
+            (u'déc', u'12'),
+        )
+
+        for key, value in months:
+            if key in datetime_str:
+                return datetime_str.replace(key, value)
+        return datetime_str
+
+    @staticmethod
     def close(spider, reason):
         if reason == 'finished':
             spider.get_connector().log(spider.name, spider.ACTION_FINISHED)
