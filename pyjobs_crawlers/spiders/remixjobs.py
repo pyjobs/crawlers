@@ -69,8 +69,8 @@ class RemixJobsSpider(JobSpider):
         # title = job_node.css('div.job-title > h1').xpath('text()').extract_first()
 
         # job_infos = job_node.css('ul.job-infos')[0]
-        company_info = response.css('.company-infos')[0]
-        company = "".join(company_info.css('.company-title > a::text').extract())
+        company_info = response.css('.job-page')[0]
+        company = "".join(company_info.css('.employer-title > a::text').extract())
 
         address = ", ".join(company_info.css('.address').xpath('.//text()').extract())
         company_url = ''.join(company_info.css('.website > a::attr(href)').extract())

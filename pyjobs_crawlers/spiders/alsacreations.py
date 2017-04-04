@@ -7,7 +7,7 @@ from pyjobs_crawlers.spiders import JobSpider, JobSource
 class AlsaCreationsSpider(JobSpider):
 
     name = u'alsacreations'
-    start_urls = ['http://emploi.alsacreations.com/index.php?action=q&q=python&table=tout&region=']
+    start_urls = ['https://emploi.alsacreations.com/?action=q&g_type=offres&q=python&region=']
     # start_urls = [u'http://emploi.alsacreations.com/']
     label = u'Alsa Creations'
     url = u'http://emploi.alsacreations.com'

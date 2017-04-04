@@ -9,10 +9,10 @@ from pyjobs_crawlers.spiders import JobSpider, JobSource, Tag
 
 class BlueCodersSpider(JobSpider):
     name = u'bluecoders'
-    start_urls = [u'http://bluecoders.io/search?search=python']
+    start_urls = [u'http://crm.bluecoders.io/search?search=python']
     label = u'Bluecoders'
     url = u'http://bluecoders.io/'
-    logo_url = u'http://bluecoders.io/resources/images/logo_banneer.svg'
+    logo_url = u'http://crm.bluecoders.io/resources/images/logo_banneer.svg'
 
     _crawl_parameters = {
         'from_list__jobs_lists__xpath': '/html/body/main/div/div[@class="job-list"]/ul',
