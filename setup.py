@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyjobs_crawler',
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages(),
     install_requires=['Scrapy==1.0.4',
                       'fasteners==0.14.1',
