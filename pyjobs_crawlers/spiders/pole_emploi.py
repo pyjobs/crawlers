@@ -40,13 +40,19 @@ class PoleEmploiSpider(JobSpider):
     def _get_from_list__publication_datetime(self, job_node):
         return ''
 
+    def _get_from_list__url(self, job_node):
+        # url is something like https://candidat.pole-emploi.fr:443/offres/recherche/detail/053BHRB%3bJSESSIONID_RECH_OFFRE=uF1AeKwGdCqOYVn1UWNfC1sjiNQx6QMzL5NWfKEc6ibo8pPodQmu!-1031959725
+        # we need to remove the JSESSIONID_xxx part
+        url = self._extract_first(job_node, 'from_list__url')
+        url_parts = url.split('%3b')
+        if len(url_parts) < 2:
+            url_parts = url.split('%3B')
+
+        return url_parts[0]
+
     def _get_from_page__publication_datetime(self, job_node):
         date_text = self._extract_first(job_node, 'from_page__publication_datetime')
-        # date_text is something like 'Publié le 31 mars 2017 - offre n° 052TWBT'
-        print("1 => ", date_text)
         date_text = date_text.split(' - ')[0].replace(u'Publié le ', u'')
-        print("2 => ", date_text)
-        print("3 => ", date_text.split(' '))
         day_id, month_in_french, year = date_text.split(' ')
         month_id = JobSpider._month_french_to_number(month_in_french)
         date_text = '{}/{}/{}'.format(day_id, month_id, year)
