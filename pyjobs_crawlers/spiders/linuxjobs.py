@@ -11,9 +11,9 @@ class LinuxJobsSpider(JobSpider):
 
     name = 'linuxjobs'
     start_urls = ['https://www.linuxjobs.fr/search/python']
-    label = 'LinuxJobs'
+    label = 'LinuxJobs.fr'
     url = 'https://www.linuxjobs.fr/'
-    logo_url = 'https://pbs.twimg.com/profile_images/649599776573403140/vaMrmib1_400x400.png'
+    logo_url = 'https://www.linuxjobs.fr/assets/images/banniere-linuxjobs-small.jpg'
 
     _crawl_parameters = {
         'from_list__jobs_lists__css': '.container .list-group',
